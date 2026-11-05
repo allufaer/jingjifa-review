@@ -946,7 +946,7 @@ function renderHome(){
    +'<h2>把五个章节，<br><em>重新过一遍。</em></h2>'
    +'<p class="hero-sub">'+st.total+' 道精选题，全部取自课程课件与配套习题。先练薄弱章节，再用错题本收口，最后做一套模拟卷。</p>'
    +'<div class="hero-actions">'
-   +'<button class="btn primary" data-act="start-random">今日推荐 · 随机 20 题</button>'
+   +'<button class="btn primary" data-act="start-random">今日推荐 · 随机 40 题</button>'
    +'<button class="btn" data-act="start-wrong">错题重练'+(st.wrongQ?'（'+st.wrongQ+'）':'')+'</button>'
    +'<button class="btn" data-act="start-case">大题专练</button>'
    +'<button class="btn ghost" data-act="go-exam">模拟考</button>'
@@ -999,7 +999,7 @@ function renderLauncher(){
   h+='</div>';
   h+='<div class="sect-title"><h2>快捷入口</h2></div>';
   h+='<div class="chap-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">'
-   +'<button class="card chap" data-act="start-random"><div class="no">随</div><div class="mid"><h3>随机 20 题</h3><div class="meta">跨章节混合抽取</div></div></button>'
+   +'<button class="card chap" data-act="start-random"><div class="no">随</div><div class="mid"><h3>随机 40 题</h3><div class="meta">跨章节混合抽取</div></div></button>'
    +'<button class="card chap" data-act="start-wrong"><div class="no">错</div><div class="mid"><h3>错题重练</h3><div class="meta">按错误次数排序</div></div></button>'
    +'<button class="card chap" data-act="start-book"><div class="no">藏</div><div class="mid"><h3>收藏题目</h3><div class="meta">你标记过的题</div></div></button>'
    +'<button class="card chap" data-act="start-case"><div class="no">案</div><div class="mid"><h3>大题专练</h3><div class="meta">'+BANK.filter(function(q){return q.type==='case'}).length+' 道案例分析 · 顺序练习</div></div></button>'
@@ -1268,7 +1268,7 @@ document.addEventListener('click',function(e){
     const ch=t.dataset.ch;
     startSession(BANK.filter(function(q){return q.ch===ch}).map(function(q){return q.id}),{title:ch+' · 顺序练习'});
   }
-  else if(act==='start-random'){startSession(shuffle(BANK).slice(0,20).map(function(q){return q.id}),{title:'随机 20 题'});}
+  else if(act==='start-random'){startSession(shuffle(BANK).slice(0,40).map(function(q){return q.id}),{title:'随机 40 题'});}
   else if(act==='start-wrong'){const ids=wrongIds(); if(!ids.length){alert('目前没有待攻克的错题。');return;} startSession(ids,{title:'错题重练'});}
   else if(act==='start-book'){const ids=Object.keys(DB.rec).filter(function(id){return byId[id]&&DB.rec[id].book}); if(!ids.length){alert('还没有收藏题目，点击题目右上角的星标即可收藏。');return;} startSession(ids,{title:'收藏题重练'});}
   else if(act==='start-case'){const ids=BANK.filter(function(q){return q.type==='case'}).map(function(q){return q.id}); startSession(ids,{title:'大题专练 · 案例分析'});}
