@@ -1253,7 +1253,10 @@ document.addEventListener('click',function(e){
     const takeCase=Math.min(caseN,n,casePool.length);
     const caseIds=shuffle(casePool).slice(0,takeCase).map(function(q){return q.id});
     const objIds=shuffle(objPool).slice(0,n-caseIds.length).map(function(q){return q.id});
-    startSession(shuffle(caseIds.concat(objIds)),{exam:true,title:'模拟考',limit:S.examCfg.min*60});
+    /* 按题型分组：单选 → 多选 → 判断，案例分析放最后 */
+    const TORD={single:0,multi:1,judge:2};
+    objIds.sort(function(a,b){return TORD[byId[a].type]-TORD[byId[b].type]});
+    startSession(objIds.concat(caseIds),{exam:true,title:'模拟考',limit:S.examCfg.min*60});
   }
   else if(act==='submit-exam'){if(S.session&&S.session.exam&&confirm('确定交卷吗？未作答题目将计为错误。'))finishSession();}
   else if(act==='resume-exam'){showView('practice');}
