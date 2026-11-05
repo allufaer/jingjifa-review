@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>经济法 · 复习舱</title>
+<style>:root{
+  --paper:#f3efe6; --card:#fffdf8; --ink:#211f1b; --muted:#736d62;
+  --line:#ddd4c4; --red:#ad3a2e; --navy:#1d3d5c; --green:#2e7a58;
+  --gold:#a9803c; --shadow:0 18px 40px -24px rgba(40,32,20,.45);
+  --serif:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--paper);
+  min-height:100vh; line-height:1.65; -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(1200px 600px at 12% -10%, #fffdf6 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, #efe7d8 0%, transparent 55%),
+    repeating-linear-gradient(0deg, rgba(120,100,70,.035) 0 1px, transparent 1px 28px);
+}
+::selection{background:#f0d9ac}
+button{font-family:inherit;cursor:pointer}
+a{color:var(--navy)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);
+  background:rgba(246,242,233,.86);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:26px;height:74px}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.seal{width:42px;height:42px;border-radius:8px;background:var(--red);color:#fff;
+  display:grid;place-items:center;font-family:var(--serif);font-size:22px;
+  box-shadow:0 6px 16px -8px rgba(173,58,46,.8);letter-spacing:1px}
+.brand h1{font-family:var(--serif);font-size:20px;margin:0;letter-spacing:2px;line-height:1.2}
+.brand p{margin:0;font-size:11px;color:var(--muted);letter-spacing:2px}
+.tabs{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.tab{border:0;background:transparent;padding:8px 14px;border-radius:999px;color:var(--muted);
+  font-size:14px;letter-spacing:1px;transition:.18s}
+.tab:hover{color:var(--ink);background:#ece5d7}
+.tab.on{color:#fff;background:var(--navy);box-shadow:0 8px 18px -12px var(--navy)}
+.streak{font-size:12px;color:var(--muted);white-space:nowrap;border-left:1px solid var(--line);padding-left:18px}
+.streak b{color:var(--red);font-size:15px;font-family:var(--serif)}
+
+/* ---------- generic ---------- */
+.view{display:none;padding:38px 0 70px;animation:fade .35s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.sect-title{display:flex;align-items:baseline;gap:12px;margin:34px 0 16px}
+.sect-title h2{font-family:var(--serif);font-size:23px;margin:0;letter-spacing:2px}
+.sect-title span{font-size:12px;color:var(--muted);letter-spacing:1px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 18px;
+  font-size:14px;color:var(--ink);transition:.18s}
+.btn:hover{border-color:var(--navy);color:var(--navy);transform:translateY(-1px)}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.primary:hover{background:#16324c;color:#fff}
+.btn.ghost{background:transparent}
+.btn.small{padding:6px 12px;font-size:12px;border-radius:8px}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* ---------- home ---------- */
+.hero{display:grid;grid-template-columns:1.35fr .9fr;gap:0;overflow:hidden}
+.hero-main{padding:34px 36px}
+.kicker{font-size:12px;letter-spacing:3px;color:var(--red)}
+.hero h2{font-family:var(--serif);font-size:34px;margin:8px 0 10px;letter-spacing:3px;line-height:1.3}
+.hero h2 em{font-style:normal;color:var(--navy);border-bottom:3px double var(--gold)}
+.hero-sub{color:var(--muted);font-size:14px;max-width:520px}
+.hero-actions{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.hero-side{background:linear-gradient(160deg,#1d3d5c,#16324c);color:#fff;padding:30px;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.ring{width:150px;height:150px;position:relative}
+.ring svg{width:100%;height:100%}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .num b{font-family:var(--serif);font-size:30px;line-height:1}
+.ring .num small{display:block;font-size:11px;letter-spacing:2px;opacity:.75;margin-top:6px}
+.hero-side p{margin:2px 0;font-size:12px;letter-spacing:1px;opacity:.8}
+
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+.stat{padding:18px 20px}
+.stat b{font-family:var(--serif);font-size:26px;display:block;line-height:1.1}
+.stat span{font-size:12px;color:var(--muted);letter-spacing:1px}
+.stat .bar{height:4px;background:#eee5d5;border-radius:4px;margin-top:12px;overflow:hidden}
+.stat .bar i{display:block;height:100%;background:var(--gold)}
+
+.chap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.chap{display:flex;align-items:center;gap:18px;padding:18px 20px;text-align:left;transition:.2s}
+.chap:hover{transform:translateY(-2px);border-color:#b9ad97}
+.chap .no{font-family:var(--serif);font-size:30px;color:var(--gold);width:44px;flex-shrink:0;opacity:.85}
+.chap .mid{flex:1;min-width:0}
+.chap h3{margin:0;font-family:var(--serif);font-size:18px;letter-spacing:1px}
+.chap .meta{font-size:12px;color:var(--muted);margin-top:2px}
+.chap .prog{height:5px;border-radius:5px;background:#efe6d6;margin-top:10px;overflow:hidden}
+.chap .prog i{display:block;height:100%;background:var(--navy);width:0;transition:width .6s}
+.chap .go{font-size:12px;color:var(--navy);border:1px solid var(--line);padding:6px 12px;border-radius:8px;flex-shrink:0}
+
+.recent{display:flex;flex-direction:column;gap:2px}
+.recent .row{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px dashed var(--line);font-size:14px}
+.recent .row:last-child{border-bottom:0}
+.recent .tag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 6px;flex-shrink:0}
+.recent .txt{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#3b372f}
+.recent .row button{opacity:0;transition:.2s}
+.recent .row:hover button{opacity:1}
+
+/* ---------- practice ---------- */
+.pbar{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.pbar .track{flex:1;height:6px;background:#e8dfcf;border-radius:6px;overflow:hidden}
+.pbar .track i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--red));width:0;transition:width .3s}
+.pbar .pnum{font-size:12px;color:var(--muted);font-family:var(--serif);white-space:nowrap}
+.qcard{padding:28px 34px 22px}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chip{font-size:11px;letter-spacing:1px;padding:3px 9px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+.chip.ch{background:#f2ecdf;color:#5c5344;border-color:#e3d9c6}
+.chip.ty{color:#fff;background:var(--navy);border-color:var(--navy);letter-spacing:2px}
+.chip.ty.multi{background:#7a3b52;border-color:#7a3b52}
+.chip.ty.judge{background:#2f6b57;border-color:#2f6b57}
+.chip.ty.case{background:var(--gold);border-color:var(--gold)}
+.qidx{margin-left:auto;font-size:12px;color:var(--muted);font-family:var(--serif)}
+.star{border:0;background:transparent;font-size:19px;line-height:1;padding:4px;color:#c9bda6}
+.star.on{color:var(--gold);transform:scale(1.08)}
+.stem{font-family:var(--serif);font-size:20px;line-height:1.85;margin:18px 0 22px;letter-spacing:.5px;white-space:pre-wrap}
+.stem .qno{color:var(--muted);font-size:15px;margin-right:8px}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);background:#fff;
+  border-radius:12px;padding:13px 16px;transition:.16s;cursor:pointer;user-select:none;
+  width:100%;text-align:left;font-family:inherit;color:inherit;font-size:15px}
+.opt:hover{border-color:#b8a98e;background:#fdf9f0}
+.opt .key{width:26px;height:26px;border-radius:50%;background:#f1eadb;color:var(--muted);
+  display:grid;place-items:center;font-size:13px;flex-shrink:0;font-family:var(--serif);margin-top:2px}
+.opt .txt{font-size:15px;line-height:1.7;color:#332f28}
+.opt.sel{border-color:var(--navy);background:#f2f6fa}
+.opt.sel .key{background:var(--navy);color:#fff}
+.opt.right{border-color:#9dc7b4;background:#f1f8f4;pointer-events:none}
+.opt.right .key{background:var(--green);color:#fff}
+.opt.bad{border-color:#e3b3ad;background:#fbf1ef;pointer-events:none}
+.opt.bad .key{background:var(--red);color:#fff}
+.opt.dim{opacity:.55;pointer-events:none}
+.qfoot{display:flex;align-items:center;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.qfoot .hint{font-size:12px;color:var(--muted);margin-right:auto}
+.qfoot .hint kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;font-size:10px;background:#fff}
+
+.explain{margin-top:20px;border-radius:12px;padding:16px 18px;font-size:14px;line-height:1.85;
+  border-left:4px solid var(--gold);background:#faf6ea;animation:fade .3s}
+.explain.right{border-left-color:var(--green);background:#f2f8f4}
+.explain.bad{border-left-color:var(--red);background:#fbf2ef}
+.explain .verdict{font-weight:600;margin-bottom:6px;font-family:var(--serif);font-size:15px}
+.explain .verdict .ans{color:var(--red)}
+
+.case-box{border:1px dashed #cfc2a9;border-radius:12px;padding:16px 18px;background:#fcf8ef;margin-top:6px}
+.case-input{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:10px;
+  background:#fffdf8;padding:12px 14px;font-family:var(--sans);font-size:14px;line-height:1.8;color:var(--ink);outline:none}
+.case-input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(29,61,92,.08)}
+.case-box h4{margin:0 0 8px;font-family:var(--serif);font-size:15px;letter-spacing:1px;color:#7a6a4c}
+.case-box .ans{white-space:pre-wrap;font-size:14px;line-height:1.95}
+.selfcheck{display:flex;gap:10px;margin-top:16px}
+.mini-list{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px}
+.mini{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:#fff;font-size:11px;color:var(--muted)}
+.mini.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mini.right{border-color:var(--green);color:var(--green)}
+.mini.bad{border-color:var(--red);color:var(--red);background:#fdf3f1}
+.mini.now{outline:2px solid var(--gold);outline-offset:1px}
+
+/* ---------- result ---------- */
+.result{text-align:center;padding:44px 30px}
+.result .big{font-family:var(--serif);font-size:64px;line-height:1;color:var(--navy)}
+.result .big small{font-size:18px;color:var(--muted)}
+.result h2{font-family:var(--serif);letter-spacing:3px;margin:10px 0 4px;font-size:24px}
+.result p{color:var(--muted);font-size:14px}
+.result-stats{display:flex;justify-content:center;gap:40px;margin:26px 0}
+.result-stats div b{display:block;font-family:var(--serif);font-size:28px}
+.result-stats div span{font-size:12px;color:var(--muted);letter-spacing:1px}
+.result .acts{display:flex;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+
+/* ---------- wrong book ---------- */
+.wrong-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.wrong-list{display:flex;flex-direction:column;gap:10px}
+.wrow{display:flex;align-items:center;gap:14px;padding:14px 18px}
+.wrow .wch{font-size:11px;border:1px solid var(--line);border-radius:5px;padding:1px 7px;color:var(--muted);flex-shrink:0}
+.wrow .wtxt{flex:1;font-size:14px;color:#3b372f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wrow .cnt{font-size:11px;color:var(--red);flex-shrink:0}
+.wrow .acts{display:flex;gap:6px;flex-shrink:0}
+.empty{padding:60px 20px;text-align:center;color:var(--muted)}
+.empty .ic{font-family:var(--serif);font-size:40px;color:#cbbfa7;display:block;margin-bottom:8px}
+
+/* ---------- knowledge ---------- */
+.knav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.knav button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 16px;font-size:13px;color:var(--muted)}
+.knav button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.kcard{padding:0;margin-bottom:14px;overflow:hidden}
+.kcard .kh{display:flex;align-items:center;gap:12px;padding:16px 22px;cursor:pointer;user-select:none}
+.kcard .kh .no{font-family:var(--serif);font-size:22px;color:var(--gold)}
+.kcard .kh h3{margin:0;font-family:var(--serif);font-size:17px;letter-spacing:1px;flex:1}
+.kcard .kh .arr{color:var(--muted);font-size:13px;transition:.2s}
+.kcard.open .kh .arr{transform:rotate(90deg)}
+.kcard .kb{display:none;padding:0 22px 20px 58px}
+.kcard.open .kb{display:block;animation:fade .25s}
+.kb ul{margin:0;padding:0;list-style:none}
+.kb li{position:relative;padding:6px 0 6px 18px;font-size:14px;line-height:1.8;color:#3d382f;border-bottom:1px dashed #eee4d2}
+.kb li:last-child{border-bottom:0}
+.kb li::before{content:"";position:absolute;left:0;top:15px;width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.7}
+.kb li b{color:var(--navy);font-weight:600}
+.kb li em{font-style:normal;color:var(--red)}
+
+/* ---------- exam setup ---------- */
+.exam-setup{max-width:660px;margin:0 auto;padding:34px 36px}
+.exam-setup h2{font-family:var(--serif);font-size:26px;letter-spacing:3px;margin:0 0 6px}
+.exam-setup p{color:var(--muted);font-size:13px;margin:0 0 24px}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:12px;letter-spacing:2px;color:var(--muted);margin-bottom:8px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:#fff;padding:9px 20px;border-radius:9px;font-size:14px}
+.seg button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.notice{font-size:12px;color:var(--muted);background:#f7f1e4;border-radius:10px;padding:12px 14px;line-height:1.8;margin-top:22px}
+.timer{font-family:var(--serif);font-size:14px;color:var(--red);border:1px solid #e0c9c4;background:#fdf4f1;border-radius:8px;padding:4px 12px}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:12px;letter-spacing:1px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-side{flex-direction:row;padding:20px;gap:20px}
+  .ring{width:110px;height:110px}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .chap-grid{grid-template-columns:1fr}
+  .topbar .wrap{height:auto;padding:12px 16px;flex-wrap:wrap;gap:10px}
+  .streak{display:none}
+  .qcard{padding:20px}
+  .stem{font-size:18px}
+  .result-stats{gap:24px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <div class="seal">法</div>
+      <div><h1>经济法复习舱</h1><p>FIVE CHAPTERS · REVIEW</p></div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button class="tab on" data-view="home">概览</button>
+      <button class="tab" data-view="practice">练习</button>
+      <button class="tab" data-view="wrong">错题本</button>
+      <button class="tab" data-view="cards">速查</button>
+      <button class="tab" data-view="exam">模拟考</button>
+    </nav>
+    <div class="streak" id="streak">连续学习 <b>0</b> 天</div>
+  </div>
+</header>
+
+<main>
+  <section class="view on" id="view-home"><div class="wrap" id="homeBody"></div></section>
+  <section class="view" id="view-practice"><div class="wrap" id="practiceBody"></div></section>
+  <section class="view" id="view-wrong"><div class="wrap" id="wrongBody"></div></section>
+  <section class="view" id="view-cards"><div class="wrap" id="cardsBody"></div></section>
+  <section class="view" id="view-exam"><div class="wrap" id="examBody"></div></section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>题库依据：课程 PPT · 公司法 / 合伙企业法 / 合同法律制度配套习题（含答案与解析）</span>
+    <span id="footInfo">本地存储 · 进度自动保存</span>
+  </div>
+</footer>
+
+<script>window.BANK_PARTS = window.BANK_PARTS || [];
+window.BANK_PARTS.push([
+/* ================= 第一章 经济法导论 ================= */
+{id:'dl01',ch:'导论',type:'single',q:'现代经济法产生的标志性法律是（　）。',o:['《法国民法典》','《谢尔曼法》','《德国民法典》','《反不正当竞争法》'],a:'B',e:'1890年美国颁布的《谢尔曼法》是世界上第一部反垄断法，被视为现代经济法产生的标志。'},
+{id:'dl02',ch:'导论',type:'single',q:'我国经济法产生于（　）。',o:['新中国成立','1978年改革开放','1992年市场经济体制确立','2021年民法典生效'],a:'B',e:'我国经济法产生于1978年改革开放，发展、完善于1992年社会主义市场经济体制确立以后。'},
+{id:'dl03',ch:'导论',type:'single',q:'下列不属于我国经济法渊源的是（　）。',o:['宪法','行政法规','当事人的判例','部门规章'],a:'C',e:'我国是成文法国家，只有判例而没有判例法，判例仅具有参考价值，不属于法律渊源。'},
+{id:'dl04',ch:'导论',type:'single',q:'下列属于经济法律事件的是（　）。',o:['企业签订买卖合同','发生自然灾害','市场主体违法经营','政府出台监管文件'],a:'B',e:'经济法律事件是不以人的主观意志为转移的客观现象，自然灾害属于自然事件；其余三项均属经济法律行为。'},
+{id:'dl05',ch:'导论',type:'single',q:'经济法的本位思想是（　）。',o:['权利本位','个人利益本位','社会责任本位','管理者本位'],a:'C',e:'民法以“权利本位”为特征，经济法以“社会责任本位”为特征。'},
+{id:'dl06',ch:'导论',type:'single',q:'经济法是调整（　）过程中发生的社会关系的法律规范的总称。',o:['平等主体之间人身与财产关系','国家宏观调控和市场规制','行政机关内部管理','企业内部组织管理'],a:'B',e:'经济法是国家为了克服市场调节的盲目性和局限性而制定的，调整国家进行宏观调控和市场规制过程中发生的社会关系的法律规范总称。'},
+{id:'dl07',ch:'导论',type:'single',q:'下列关系中，不属于经济法调整对象的是（　）。',o:['市场主体调控关系','市场规制关系','宏观调控关系','平等主体之间的人身关系'],a:'D',e:'平等主体之间的人身关系和财产关系由民法调整。经济法调整市场主体调控关系、市场规制关系和宏观调控关系。'},
+{id:'dl08',ch:'导论',type:'single',q:'关于我国法律规范的效力等级，下列排序正确的是（　）。',o:['法律＞宪法＞行政法规＞地方性法规','宪法＞法律＞行政法规＞地方性法规','行政法规＞法律＞宪法＞地方性法规','宪法＞行政法规＞法律＞地方性法规'],a:'B',e:'效力等级：宪法＞法律＞行政法规＞地方性法规＞同级地方政府规章；宪法＞法律＞行政法规＞部门规章。'},
+{id:'dl09',ch:'导论',type:'single',q:'关于经济法与行政法的区别，下列表述正确的是（　）。',o:['行政法是“管理经营者之法”，经济法是“管理管理者之法”','行政法是“管理管理者之法”，经济法是“管理经营者之法”','两者调整对象完全相同','两者均以权利本位为特征'],a:'B',e:'行政法调整行政管理关系，是“管理管理者之法”；经济法调整国家调控与规制经济的关系，是“管理经营者之法”。'},
+{id:'dl10',ch:'导论',type:'single',q:'经济法律责任的第一目的是（　）。',o:['惩罚违法主体','补偿受害人损失','保护社会公共利益不受侵犯','维护行政机关权威'],a:'C',e:'经济法律责任侧重于保护社会公共利益不受侵犯，这是其第一目的。'},
+{id:'dl11',ch:'导论',type:'single',q:'民法与经济法在宗旨上的区别是（　）。',o:['民法采社会本位，经济法采个人本位','民法采权利本位，经济法采社会责任本位','两者都采权利本位','两者都采社会本位'],a:'B',e:'民法以其“权利本位”为特征；经济法是以“社会责任本位”为特征。'},
+{id:'dl12',ch:'导论',type:'single',q:'《公司法》《合伙企业法》《个人独资企业法》在经济法体系中属于（　）。',o:['市场主体法','市场规制法','宏观调控法','程序法'],a:'A',e:'经济法体系可分为市场主体法、市场规制法和宏观调控法。《公司法》《合伙企业法》《个人独资企业法》《企业破产法》属于市场主体法。'},
+{id:'dl13',ch:'导论',type:'single',q:'经济法律关系的构成三要素是（　）。',o:['主体、事实、行为','主体、权利、义务','主体、内容、客体','主体、行为、客体'],a:'C',e:'经济法律关系由主体、内容（经济权利与经济义务）、客体三要素构成；法律事实是引起法律关系产生、变更、终止的原因。'},
+{id:'dl14',ch:'导论',type:'judge',q:'自由资本主义时期，政府扮演“守夜人”角色，奉行自由放任的经济政策。',a:true,e:'自由资本主义时期奉行亚当·斯密的经济自由主义，政府不妄加干预经济，扮演“守夜人”。'},
+{id:'dl15',ch:'导论',type:'judge',q:'行政法以“社会责任本位”，经济法是“管理管理者之法”。',a:false,e:'说反了。行政法是“管理管理者之法”，经济法是“管理经营者之法”；经济法采社会责任本位。'},
+{id:'dl16',ch:'导论',type:'judge',q:'在我国，判例只具有参考价值，不属于法律渊源。',a:true,e:'我国属于成文法国家，只有判例没有判例法，判例不属于正式法律渊源。'},
+{id:'dl17',ch:'导论',type:'judge',q:'经济法律行为是不以人的主观意志为转移的客观现象。',a:false,e:'经济法律行为是人们有意识的活动（作为或不作为）；不以人的意志为转移的是经济法律事件。'},
+{id:'dl18',ch:'导论',type:'judge',q:'道义责任属于经济法律责任的一种形式。',a:false,e:'经济法律责任的形式包括民事责任、行政责任、刑事责任；道义责任不属于法律责任。'},
+{id:'dl19',ch:'导论',type:'judge',q:'宪法由全国人民代表大会制定和修改，具有最高法律效力。',a:true,e:'宪法是根本法，效力最高，是经济法最重要的渊源。'},
+{id:'dl20',ch:'导论',type:'judge',q:'我国经济法是国家为了克服市场调节的盲目性和局限性而制定的法律规范的总称。',a:true,e:'这是经济法概念的核心表述，强调国家适度干预、弥补市场缺陷。'},
+{id:'dl21',ch:'导论',type:'multi',q:'经济法的调整对象包括（　）。',o:['市场主体调控关系','市场规制关系','宏观调控关系','平等主体之间的人身关系'],a:['A','B','C'],e:'D项属于民法调整对象。经济法调整市场主体调控关系、市场规制关系（反垄断、反不正当竞争、消费者保护）和宏观调控关系（财税、金融、计划）。'},
+{id:'dl22',ch:'导论',type:'multi',q:'下列法律中，属于市场规制法的有（　）。',o:['《反不正当竞争法》','《消费者权益保护法》','《公司法》','《产品质量法》'],a:['A','B','D'],e:'《公司法》属于市场主体法；其余三项属于规范市场交易、维护市场秩序的市场规制法。'},
+{id:'dl23',ch:'导论',type:'multi',q:'经济法的基本原则包含（　）。',o:['资源优化配置原则','国家适度干预原则','社会利益本位原则','维护公平竞争原则'],a:['A','B','C','D'],e:'经济法五大基本原则：资源优化配置、国家适度干预、社会利益本位、平衡协调、维护公平竞争。'},
+{id:'dl24',ch:'导论',type:'multi',q:'经济法律关系的三要素包括（　）。',o:['主体','法律事实','客体','内容'],a:['A','C','D'],e:'三要素为主体、内容、客体；法律事实是引起经济法律关系产生、变更、终止的客观现象，不是构成要素。'},
+{id:'dl25',ch:'导论',type:'multi',q:'经济法律责任的形式包括（　）。',o:['民事责任','行政责任','刑事责任','道义责任'],a:['A','B','C'],e:'经济法律责任包括民事、行政、刑事责任；道义责任仅是社会评价，不具国家强制性。'},
+
+/* ================= 第二章 个人独资企业法 ================= */
+{id:'dz01',ch:'个人独资',type:'single',q:'下列关于个人独资企业法律特征的表述中，符合规定的是（　）。',o:['个人独资企业没有独立承担民事责任的能力','个人独资企业不能以自己的名义从事民事活动','个人独资企业具有法人资格','投资人对企业债务承担有限责任'],a:'A',e:'个人独资企业不具有法人资格，无独立承担民事责任的能力，但它是独立的民事主体，可以自己的名义从事民事活动；投资人承担无限责任。'},
+{id:'dz02',ch:'个人独资',type:'single',q:'个人独资企业的投资人应当是（　）。',o:['一个中国自然人','一个法人','一个自然人，国籍不限','两个以上自然人'],a:'A',e:'投资人只能是一个中国公民（自然人），不包括法人，也不包括港、澳、台同胞；且须为完全民事行为能力人。'},
+{id:'dz03',ch:'个人独资',type:'single',q:'下列中国公民中，依法可以投资设立个人独资企业的是（　）。',o:['某市中级法院法官李某','某商业银行支行部门经理张某','某大学在校本科生袁某','某县政府办公室主任金某'],a:'C',e:'法律、行政法规禁止从事营利性活动的人不得作为投资人，如国家公务员、法官、检察官、人民警察、商业银行工作人员等。在校本科生不属于禁止主体。'},
+{id:'dz04',ch:'个人独资',type:'single',q:'下列名称中，个人独资企业可以使用的是（　）。',o:['云滇针织品有限公司','昆海化妆品经销公司','霞光婚纱摄影工作室','某某实业股份有限公司'],a:'C',e:'个人独资企业的名称中不得使用“有限”“有限责任”或者“公司”字样，可以叫厂、店、部、中心、工作室等。'},
+{id:'dz05',ch:'个人独资',type:'single',q:'个人独资企业的出资（　）。',o:['只能以个人财产出资','只能以家庭共有财产出资','可以个人财产出资，也可以家庭共有财产作为个人出资','必须达到法定最低注册资本'],a:'C',e:'投资人可以个人财产出资，也可以在申请设立登记时明确以家庭共有财产作为个人出资；法律未设最低注册资本。'},
+{id:'dz06',ch:'个人独资',type:'single',q:'个人独资企业登记机关应当自收到设立申请文件之日起（　）内作出是否登记的决定。',o:['10日','15日','30日','60日'],a:'B',e:'登记机关应在收到申请文件之日起15日内，对符合条件的予以登记、发给营业执照；不符合的书面答复并说明理由。'},
+{id:'dz07',ch:'个人独资',type:'single',q:'个人独资企业的成立日期是（　）。',o:['设立申请之日','登记机关受理之日','营业执照签发之日','首次开业之日'],a:'C',e:'营业执照的签发日期为个人独资企业成立日期。领取营业执照前，投资人不得以个人独资企业名义从事经营活动。'},
+{id:'dz08',ch:'个人独资',type:'single',q:'个人独资企业设立分支机构的，分支机构的民事责任由（　）承担。',o:['分支机构自己','设立该分支机构的个人独资企业','投资人个人','登记机关'],a:'B',e:'分支机构不具有法人资格，其民事责任由设立该分支机构的个人独资企业承担。'},
+{id:'dz09',ch:'个人独资',type:'single',q:'投资人委托或者聘用他人管理个人独资企业事务的，应当（　）。',o:['口头授权即可','签订书面合同，明确委托内容和授权范围','经登记机关批准','经债权人同意'],a:'B',e:'投资人应与受托人或被聘用的人签订书面合同，明确委托的具体内容和授予的权利范围。'},
+{id:'dz10',ch:'个人独资',type:'single',q:'投资人对受托人职权的限制，（　）。',o:['可以对抗一切第三人','不得对抗善意第三人','不得对抗恶意第三人','经公告后可以对抗第三人'],a:'B',e:'投资人对受托人或者被聘用人员职权的限制，不得对抗善意第三人；对知情的恶意第三人则可以对抗。'},
+{id:'dz11',ch:'个人独资',type:'single',q:'个人独资企业解散，清算人的确定方式是（　）。',o:['只能由投资人自行清算','只能由债权人清算','由投资人自行清算，或者由债权人申请人民法院指定清算人','由登记机关指定'],a:'C',e:'个人独资企业解散，由投资人自行清算或者由债权人申请人民法院指定清算人进行清算。'},
+{id:'dz12',ch:'个人独资',type:'single',q:'投资人自行清算的，债权人申报债权的期限是（　）。',o:['接到通知之日起15日内，未接到通知的公告之日起30日内','接到通知之日起30日内，未接到通知的公告之日起60日内','接到通知之日起60日内，未接到通知的公告之日起90日内','一律为公告之日起45日内'],a:'B',e:'投资人自行清算的，应在清算前15日内书面通知债权人；债权人应在接到通知之日起30日内、未接到通知的自公告之日起60日内申报债权。'},
+{id:'dz13',ch:'个人独资',type:'single',q:'个人独资企业解散后，原投资人对企业存续期间的债务仍应承担偿还责任，但债权人在（　）内未提出偿债请求的，该责任消灭。',o:['1年','2年','3年','5年'],a:'D',e:'个人独资企业解散后，原投资人对企业存续期间的债务仍应承担偿还责任；债权人在5年内未向债务人提出偿债请求的，该责任消灭。'},
+{id:'dz14',ch:'个人独资',type:'single',q:'个人独资企业解散的，财产应当首先用于清偿（　）。',o:['所欠职工工资和社会保险费用','所欠税款','其他债务','投资人出资'],a:'A',e:'清偿顺序：所欠职工工资和社会保险费用→所欠税款→其他债务。'},
+{id:'dz15',ch:'个人独资',type:'single',q:'个人独资企业财产不足以清偿债务的，应当（　）。',o:['依法注销，债务消灭','由投资人以其个人的其他财产予以清偿','由债权人自行承担','转为有限责任公司'],a:'B',e:'个人独资企业投资人承担无限责任，企业财产不足清偿债务的，投资人应以其个人的其他财产予以清偿。'},
+{id:'dz16',ch:'个人独资',type:'judge',q:'个人独资企业具有法人资格，能够独立承担民事责任。',a:false,e:'个人独资企业是非法人企业，不具有法人资格，不能独立承担民事责任，由投资人承担无限责任。'},
+{id:'dz17',ch:'个人独资',type:'judge',q:'个人独资企业不缴纳企业所得税，而由投资人依法缴纳个人所得税。',a:true,e:'个人独资企业不是企业所得税的纳税义务人，其生产经营所得由投资人缴纳个人所得税。'},
+{id:'dz18',ch:'个人独资',type:'judge',q:'个人独资企业的投资人可以是外国公民。',a:false,e:'投资人只能是中国公民，不包括外国公民，也不包括港、澳、台同胞。'},
+{id:'dz19',ch:'个人独资',type:'judge',q:'投资人在设立登记申请书上未注明以家庭共有财产出资的，企业财产不足清偿债务时，可直接执行其家庭共有财产。',a:false,e:'未明确以家庭共有财产作为个人出资的，应以个人财产承担无限责任，不能当然执行家庭共有财产。'},
+{id:'dz20',ch:'个人独资',type:'judge',q:'投资人明确以家庭共有财产作为个人出资的，应当依法以家庭共有财产对企业债务承担无限责任。',a:true,e:'这是《个人独资企业法》第18条的明确规定。'},
+{id:'dz21',ch:'个人独资',type:'judge',q:'投资人应承担民事赔偿责任和缴纳罚款、罚金，其财产不足以同时支付的，应当先缴纳罚款、罚金。',a:false,e:'应当先承担民事赔偿责任，再缴纳罚款、罚金；被判处没收财产的，同样先承担民事赔偿责任。'},
+{id:'dz22',ch:'个人独资',type:'judge',q:'清算期间，个人独资企业可以开展与清算目的无关的经营活动。',a:false,e:'清算期间不得开展与清算目的无关的经营活动；清偿债务前，投资人不得转移、隐匿财产。'},
+{id:'dz23',ch:'个人独资',type:'multi',q:'投资人委托或者聘用的管理人员不得实施的行为有（　）。',o:['利用职务便利索取或者收受贿赂','挪用企业资金归个人使用或者借贷给他人','擅自以企业财产提供担保','未经投资人同意从事与本企业相竞争的业务'],a:['A','B','C','D'],e:'此外还包括侵占企业财产、擅自以个人名义开立账户存储企业资金、未经同意与本企业交易、擅自转让企业知识产权、泄露商业秘密等。'},
+{id:'dz24',ch:'个人独资',type:'multi',q:'下列情形中，个人独资企业应当解散的有（　）。',o:['投资人决定解散','投资人死亡，无继承人或者继承人决定放弃继承','被依法吊销营业执照','投资人被宣告死亡，其继承人决定继承'],a:['A','B','C'],e:'D项中继承人决定继承的，企业继续存续，不解散。法定解散情形还包括法律、行政法规规定的其他情形。'},
+{id:'dz25',ch:'个人独资',type:'multi',q:'关于个人独资企业的设立，下列说法正确的有（　）。',o:['投资人可以家庭共有财产作为个人出资','企业名称中不得使用“公司”字样','必须有符合规定的最低注册资本','投资人为一个中国自然人'],a:['A','B','D'],e:'个人独资企业没有法定最低注册资本要求，只需有投资人申报的出资。'}
+]);
+
+window.BANK_PARTS = window.BANK_PARTS || [];
+window.BANK_PARTS.push([
+/* ================= 第三章 合伙企业法 ================= */
+{id:'ph01',ch:'合伙',type:'single',q:'根据合伙企业法律制度的规定，下列有关合伙企业的说法中，正确的是（　）。',o:['特殊的普通合伙企业由普通合伙人与有限合伙人组成','合伙企业不具有法人资格，不能拥有自己的财产','合伙企业应就其生产经营所得缴纳企业所得税','合伙协议依法由全体合伙人协商一致，以书面形式订立'],a:'D',e:'A错：特殊的普通合伙企业全部合伙人均为普通合伙人；B错：合伙企业虽无法人资格，但依法拥有独立支配和管理的财产；C错：合伙企业“先分后税”，由合伙人分别缴纳所得税。'},
+{id:'ph02',ch:'合伙',type:'single',q:'普通合伙企业的下列事项中，应当登记的是（　）。',o:['合伙协议','合伙人认缴出资的缴付期限','执行事务合伙人名称或者姓名','合伙期限'],a:'C',e:'法定登记事项包括名称、类型、经营范围、主要经营场所、出资额、合伙人姓名或名称及住所、承担责任方式、执行事务合伙人姓名或名称。'},
+{id:'ph03',ch:'合伙',type:'single',q:'甲、乙、丙、丁拟设立普通合伙企业，合伙协议约定的下列条款中，不符合规定的是（　）。',o:['合伙人可以劳务出资','经全体合伙人一致同意，可以吸收上市公司作为普通合伙人','修改合伙协议应当经全体合伙人2/3以上同意','合伙人不得分期出资'],a:'B',e:'国有独资公司、国有企业、上市公司以及公益性的事业单位、社会团体不得成为普通合伙人，这是强制性规定，不能以协议约定或全体同意改变。'},
+{id:'ph04',ch:'合伙',type:'single',q:'根据合伙企业法律制度的规定，下列有关合伙企业财产的说法中，正确的是（　）。',o:['合伙人以土地使用权出资需要评估作价的，不得由合伙人自行协商确定','合伙人在清算前私自转移合伙企业财产的，合伙企业不得以此对抗善意第三人','合伙企业的原始财产是全体合伙人实际缴纳的财产','合伙企业清算时，其财产首先用于缴纳所欠税款'],a:'B',e:'A错：非货币出资的作价可由全体合伙人协商，也可委托法定评估机构评估；C错：原始财产是全体合伙人“认缴”的财产；D错：清算时首先支付清算费用。'},
+{id:'ph05',ch:'合伙',type:'single',q:'赵某是甲普通合伙企业的合伙人。某日，赵某私自将企业的机器设备转让给善意且支付合理对价的李某并交付。下列表述中，正确的是（　）。',o:['李某可以取得所有权，但需补偿企业损失','合伙企业不得以赵某无权处分为由请求李某返还设备','赵某有权要求李某返还设备','转让合同因损害企业利益而无效'],a:'B',e:'合伙人清算前私自转移或处分合伙企业财产的，合伙企业不得以此对抗善意第三人；李某符合善意取得要件，取得所有权。'},
+{id:'ph06',ch:'合伙',type:'single',q:'甲、乙、丙系普通合伙人，合伙协议对对外转让财产份额的决议方法未约定。甲将其财产份额转让给丁。丁成为合伙人的时间点是（　）。',o:['甲与丁签订转让协议时','乙、丙一致同意丁受让时','合伙协议经修改增加丁为合伙人时','企业登记机关完成变更登记时'],a:'C',e:'合伙人以外的人依法受让财产份额的，经修改合伙协议即成为合伙人。'},
+{id:'ph07',ch:'合伙',type:'single',q:'某普通合伙企业委托合伙人杨某一人执行合伙事务，下列说法正确的是（　）。',o:['只能由杨某对外代表该合伙企业','除协议另有约定外，杨某可自行决定以企业名义为他人提供担保','除协议另有约定外，杨某可自行处分企业不动产','除协议另有约定外，杨某可自行决定其他合伙人对外转让份额'],a:'A',e:'委托一人执行事务的，其他合伙人不再执行事务，只能由杨某对外代表企业；担保、处分不动产等重大事项须经全体合伙人一致同意。'},
+{id:'ph08',ch:'合伙',type:'single',q:'甲为某律师事务所（普通合伙）的合伙人，为维持小规模纳税人身份拟再设立一家同业律师事务所。下列说法正确的是（　）。',o:['经其他合伙人一致同意可以设立','可以设立，除非合伙协议另有约定','如不执行合伙企业事务就可以设立','只要具有该合伙人身份，就不可以设立'],a:'D',e:'普通合伙人绝对不得自营或者同他人合作经营与本合伙企业相竞争的业务，属于法定禁止，不能通过协议约定或全体同意豁免。'},
+{id:'ph09',ch:'合伙',type:'single',q:'星点律师事务所（普通合伙）的合伙协议有下列条款，其中符合规定的是（　）。',o:['允许合伙人同时入伙其他律师事务所','允许合伙人自行决定将财产份额出质','将合伙人除名，应当经全体合伙人过半数同意','修改合伙协议，应当经全体合伙人过半数同意'],a:'D',e:'修改或补充合伙协议原则上须全体一致同意，但协议另有约定的除外，故可约定过半数通过；除名须其他合伙人一致同意，份额出质须其他合伙人一致同意。'},
+{id:'ph10',ch:'合伙',type:'single',q:'甲、乙、丙、丁设立普通合伙企业，协议约定企业财产不足清偿时甲最多清偿10万元、乙最多5万元，其余向丙、丁追偿。欠A公司100万元到期未清偿。下列说法正确的是（　）。',o:['甲仅负有向A公司偿还10万元的义务','乙仅负有向A公司偿还5万元的义务','A公司只能要求丙、丁承担连带责任','A公司可以要求甲、乙、丙、丁承担连带责任'],a:'D',e:'合伙人内部的分担比例和责任限制约定仅对内有效，不得对抗外部债权人；全体普通合伙人对企业债务承担无限连带责任。'},
+{id:'ph11',ch:'合伙',type:'single',q:'周某欠乙银行到期贷款，乙银行申请强制执行周某在甲普通合伙企业中的财产份额。下列说法正确的是（　）。',o:['强制执行时不必征得其他合伙人同意','其他合伙人不同意转让又无力购买的，视为同意处理','银行有权自行接管周某的财产份额','份额全部被执行后，周某对企业的债务不再承担无限连带责任'],a:'A',e:'人民法院强制执行合伙人的财产份额是司法强制措施，不必征得其他合伙人同意，但应通知全体合伙人；其他合伙人不同意转让又不购买的，办理退伙或削减份额结算。'},
+{id:'ph12',ch:'合伙',type:'single',q:'下列情形中，经其他合伙人一致同意可以决议将该合伙人除名的是（　）。',o:['合伙人未履行出资义务','合伙人死亡','合伙人个人丧失偿债能力','合伙人全部财产份额被人民法院强制执行'],a:'A',e:'B、C、D属于当然退伙事由；法定除名事由包括未履行出资义务、因故意或重大过失给企业造成损失、执行事务有不正当行为等。'},
+{id:'ph13',ch:'合伙',type:'single',q:'张某、赵某和李某设立普通合伙企业，李某未履行到期出资义务。2月1日张某和赵某作出除名决议，3月1日李某收到除名通知。李某退伙的时间是（　）。',o:['2023年4月1日','2023年1月20日','2023年3月1日','2023年2月1日'],a:'C',e:'对合伙人的除名决议应当书面通知被除名人，被除名人收到除名通知之日除名生效，李某自3月1日退伙。'},
+{id:'ph14',ch:'合伙',type:'single',q:'张某、赵某、李某设立普通合伙企业，张某病故，其15岁的儿子小张是唯一法定继承人。下列表述正确的是（　）。',o:['合伙企业必须解散清算','经赵某和李某同意，小张可以成为合伙人','小张有权要求合伙企业返还张某的财产份额','经赵某一人同意，企业可转为有限合伙企业，小张为有限合伙人'],a:'C',e:'小张为限制民事行为能力人，不能成为普通合伙人；转为有限合伙企业须全体合伙人一致同意；不能取得合伙人资格的，应退还其财产份额。'},
+{id:'ph15',ch:'合伙',type:'single',q:'甲普通合伙企业经全体合伙人一致同意解散，但全部财产不足清偿债务。下列说法正确的是（　）。',o:['可以注销企业，全体普通合伙人对剩余债务继续承担无限连带责任','必须偿清剩余债务后才能注销','可以注销，剩余债务不再清偿','经债权人同意可以注销'],a:'A',e:'合伙企业注销后，原普通合伙人对企业存续期间未清偿的债务仍承担无限连带责任（债权人5年内未提出偿债请求的除外）。'},
+{id:'ph16',ch:'合伙',type:'single',q:'张某等四人拟设立特殊的普通合伙企业，下列名称符合规定的是（　）。',o:['甲企业（合伙）','甲企业（普通合伙）','甲企业（有限合伙）','甲企业（特殊普通合伙）'],a:'D',e:'特殊的普通合伙企业名称中必须标明“特殊普通合伙”字样；普通合伙企业标明“普通合伙”。'},
+{id:'ph17',ch:'合伙',type:'single',q:'赵某（普通合伙人）、周某（有限合伙人）拟设立有限合伙企业，下列可以作为周某出资的是（　）。',o:['周某管理企业的劳务','周某承租的小汽车','周某父亲所有的房屋','周某自己所有的专利权'],a:'D',e:'有限合伙人不得以劳务出资；出资财产须为合伙人依法拥有所有权或处分权的财产，承租物、他人房屋不可出资。'},
+{id:'ph18',ch:'合伙',type:'single',q:'根据合伙企业法律制度的规定，下列各项中，属于有限合伙企业合伙协议可以约定的是（　）。',o:['有限合伙人对外代表有限合伙企业','有限合伙人享有全部企业利润','有限合伙人完全不承担企业债务','有限合伙人执行合伙事务'],a:'B',e:'有限合伙企业不得将全部利润分配给部分合伙人，但合伙协议另有约定的除外。有限合伙人不执行事务、不得对外代表企业；仍以其认缴出资额为限承担责任。'},
+{id:'ph19',ch:'合伙',type:'single',q:'第三人有理由相信有限合伙人为普通合伙人并与其交易的，该有限合伙人对该笔交易（　）。',o:['不承担责任','以财产份额为限承担责任','承担补充责任','承担与普通合伙人相同的责任'],a:'D',e:'构成表见代理情形时，为保护善意相对人，该有限合伙人对该笔交易承担与普通合伙人相同的无限连带责任。'},
+{id:'ph20',ch:'合伙',type:'single',q:'张某是甲有限合伙企业的有限合伙人，认缴出资100万元、实缴80万元。2025年5月退伙，取回财产70万元，退伙时企业负债120万元。张某对退伙前原因发生的企业债务承担责任的上限是（　）。',o:['70万元','80万元','120万元','100万元'],a:'A',e:'有限合伙人退伙后，对基于退伙前原因发生的企业债务，以其退伙时从企业中取回的财产为限承担责任。'},
+
+{id:'ph21',ch:'合伙',type:'multi',q:'下列主体中，不得成为普通合伙人的有（　）。',o:['17周岁的高中生赵某','甲国有独资公司','乙上市公司','已被人民法院宣告破产的丙公司'],a:['A','B','C','D'],e:'普通合伙人须具有完全民事行为能力；国有独资公司、国有企业、上市公司以及公益性事业单位、社会团体不得成为普通合伙人；被宣告破产的公司丧失偿债能力，亦不得成为。'},
+{id:'ph22',ch:'合伙',type:'multi',q:'赵某、钱某、孙某、李某拟设立普通合伙企业，下列说法正确的有（　）。',o:['赵某以专利权出资，应当办理专利权转移登记手续','全体合伙人可以协商确定钱某用于出资的房屋作价','该企业自合伙协议签订之日起成立','该企业名称中应当标明“普通合伙”字样'],a:['A','B','D'],e:'C错：合伙企业自营业执照签发之日起成立，而非协议签订之日。'},
+{id:'ph23',ch:'合伙',type:'multi',q:'甲、乙出资设立普通合伙企业，下列属于合伙企业财产的有（　）。',o:['合伙企业合法接受的捐赠','甲认缴但尚未实际缴纳的50万元','乙用于出资的知识产权','合伙企业承租的生产线'],a:['A','B','C'],e:'合伙企业财产包括合伙人认缴和实缴的出资、以企业名义取得的收益、依法取得的其他财产。承租的生产线仅享有使用权，不属于企业财产。'},
+{id:'ph24',ch:'合伙',type:'multi',q:'甲、乙、丙、丁共同出资设立普通合伙企业，合伙协议对份额转让没有约定。下列说法正确的有（　）。',o:['甲向乙转让份额须经丙、丁一致同意','甲向乙转让份额，丙、丁享有优先购买权','甲向戊转让份额须经乙、丙、丁一致同意','甲向戊转让份额，乙、丙、丁在同等条件下有优先购买权'],a:['C','D'],e:'合伙人之间内部转让只需通知其他合伙人，无需同意，其他合伙人无优先购买权；对外转让须经其他合伙人一致同意，且其他合伙人享有优先购买权。'},
+{id:'ph25',ch:'合伙',type:'multi',q:'赵某、钱某、孙某、李某设立普通合伙企业，协议约定由赵某和钱某执行事务。下列说法正确的有（　）。',o:['赵某和钱某均可对外代表企业','赵某、钱某对执行合伙事务享有同等权利','赵某对钱某执行的事务提出异议，钱某可以不暂停','执行事务产生的费用和亏损由企业承担'],a:['A','B','D'],e:'C错：合伙人分别执行事务时，一方提出异议，另一方应当暂停该项事务的执行。'},
+{id:'ph26',ch:'合伙',type:'multi',q:'甲、乙、丙设立普通合伙企业，协议约定由甲执行事务。下列事项中，需要全体合伙人一致同意的有（　）。',o:['甲拟向乙转让自己的财产份额','甲拟聘任合伙人丙担任经营管理人员','甲拟向丁出售合伙企业的一处厂房','甲拟改变合伙企业的经营范围'],a:['C','D'],e:'内部转让只需通知；聘任合伙人（内部人）不属于“聘任合伙人以外的人”；处分不动产、改变经营范围属于法定须全体一致同意的重大事项。'},
+{id:'ph27',ch:'合伙',type:'multi',q:'周某、吴某、王某设立畅通汽修（普通合伙），三人共同执行事务，周某分管采购。吴某认为周某拟采购的零配件质量不过关；王某提议将自己的零配件卖给企业。协议对事务执行、自我交易均无特别约定。下列说法正确的有（　）。',o:['吴某有权行使异议权，周某应暂停推进签约事宜','吴某有权行使异议权，但周某在分管权限内可不接受','经周某同意，王某可以将零配件卖给企业','经周某、吴某同意，王某可以将零配件卖给企业'],a:['A','D'],e:'执行事务合伙人提出异议后，被异议人应暂停该项事务；普通合伙人不得与本企业自我交易，须经全体合伙人一致同意。'},
+{id:'ph28',ch:'合伙',type:'multi',q:'朱某系普通合伙人，因买房向刘某借款50万元，到期不能清偿。刘某行使权利的下列说法中，正确的有（　）。',o:['可代位行使朱某在合伙企业中的权利','可就朱某在合伙企业中分得的收益主张清偿','可申请对朱某的合伙财产份额强制执行','就朱某的合伙财产份额享有优先受偿权'],a:['B','C'],e:'债权人不得代位行使合伙人在合伙企业中的权利；可要求以分得收益清偿或申请法院强制执行财产份额，但无优先受偿权。'},
+{id:'ph29',ch:'合伙',type:'multi',q:'某普通合伙企业的合伙人发生下列情形，属于当然退伙事由的有（　）。',o:['普通合伙人甲公司被宣告破产','普通合伙人丁因斗殴被公安机关拘留','普通合伙人丙被依法宣告失踪','普通合伙人乙公司被吊销营业执照'],a:['A','D'],e:'法人被吊销营业执照、责令关闭、撤销或宣告破产，属于当然退伙；自然人须“死亡或者被宣告死亡”，被宣告失踪或行政拘留不导致当然退伙。'},
+{id:'ph30',ch:'合伙',type:'multi',q:'下列各项中，属于合伙企业应当解散的情形有（　）。',o:['合伙人已不具备法定人数满30天','合伙期限届满，合伙人决定不再经营','合伙协议约定的解散事由出现','合伙企业被责令停业整顿'],a:['A','B','C'],e:'D错：被吊销营业执照、责令关闭或者被撤销才应解散；“停业整顿”属于行政处罚过程。'},
+{id:'ph31',ch:'合伙',type:'multi',q:'合伙企业解散清算时，下列费用属于清算费用的有（　）。',o:['合伙企业财产的保管费','通告债权人的费用','调查债权的费用','处分合伙企业财产的费用'],a:['A','B','C','D'],e:'清算费用包括财产管理/保管费用、处分财产费用、公告通知费用以及调查、咨询、诉讼等费用。'},
+{id:'ph32',ch:'合伙',type:'multi',q:'甲会计师事务所（特殊普通合伙）的合伙人李某实施下列行为造成甲所债务，应由李某承担无限责任、其他合伙人以财产份额为限承担责任的有（　）。',o:['因重大过失出具错误审计意见','因一般过失未发现客户财务造假','故意泄露被审计客户的商业秘密','因轻过失购买过量办公用品'],a:['A','C'],e:'特殊普通合伙中，合伙人因故意或者重大过失引起的执业债务，由该合伙人承担无限责任，其他合伙人以财产份额为限；一般/轻过失或非执业原因产生的债务由全体合伙人无限连带。'},
+{id:'ph33',ch:'合伙',type:'multi',q:'甲、乙、丙、丁设立A会计师事务所（特殊普通合伙），甲为执行事务合伙人，经手租赁的办公用房欠付2年租金。下列说法正确的有（　）。',o:['A所应以其全部财产清偿','甲承担无限责任，乙、丙、丁以实缴出资额为限','甲承担无限责任，乙、丙、丁以认缴出资额为限','甲、乙、丙、丁均应承担无限连带责任'],a:['A','D'],e:'欠付办公用房租金属于日常经营管理债务，不属于因故意或重大过失产生的特殊执业债务，全体普通合伙人承担无限连带责任。'},
+{id:'ph34',ch:'合伙',type:'multi',q:'甲公益性社会团体与王某共同出资设立合伙企业，经营亏损，财产不足清偿债务。下列说法正确的有（　）。',o:['甲公益性社会团体以其认缴出资额为限承担责任','王某以其认缴出资额为限承担责任','甲公益性社会团体承担无限责任','王某承担无限责任'],a:['A','D'],e:'公益性社会团体不得成为普通合伙人，只能作为有限合伙人承担有限责任；有限合伙企业至少需一名普通合伙人，故王某为普通合伙人，承担无限责任。'},
+{id:'ph35',ch:'合伙',type:'multi',q:'甲、乙、丙设立合伙企业，甲为有限合伙人，未按期缴纳出资。下列说法符合规定的有（　）。',o:['甲应当补缴出资','甲应当对其他合伙人承担违约责任','甲当然退伙','乙、丙可以决议将甲除名'],a:['A','B','D'],e:'未按期足额缴纳出资的，应补缴并承担违约责任；未履行出资义务属于法定除名事由，经其他合伙人一致同意可以除名，但不直接导致当然退伙。'},
+{id:'ph36',ch:'合伙',type:'multi',q:'下列有关有限合伙企业的说法中，不正确的有（　）。',o:['经全体合伙人同意，有限合伙人可以以劳务出资','有限合伙企业至少应当有2个以上普通合伙人','上市公司不得成为有限合伙企业的有限合伙人','合伙协议可以约定将全部利润分配给部分有限合伙人'],a:['A','B','C'],e:'A错：有限合伙人绝对不得以劳务出资；B错：至少1个普通合伙人即可；C错：上市公司只是不得成为普通合伙人，可以成为有限合伙人。D正确（协议可约定）。'},
+{id:'ph37',ch:'合伙',type:'multi',q:'赵某是某私募基金（有限合伙）的有限合伙人，其下列行为不违反规定的有（　）。',o:['参与选择承办基金审计业务的会计师事务所','获取经审计的基金财务会计报告','代表基金对外签订合作协议','为了解事务执行情况查阅基金财务资料'],a:['A','B','D'],e:'A、B、D属于“不视为执行合伙事务”的安全港行为；C代表企业对外签约属于事务执行权，有限合伙人不得实施。'},
+{id:'ph38',ch:'合伙',type:'multi',q:'根据合伙企业法律制度的规定，下列各项中，有限合伙人以其认缴的出资额为限承担责任的有（　）。',o:['有限合伙人入伙前发生的企业债务','有限合伙人作为合伙人期间发生的企业债务','退伙后基于退伙前原因发生的企业债务','退伙后新发生的企业债务'],a:['A','B'],e:'C项以退伙时取回的财产为限；D项退伙后新发生的债务，退伙人不承担责任。'},
+
+{id:'ph39',ch:'合伙',type:'judge',q:'合伙企业的营业执照签发日期，为合伙企业的成立日期。',a:true,e:'合伙企业自营业执照签发之日起成立。'},
+{id:'ph40',ch:'合伙',type:'judge',q:'合伙企业办理登记、备案事项时，只需对执行事务合伙人和经营管理人员进行实名验证。',a:false,e:'应当对全体合伙人进行实名验证，而非仅限执行事务合伙人或经营管理人员。'},
+{id:'ph41',ch:'合伙',type:'judge',q:'合伙企业不得设立分支机构。',a:false,e:'合伙企业可以设立分支机构，向分支机构所在地登记机关申请登记并领取营业执照。'},
+{id:'ph42',ch:'合伙',type:'judge',q:'普通合伙人以劳务出资，其作价应当由全体合伙人协商确定，不得委托评估机构评估。',a:false,e:'劳务出资的作价可以由全体合伙人协商确定，也可以由全体合伙人委托法定评估机构评估。'},
+{id:'ph43',ch:'合伙',type:'judge',q:'普通合伙企业的合伙协议可以约定，经全体合伙人过半数同意即可修改或者补充合伙协议。',a:true,e:'修改或补充合伙协议原则上须全体一致同意，但合伙协议另有约定的除外。'},
+{id:'ph44',ch:'合伙',type:'judge',q:'合伙人在合伙企业清算前，不得请求分割合伙企业的财产，但法律另有规定的除外。',a:true,e:'这体现了合伙财产的完整性，符合《合伙企业法》规定。'},
+{id:'ph45',ch:'合伙',type:'judge',q:'在合伙人分别执行合伙事务的情况下，因执行事务行为产生的亏损和责任由该事务执行人承担。',a:false,e:'执行事务产生的收益归合伙企业，亏损和责任由合伙企业承担，最终由全体合伙人承担。'},
+{id:'ph46',ch:'合伙',type:'judge',q:'在普通合伙企业中，财产份额越高的合伙人在事务执行中的权利越大。',a:false,e:'普通合伙人无论出资多少，平等地享有执行合伙事务的权利，实行一人一票。'},
+{id:'ph47',ch:'合伙',type:'judge',q:'合伙人执行合伙事务以及对外代表合伙企业权利的限制，不得对抗第三人。',a:false,e:'该限制不得对抗“善意”第三人；对知情的恶意第三人可以对抗。'},
+{id:'ph48',ch:'合伙',type:'judge',q:'赵某等四人各出资1/4设立普通合伙企业，赵某提议停业装修，协议对该事项未约定。经钱某和孙某同意，可以停业装修。',a:true,e:'停业装修不属于法定须一致同意的重大事项，协议未约定时实行一人一票、过半数通过。三人同意已过半数。'},
+{id:'ph49',ch:'合伙',type:'judge',q:'合伙企业解散即意味着合伙企业终止。',a:false,e:'解散后进入清算程序，清算完毕并办理注销登记后，合伙企业才终止。'},
+{id:'ph50',ch:'合伙',type:'judge',q:'有限合伙人转变为普通合伙人的，对其作为有限合伙人期间企业发生的债务，以其认缴的出资额为限承担责任。',a:false,e:'有限合伙人转变为普通合伙人的，对其作为有限合伙人期间企业发生的债务承担无限连带责任。'},
+{id:'ph51',ch:'合伙',type:'judge',q:'合伙协议未作特别约定的，有限合伙人可以经营与本企业相竞争的业务。',a:true,e:'有限合伙人默认可以竞业，除非合伙协议另有约定；普通合伙人则是法定绝对禁止竞业。'},
+{id:'ph52',ch:'合伙',type:'judge',q:'特殊的普通合伙企业应当建立执业风险基金、办理职业保险。',a:true,e:'这是特殊的普通合伙企业的法定强制风险防范机制，执业风险基金应单独立户管理。'},
+{id:'ph53',ch:'合伙',type:'judge',q:'合伙企业经依法清算并办理注销登记后，合伙人对合伙企业债务不再承担任何责任。',a:false,e:'原普通合伙人对合伙企业存续期间的债务，在注销后仍应承担无限连带责任（债权人5年内未提出请求的除外）。'},
+
+{id:'ph54',ch:'合伙',type:'case',q:'张某、王某、李某共同出资设立甲普通合伙企业，协议约定由张某执行事务，但仅有权决定不超过100万元的支出。\n（1）张某的朋友刘某拟从银行借款80万元，请求张某提供担保，张某自行决定以甲企业名义为刘某提供担保。\n（2）此后张某又以甲企业名义与赵某签订150万元原材料采购合同。王某、李某决定撤销张某对外签订合同的资格。付款期限届至，甲企业以张某超越权限、合同无效为由拒绝付款。经查，赵某对张某超越权限一事知情。\n要求：分别回答下列问题并说明理由。（1）张某是否有权自行决定提供担保？（2）甲企业主张买卖合同无效是否成立？（3）王某、李某是否有权撤销张某对外签订合同的资格？',a:'（1）无权。除合伙协议另有约定外，以合伙企业名义为他人提供担保，应当经全体合伙人一致同意。本案协议未特别约定，张某单方决定违法。\n（2）成立。合伙企业对合伙人执行合伙事务及对外代表权利的限制，不得对抗善意第三人；赵某对张某超越100万元权限知情，属于恶意第三人，甲企业可以拒绝承认该合同效力。\n（3）有权。受委托执行合伙事务的合伙人不按照合伙协议或者全体合伙人的决定执行事务的，其他合伙人可以决定撤销该委托。',e:'考点：合伙事务执行、一致同意事项、越权代表与第三人善意/恶意、撤销委托。'},
+{id:'ph55',ch:'合伙',type:'case',q:'甲、乙、丙、丁成立有限合伙企业，甲、乙、丙为有限合伙人，丁为普通合伙人。存续期间发生下列事项，合伙协议均无特殊约定：\n（1）甲将其机器设备以高于市场价10%的价格出售给该企业；\n（2）乙同时拥有一家个人独资企业，经营相同业务；\n（3）丙外出遇车祸受伤，经鉴定完全丧失民事行为能力。\n要求：分别判断上述行为是否合法，并说明理由。',a:'（1）合法。有限合伙人可以同本有限合伙企业进行交易，但合伙协议另有约定的除外。\n（2）合法。有限合伙人可以自营或者同他人合作经营与本有限合伙企业相竞争的业务，但合伙协议另有约定的除外。\n（3）其他合伙人不能要求丙当然退伙。作为有限合伙人的自然人在存续期间丧失民事行为能力的，其他合伙人不得因此要求其退伙，可由其法定代理人代理。',e:'考点：有限合伙人的交易自由、竞业自由、丧失民事行为能力的处理。'},
+{id:'ph56',ch:'合伙',type:'case',q:'甲、乙、丙拟设立A有限合伙企业，协议约定：\n（1）甲为普通合伙人，以生产设备作价30万元出资；乙、丙为有限合伙人，各以50万元现金出资；丙自企业成立之日起5年内缴清出资；\n（2）企业事务由甲负责执行，企业每月支付甲报酬3万元；\n（3）企业定期接受审计，乙有权参与选择承办审计业务的会计师事务所；\n（4）企业盈利在丙未缴纳50万元出资前全部分配给甲和乙。\n要求：分别判断上述约定是否符合规定，并说明理由。',a:'（1）符合。有限合伙人应当按照合伙协议约定按期足额缴纳出资，法律未对缴付期限作强制限制，丙5年内缴清属于合伙人意思自治。\n（2）符合。有限合伙企业由普通合伙人执行合伙事务，执行事务合伙人有权按照合伙协议的约定或者全体合伙人的决定获取报酬。\n（3）不视为乙执行合伙事务。有限合伙人参与选择承办有限合伙企业审计业务的会计师事务所，属于法定的“不视为执行合伙事务”情形（安全港条款）。\n（4）可以。有限合伙企业不得将全部利润分配给部分合伙人，但合伙协议另有约定的除外。',e:'考点：有限合伙人出资期限、执行事务合伙人报酬、安全港行为、利润分配的协议自由。'}
+]);
+
+window.BANK_PARTS = window.BANK_PARTS || [];
+window.BANK_PARTS.push([
+/* ================= 第四章 公司法 ================= */
+{id:'gs01',ch:'公司',type:'single',q:'下列关于分公司的表述中，正确的是（　）。',o:['分公司的民事责任由总公司承担','分公司有独立的财产','分公司具有独立法人资格','分公司有独立的公司章程'],a:'A',e:'分公司不具有法人资格，没有独立财产和独立章程，其民事责任由总公司承担；但分公司仍需依法登记并领取营业执照。'},
+{id:'gs02',ch:'公司',type:'single',q:'王某是甲公司的控股股东，因向银行借款请求甲公司为其提供担保。下列说法正确的是（　）。',o:['法律禁止公司为股东提供担保','能否担保取决于公司章程','应经股东会决议，由除王某外股东所持表决权的2/3以上通过','应经股东会决议，王某不得参加表决，由出席会议的其他股东所持表决权的过半数通过'],a:'D',e:'公司为股东或者实际控制人提供担保的，必须经股东会决议；接受担保的股东不得参加表决，该项表决由出席会议的其他股东所持表决权的过半数通过。'},
+{id:'gs03',ch:'公司',type:'single',q:'赵某等四人拟设立有限责任公司，下列出资形式中不符合规定的是（　）。',o:['以商标权出资','以小汽车出资','以取得的特许经营权出资','以非专利技术出资'],a:'C',e:'股东可以用货币以及实物、知识产权、土地使用权、股权、债权等可以货币估价并可依法转让的非货币财产出资；劳务、信用、自然人姓名、商誉、特许经营权等不得作价出资。'},
+{id:'gs04',ch:'公司',type:'single',q:'股东出资加速到期制度的适用条件是（　）。',o:['公司资不抵债','公司长期亏损','公司不能清偿到期债务','公司明显缺乏清偿能力'],a:'C',e:'新《公司法》规定，公司不能清偿到期债务的，公司或者已到期债务的债权人有权要求已认缴出资但未届出资期限的股东提前缴纳出资。'},
+{id:'gs05',ch:'公司',type:'single',q:'陈某是甲公司股东，未按期足额缴纳出资，公司拟令其丧失未缴纳出资的股权。下列符合规定的是（　）。',o:['甲公司董事会负责核查陈某出资情况','催缴书载明宽限期为自发出之日起30日','实际控制人口头通知陈某丧失股权','陈某应自接到失权通知之日起15日内起诉'],a:'A',e:'董事会负责核查股东出资；宽限期应不少于60日；失权通知应以书面形式发出；异议之诉应自接到通知之日起30日内提起。'},
+{id:'gs06',ch:'公司',type:'single',q:'林某认缴出资20万元，出资期限为2023年12月31日。2024年7月林某未缴纳出资即转让全部股权给知情的徐某。该出资义务的承担方式是（　）。',o:['林某承担，徐某无须承担','徐某承担，林某无须承担','林某承担，徐某承担补充责任','林某和徐某承担连带责任'],a:'D',e:'转让已到期未缴纳出资的股权，受让人知道或者应当知道的，由受让人与该股东在未缴纳出资的范围内承担连带责任。'},
+{id:'gs07',ch:'公司',type:'single',q:'吴某认缴出资20万元，出资期限为2025年12月31日。2024年7月吴某未缴纳出资即转让全部股权给魏某。该出资义务的承担方式是（　）。',o:['吴某承担，魏某无须承担','魏某承担，吴某无须承担','魏某承担，吴某承担补充责任','吴某承担，魏某承担补充责任'],a:'C',e:'转让未届出资期限的股权，由受让人承担缴纳出资义务；受让人未按期足额缴纳的，转让人对受让人未按期缴纳的出资承担补充责任。'},
+{id:'gs08',ch:'公司',type:'single',q:'下列主体中，有权提议召开有限责任公司临时股东会的是（　）。',o:['代表1/10以上表决权的股东','董事长','监事会主席','1/3以上的监事'],a:'A',e:'有权提议的主体包括代表1/10以上表决权的股东、1/3以上的董事、监事会（或不设监事会的监事）。'},
+{id:'gs09',ch:'公司',type:'single',q:'下列各项中，属于有限责任公司董事会法定职权的是（　）。',o:['对公司增加或减少注册资本作出决议','决定公司内部管理机构的设置','对发行公司债券作出决议','审议批准利润分配方案和弥补亏损方案'],a:'B',e:'A、C、D属于股东会职权；决定公司内部管理机构的设置属于董事会法定职权。'},
+{id:'gs10',ch:'公司',type:'single',q:'根据公司法律制度的规定，有关股份有限公司监事会，下列表述正确的是（　）。',o:['监事任期届满，连选可以连任','监事人数不得少于5人','职工代表不得少于1/2','董事可以兼任监事'],a:'A',e:'监事任期每届3年，任期届满连选可以连任；监事会成员不得少于3人；职工代表比例不得低于1/3；董事、高级管理人员不得兼任监事。'},
+{id:'gs11',ch:'公司',type:'single',q:'李某是某非上市股份有限公司股东，已连续90日持有5%股份，章程未就知情权另有规定。下列李某可以行使知情权的是（　）。',o:['基于正当目的复制会计账簿','基于正当目的查阅会计凭证','复制股东名册','查阅董事会会议记录'],a:'C',e:'股份有限公司股东有权查阅、复制公司章程、股东名册、股东会会议记录、董事会会议决议、监事会会议决议、财务会计报告；会计账簿、会计凭证须连续180日以上持股1%以上方可查阅且不得复制。'},
+{id:'gs12',ch:'公司',type:'single',q:'甲有限责任公司股东王某持股92%，何某持股8%。召开股东会前何某未被通知，会议只有王某参加并作出增加注册资本的决议。该决议的效力是（　）。',o:['有效','无效','可撤销','不成立'],a:'D',e:'未召开股东会会议作出决议，或会议未对决议事项进行表决的，属于决议不成立情形。未依法通知股东、未形成合法会议形态，决议不成立。'},
+{id:'gs13',ch:'公司',type:'single',q:'赵某拟向股东以外的人转让其持有的有限责任公司股权。根据公司法律制度的规定，赵某应当（　）。',o:['征得其他股东一致同意','至少征得其他股东中二人同意','口头通知其他股东','书面通知其他股东'],a:'D',e:'新《公司法》取消对外转让须“过半数股东同意”的规则：股东应向其他股东书面通知转让的数量、价格、支付方式和期限等，其他股东在同等条件下有优先购买权。'},
+{id:'gs14',ch:'公司',type:'single',q:'蓝天有限责任公司股东甲的股权被人民法院强制执行。乙、丙分别自接到通知之日起第15日和第30日主张优先购买权。下列表述正确的是（　）。',o:['乙、丙都可行使','乙可行使，丙视为放弃','乙、丙都视为放弃','乙、丙都无权主张'],a:'B',e:'其他股东自接到通知之日起满20日不行使优先购买权的，视为放弃。乙第15日提出（未满20日）可行使；丙第30日提出，视为放弃。'},
+{id:'gs15',ch:'公司',type:'single',q:'钱某向A有限责任公司书面申请查阅、复制会计账簿及会计凭证，用于股权估值。下列正确的是（　）。',o:['钱某有权请求公司以合理价格回购其股权','钱某有权起诉请求法院裁定公司分配利润','公司可以“不正当目的”为由拒绝','钱某有权查阅，但无权复制会计账簿及会计凭证'],a:'D',e:'有限责任公司股东有权查阅（但无权复制）会计账簿、会计凭证；为评估股权价值不属于不正当目的；连续5年不分配才可能触发回购请求权。'},
+{id:'gs16',ch:'公司',type:'single',q:'下列有关股份有限公司召开股东会会议的说法中，正确的是（　）。',o:['召开临时股东会应于会议召开10日前通知各股东','公司未弥补的亏损达股本总额1/3时应召开临时股东会','修改公司章程应经全体股东所持表决权过半数通过','股东会应当由董事长召集'],a:'B',e:'A错：临时股东会应提前15日通知；C错：修改章程属特别决议，须经出席会议股东所持表决权2/3以上通过；D错：股东会由董事会召集，董事长主持。'},
+{id:'gs17',ch:'公司',type:'single',q:'某上市公司董事会成员9名、监事会成员5名。下列有关董事会召开的情形中，符合法律规定的是（　）。',o:['经2名董事提议可召开董事会临时会议','董事长、副董事长不能履职时，可由4名董事共同推举1名董事履职','经3名监事提议可召开董事会临时会议','董事会每年召开2次会议，并在会议召开10日前通知全体董事和监事'],a:'D',e:'A错：1/3以上董事（至少3人）方可提议；B错：应由过半数（至少5名）董事共同推举；C错：提议主体是监事会而非个别监事。'},
+{id:'gs18',ch:'公司',type:'single',q:'持有公司全部股东表决权10%以上的股东，以下列事由提起解散公司诉讼，人民法院应予受理的是（　）。',o:['公司剥夺股东的表决权','公司被吊销营业执照未清算','公司发生亏损','公司持续2年以上无法召开股东会，经营管理发生严重困难'],a:'D',e:'只有公司经营管理发生严重困难、继续存续会使股东利益受到重大损失且其他途径无法解决时，10%以上股东才可提起解散公司诉讼。'},
+{id:'gs19',ch:'公司',type:'single',q:'下列有关上市公司董事会秘书的表述中，正确的是（　）。',o:['董事会秘书可以代表董事长','董事会秘书可以代表董事会','董事会秘书是董事会设置的服务席位','董事会秘书不属于公司高级管理人员'],a:'C',e:'董事会秘书负责股东会和董事会会议筹备、文件保管、股东资料管理及信息披露等，是董事会设置的服务席位，属于高级管理人员，但无权对外代表董事长或董事会。'},
+{id:'gs20',ch:'公司',type:'single',q:'甲国有独资公司董事会作出的下列决议中，符合法律规定的是（　）。',o:['聘任赵某为公司经理','增选钱某为公司董事','批准董事孙某兼任乙公司经理','决定分配利润5000万元'],a:'A',e:'国有独资公司经理由董事会聘任或解聘；董事会成员由履行出资人职责的机构委派或职工代表大会选举；董事兼职须经履行出资人职责的机构同意；利润分配由履行出资人职责的机构决定。'},
+{id:'gs21',ch:'公司',type:'single',q:'根据公司法律制度的规定，下列有关公司财务会计事项的说法中，符合规定的是（　）。',o:['依照公司章程的规定，由监事会决定聘用承办审计业务的会计师事务所','将公司部分货币资产以个人名义开立账户存储','财务会计报告只提供给持有表决权30%以上的股东查阅','在法定会计账簿外另立会计账簿'],a:'A',e:'公司聘用、解聘承办审计业务的会计师事务所，依照章程规定由股东会、董事会或者监事会决定；不得以个人名义存储公司资金，不得另立会计账簿，财务会计报告应依法供全体股东查阅。'},
+{id:'gs22',ch:'公司',type:'single',q:'甲公司拟与其持股95%的乙公司合并，需支付价款1.23亿元，占甲公司净资产的3.8%，两公司章程未另有规定。关于本次合并的决议，正确的是（　）。',o:['甲公司和乙公司都应经股东会决议','甲公司和乙公司都可以不经股东会决议','甲公司应经股东会决议，乙公司可不经','甲公司可不经股东会决议，乙公司应经'],a:'B',e:'持有90%以上股份的简易合并中，被吸收合并方可由董事会决议；支付价款不超过本公司净资产10%的小额合并中，吸收合并方可由董事会决议。故两家公司均可不经股东会决议。'},
+{id:'gs23',ch:'公司',type:'single',q:'某股份有限公司亏损120万元，盈余公积100万元，资本公积10万元，实收股本200万元。拟通过减少注册资本弥补亏损，本次减资的最大额度为（　）。',o:['10万元','20万元','100万元','120万元'],a:'A',e:'减资弥补亏损前，应先以任意公积金、法定公积金（100万元）和资本公积金（10万元）弥补；剩余未弥补亏损120－100－10＝10万元，方可通过减资弥补。'},
+
+{id:'gs24',ch:'公司',type:'multi',q:'下列关于分公司的表述中，正确的有（　）。',o:['分公司不具有独立法人资格','分公司的民事责任由总公司承担','分公司无独立的公司章程','分公司无需办理登记领照手续'],a:['A','B','C'],e:'分公司无法人资格、无独立财产和章程，民事责任由总公司承担；但仍需依法办理登记、领取营业执照，故D错。'},
+{id:'gs25',ch:'公司',type:'multi',q:'某股份有限公司拟设立组织机构，下列方案符合法律规定的有（　）。',o:['不设董事会，设1名董事；不设监事会，设1名监事','不设董事会，设1名董事；不设监事会，经全体股东一致同意不设监事','设21人董事会，设15人监事会','设董事会并设置审计委员会，不设监事会也不设监事'],a:['A','B','D'],e:'C错：股份有限公司董事会成员为3人以上19人以下，21人超过法定上限。规模较小或股东人数较少的公司可设1名董事、1名监事，或经全体股东一致同意不设监事。'},
+{id:'gs26',ch:'公司',type:'multi',q:'下列事项中，属于有限责任公司股东会特别决议事项（须经代表2/3以上表决权的股东通过）的有（　）。',o:['修改公司章程','决定公司的经营方针和投资计划','增加或者减少注册资本','公司合并、分立、解散或者变更公司形式'],a:['A','C','D'],e:'特别决议事项为“修改章程、增减注册资本、合并、分立、解散、变更公司形式”；经营方针和投资计划不属于股东会法定职权。'},
+{id:'gs27',ch:'公司',type:'multi',q:'甲公司董事会作出的下列人员聘任决定中，符合规定的有（　）。',o:['决定续聘王某担任公司总经理','决定聘任现任监事李某担任公司副总经理','决定聘任刘某为产品研发部经理','决定聘任赵某为财务负责人'],a:['A','D'],e:'董事会决定聘任或解聘经理、副经理、财务负责人等高级管理人员；董事、高级管理人员不得兼任监事；部门经理由经理聘任，不由董事会决定。'},
+{id:'gs28',ch:'公司',type:'multi',q:'下列人员中，不具备公司董事、监事、高级管理人员任职资格的有（　）。',o:['赵某，曾为图书馆馆长，现已退休','钱某，曾为乙企业董事长，因决策失误导致企业破产清算，完结至今2年','孙某，个人负债5000万元到期未清偿，被列为失信被执行人','李某，曾因贪污罪被判刑，执行期满释放至今4年'],a:['B','C','D'],e:'对破产清算负有个人责任、完结未逾3年的不得任职；个人所负数额较大债务到期未清偿且被列为失信被执行人的不得任职；因贪污罪被判刑、执行期满未逾5年的不得任职。'},
+{id:'gs29',ch:'公司',type:'multi',q:'赵某是甲公司董事长，章程无特殊规定。赵某的下列行为中，违反董事义务的有（　）。',o:['自行决定将其所有的房产出售给甲公司','将甲公司重要商业机密出售给乙公司','私自向甲公司客户收受交易佣金并归为己有','自行决定设立个人独资企业经营与甲公司相同的业务'],a:['A','B','C','D'],e:'A为未经同意的自我交易；B为泄露公司秘密；C为收受贿赂、侵占公司利益；D为谋取公司商业机会及同业竞争，均违反忠实义务。'},
+{id:'gs30',ch:'公司',type:'multi',q:'有限责任公司董事、高级管理人员执行职务违法给公司造成损失，股东可为公司利益以自己名义起诉。下列属于该情形的有（　）。',o:['书面请求董事会起诉遭拒绝','书面请求董事会起诉，董事会30日内未起诉','书面请求监事会起诉遭拒绝','书面请求监事会起诉，监事会30日内未起诉'],a:['C','D'],e:'告董事、高级管理人员的，应向监事会（或不设监事会的监事）提出书面请求；只有监事会拒绝或30日内未起诉（或情况紧急），股东才能提起股东代表诉讼。'},
+{id:'gs31',ch:'公司',type:'multi',q:'甲股份有限公司发生下列情形，应当在2个月内召开临时股东会的有（　）。',o:['董事人数不足3人','未弥补的亏损达到股本总额的10%','监事会提议召开','持股15%的股东提议召开'],a:['A','C','D'],e:'法定情形包括董事人数不足法定人数或章程所定人数的2/3、未弥补亏损达股本总额1/3、单独或合计持股10%以上股东请求、监事会提议。10%未达1/3，故B不选。'},
+{id:'gs32',ch:'公司',type:'multi',q:'甲股份有限公司职工400人，章程规定不设监事会也不设监事。有关董事会组成，符合规定的有（　）。',o:['董事会成员总数可以为20人','董事长应当以全体董事过半数选举产生','董事会应当有职工代表','董事会设置有审计委员会'],a:['B','C','D'],e:'A错：董事会成员为3至19人；职工人数300人以上且不设监事会的，董事会中应有职工代表；不设监事会应在董事会中设审计委员会行使监事会职权。'},
+{id:'gs33',ch:'公司',type:'multi',q:'根据公司法律制度的规定，属于国家出资公司的有（　）。',o:['国有独资的股份有限公司','国有资本控股的有限责任公司','国有资本控股的股份有限公司','国有资本参股的有限责任公司'],a:['A','B','C','D'],e:'国家出资公司包括国家出资的国有独资公司、国有资本控股公司（含有限公司和股份公司）以及国有资本参股公司。'},
+{id:'gs34',ch:'公司',type:'multi',q:'甲公司为国有独资公司，董事会中设审计委员会行使监事会职权。下列说法正确的有（　）。',o:['甲公司不设股东会','董事会成员中应当有过半数为外部董事','董事会成员中应当有公司职工代表','甲公司既不设监事会，也不设监事'],a:['A','B','C','D'],e:'国有独资公司不设股东会，由履行出资人职责的机构行使股东会职权；董事会中外部董事应过半数，并应有职工代表；设审计委员会的，不设监事会也不设监事。'},
+{id:'gs35',ch:'公司',type:'multi',q:'根据公司法律制度的规定，下列有关减少注册资本弥补亏损的说法中，正确的有（　）。',o:['有限责任公司、股份有限公司均可适用','公司发生亏损，应当优先通过减少注册资本弥补','减资弥补亏损的，不得向股东分配','减资弥补亏损的，不得免除股东缴纳出资的义务'],a:['A','C','D'],e:'B错：应优先以公积金弥补亏损；减资弥补亏损不得向股东分配，也不得免除股东出资义务。'},
+{id:'gs36',ch:'公司',type:'multi',q:'因营业期限届满，甲公司进入清算程序。下列有关清算的说法中，不符合法律规定的有（　）。',o:['全体董事、监事、高级管理人员为清算义务人','清算组应当由全体股东组成','清算组成员负有忠实义务和勤勉义务','清算期间公司存续，但不得开展与清算无关的经营活动'],a:['A','B'],e:'A错：清算义务人为董事（不含监事、高管）；B错：清算组由董事组成，章程另有规定或股东会决议另选他人的除外，并非全体股东。'},
+{id:'gs37',ch:'公司',type:'multi',q:'赵某任董事、钱某任监事、孙某任总经理，李某为最大股东但未任职。赵某和孙某商量将公司注销。下列说法正确的有（　）。',o:['公司应当召开股东会作出解散决议','赵某和孙某协商一致即可注销公司','赵某是公司的清算义务人','赵某、钱某、孙某、李某都是清算义务人'],a:['A','C'],e:'解散、注销属于股东会职权（特别决议），董事与总经理私下协商无效；新《公司法》确立董事为清算义务人。'},
+{id:'gs38',ch:'公司',type:'multi',q:'根据公司法律制度的规定，属于公司适用简易注销程序条件的有（　）。',o:['存续期间未产生债务或者已清偿全部债务','公司债务情况已取得半数股东承诺','通过国家企业信用信息公示系统公告期限不少于20日','公告期限届满后未有异议'],a:['A','C','D'],e:'B错：须全体股东承诺，而非半数股东。'},
+
+{id:'gs39',ch:'公司',type:'judge',q:'公司登记机关应当将公司登记事项通过国家企业信用信息公示系统向社会公示。',a:true,e:'符合《公司法》关于登记事项公示的要求。'},
+{id:'gs40',ch:'公司',type:'judge',q:'甲公司由总经理代表公司执行事务，章程同时规定由董事长担任法定代表人，该规定合法。',a:true,e:'法定代表人按照章程规定，由代表公司执行公司事务的董事或者经理担任，董事长属于董事，可以担任。'},
+{id:'gs41',ch:'公司',type:'judge',q:'有限责任公司股权转让的，受让人自股权转让协议生效时起可以向公司主张行使股东权利。',a:false,e:'受让人自记载于股东名册时起可以向公司主张行使股东权利，而非协议生效时。'},
+{id:'gs42',ch:'公司',type:'judge',q:'赵某以违法犯罪所得出资并取得股权，应直接从公司账户扣收其出资款以补偿受害人。',a:false,e:'为维护公司法人财产独立与交易安全，不得直接扣减公司账户资产，应采取拍卖或变卖该股权的方式追缴犯罪所得。'},
+{id:'gs43',ch:'公司',type:'judge',q:'新《公司法》施行前设立、出资期限超过5年的公司，应在2027年6月30日前将剩余认缴出资期限调整至5年内。',a:true,e:'这是新《公司法》过渡期政策的要求。'},
+{id:'gs44',ch:'公司',type:'judge',q:'有限责任公司章程规定股东会会议全体股东一人一票行使表决权，该规定符合法律规定。',a:true,e:'有限责任公司股东按出资比例行使表决权，但公司章程另有规定的除外。'},
+{id:'gs45',ch:'公司',type:'judge',q:'只有一个股东的公司，股东不能证明公司财产独立于股东自己财产的，应当对公司债务承担连带责任。',a:true,e:'一人公司适用法人人格否认的举证责任倒置规则。'},
+{id:'gs46',ch:'公司',type:'judge',q:'有限责任公司的控股股东滥用股东权利，严重损害公司或其他股东利益的，其他股东有权请求公司以合理价格收购其股权。',a:true,e:'这是新《公司法》新增的控股股东压迫情形下的股权回购请求权。'},
+{id:'gs47',ch:'公司',type:'judge',q:'公司股东滥用公司法人独立地位和股东有限责任逃避债务，严重损害债权人利益的，应当对公司债务承担连带责任。',a:true,e:'这是法人人格否认（刺破公司面纱）的基本情形。'},
+{id:'gs48',ch:'公司',type:'judge',q:'有限责任公司股东查阅公司账簿的权利属于股东的自益权。',a:false,e:'查阅权属于知情权，性质上为共益权，旨在参与公司管理与监督，而非仅为个人获取经济利益。'},
+{id:'gs49',ch:'公司',type:'judge',q:'股份有限公司股东会选举董事、监事，应当实行累积投票制。',a:false,e:'可以按照公司章程规定或者股东会决议实行累积投票制，并非“应当”。'},
+{id:'gs50',ch:'公司',type:'judge',q:'公司减少注册资本的，必须编制资产负债表及财产清单。',a:true,e:'无论普通减资还是减资弥补亏损，均须编制资产负债表及财产清单。'},
+{id:'gs51',ch:'公司',type:'judge',q:'公司通过简易程序注销登记，股东承诺不实的，应当对注销登记前的债务承担补充清偿责任。',a:false,e:'应当承担连带责任，而非补充责任。'},
+
+{id:'gs52',ch:'公司',type:'case',q:'2020年8月，冯某、陈某、楚某、卫某共同设立甲有限责任公司，注册资本100万元，持股10%、20%、30%、40%。陈某认缴20万元，应于2023年7月31日前缴清；楚某认缴30万元，应于2025年7月31日前缴清。\n2024年7月5日，董事会向陈某发出《催缴出资通知书》，要求其于2024年9月10日前缴清，否则经董事会决议解除其股东资格。陈某提出：（1）宽限期过短，不符合规定；（2）解除股东资格应由股东会决议，董事会无权。\n2024年10月10日，公司无力向乙公司偿付到期货款40万元，乙公司请求楚某提前缴纳出资，楚某以出资期限未届至为由拒绝。\n要求：（1）陈某第（1）项主张是否成立？（2）第（2）项主张是否成立？（3）乙公司是否有权请求楚某提前缴纳出资？分别说明理由。',a:'（1）不成立。催缴出资书面通知中载明的宽限期应当不少于60日。甲公司7月5日发出通知、宽限至9月10日，已超过60日，符合法定要求。\n（2）不成立。股东在宽限期届满仍未履行出资义务的，公司经董事会决议可以向该股东发出失权通知，自通知发出之日起该股东丧失其未缴纳出资的股权，属于董事会职权，无须股东会决议。\n（3）有权。公司不能清偿到期债务的，公司或者已到期债务的债权人有权要求已认缴出资但未届出资期限的股东提前缴纳出资（出资加速到期）。',e:'考点：催缴宽限期60日、股东失权由董事会决议、出资加速到期。'},
+{id:'gs53',ch:'公司',type:'case',q:'甲、乙、丙、丁、戊共同出资设立A有限责任公司，出资比例22%、30%、20%、20%、8%。\n（1）3月，甲向银行申请贷款请求A公司担保。甲提议召开临时股东会，董事会按期召集。表决时甲、乙、戊赞成，丙、丁反对，作出为甲提供担保的决议。\n（2）6月，乙提议将公司变更为股份有限公司。表决时乙、丙、丁赞成，甲、戊反对，作出变更公司形式的决议。\n要求：（1）甲是否有权提议召开临时股东会？（2）为甲提供担保的决议是否合法？（3）变更公司形式的决议是否合法？分别说明理由。',a:'（1）有权。代表1/10以上表决权的股东有权提议召开临时股东会，甲持股22%，超过1/10。\n（2）不合法。公司为股东提供担保，接受担保的股东不得参加表决，该项表决由出席会议的其他股东所持表决权的过半数通过。甲不得表决；扣除甲后，赞成票为乙30%＋戊8%＝38%，其他股东表决权合计78%，38/78未过半数，决议不合法。\n（3）合法。变更公司形式属于特别决议，须经代表2/3以上表决权的股东通过。赞成票为乙30%＋丙20%＋丁20%＝70%，超过2/3（约66.67%），决议合法有效。',e:'考点：临时股东会提议权、关联担保表决回避与过半数、特别决议2/3。'}
+]);
+
+window.BANK_PARTS = window.BANK_PARTS || [];
+window.BANK_PARTS.push([
+/* ================= 第五章 合同法律制度 ================= */
+{id:'ht01',ch:'合同',type:'single',q:'根据合同法律制度的规定，下列有关要约的表述中，正确的是（　）。',o:['要约只能向特定的相对人发出','要约与撤回要约的通知同时到达受要约人的，不影响要约生效','要约一旦生效一概不得撤销','要约因要约人依法撤销要约而失效'],a:'D',e:'A错：特殊情况下可向不特定人发出；B错：撤回通知不晚于要约到达的，要约被撤回、不生效；C错：除法定不得撤销情形外，承诺作出前可撤销。'},
+{id:'ht02',ch:'合同',type:'single',q:'甲4月24日向乙发函：“以每吨5000元出售螺纹钢100吨，如欲购买请于5月10日前让本人知悉”。乙4月27日收到，次日回函愿购，因投递错误于5月11日到达。甲未理会，将钢材另售他人。下列说法正确的是（　）。',o:['合同未成立，甲不承担责任','合同未成立，但乙可要求赔偿信赖利益损失','合同成立但未生效，甲可撤销要约','合同成立且已生效，乙有权要求甲履行合同'],a:'D',e:'乙在期限内发出承诺，因“迟发”以外的原因迟到，若要约人及时通知不接受，合同不成立；甲未通知，承诺有效，合同成立并生效。'},
+{id:'ht03',ch:'合同',type:'single',q:'甲、乙约定采用合同书订立买卖合同。甲公司签字盖章后尚未寄出，即收到乙公司依约发来的货物，甲清点入库。次日甲将签字盖章的合同寄给乙，乙签章。该合同成立时间是（　）。',o:['甲公司签字盖章时','乙公司签字盖章时','甲公司接受乙公司发来的货物时','甲公司将合同寄给乙公司时'],a:'C',e:'虽约定采用合同书形式，但一方已履行主要义务、对方接受时，合同成立。'},
+{id:'ht04',ch:'合同',type:'single',q:'甲公司为干扰竞争对手乙公司，本不需要某合同项目，却向丙公司提出更优条件，致丙搁置与乙的谈判；乙退出后甲随即终止磋商，并将知悉的丙公司商业秘密泄露给丁。下列说法正确的是（　）。',o:['甲无须向丙承担任何责任','甲应向丙承担违约责任','甲应向乙承担缔约过失责任','甲应向丙承担缔约过失责任'],a:'D',e:'甲在与丙磋商中假借订立合同恶意磋商、泄露商业秘密，应向丙承担缔约过失责任。'},
+{id:'ht05',ch:'合同',type:'single',q:'周某向吴某借用耕牛，约定借期3个月。1周后周某买牛，提出提前还牛。下列说法不正确的是（　）。',o:['如提前还牛不损害吴某利益，吴某应当接受','如提前还牛损害吴某利益，吴某有权拒绝','如提前还牛给吴某增加费用，吴某有权请求周某支付','不论何时归还，吴某均应无条件接受'],a:'D',e:'债权人可以拒绝债务人提前履行，但提前履行不损害债权人利益的除外；因提前履行增加的费用由债务人负担。'},
+{id:'ht06',ch:'合同',type:'single',q:'2026年1月，A市甲公司与B市乙公司在C市签订买卖合同，约定2026年6月在D市交货付款，未约定价格。5月起榴莲价格飞涨，协商不成且无法依交易习惯确定。该批榴莲应执行（　）。',o:['2026年1月时D市的市场价格','2026年6月时C市的市场价格','2026年1月时B市的市场价格','2026年6月时A市的市场价格'],a:'A',e:'价款约定不明的，按“订立合同时履行地”的市场价格履行，即2026年1月、D市。'},
+{id:'ht07',ch:'合同',type:'single',q:'甲、乙签订买卖合同，约定甲支付货款一周后乙交付货物。甲未按期付款却请求乙交货。乙可行使的抗辩权是（　）。',o:['不安抗辩权','先诉抗辩权','同时履行抗辩权','后履行抗辩权'],a:'D',e:'双务合同有先后履行顺序，先履行一方未履行的，后履行一方有权拒绝其履行请求，为后履行抗辩权。'},
+{id:'ht08',ch:'合同',type:'single',q:'甲医院欠乙公司设备款300万元已1年，丙公司欠甲医院医疗服务费500万元已2年，甲医院经常催告但未起诉或申请仲裁。乙公司拟行使代位权。下列说法正确的是（　）。',o:['由于甲医院经常催告，乙无权行使代位权','乙行使代位权将导致甲医院对丙公司的诉讼时效中止','乙行使代位权以300万元为限','乙提起代位权之诉应以甲医院和丙公司为共同被告'],a:'C',e:'A错：须以诉讼或仲裁方式主张权利才不构成怠于行使；B错：代位权行使导致诉讼时效中断；D错：债权人是原告，债务人的相对人是被告，债务人为第三人。'},
+{id:'ht09',ch:'合同',type:'single',q:'甲公司欠乙公司到期货款100万元无力清偿，丙公司欠甲公司到期租金150万元。甲、丙达成以物抵债协议，丙以价值50万元的小汽车抵偿全部租金，丙对甲欠乙货款知情。乙可以主张的是（　）。',o:['请求丙向乙交付小汽车','请求丙向乙清偿150万元','请求撤销甲、丙之间的以物抵债协议','请求拍卖、变卖小汽车并优先受偿'],a:'C',e:'以明显不合理低价以物抵债，且相对人知情，损害债权人利益，债权人可行使债权人撤销权。'},
+{id:'ht10',ch:'合同',type:'single',q:'乙公司将其对甲公司享有的300万元债权转让给丙公司。该转让对甲公司发生效力的时间是（　）。',o:['乙、丙签订转让合同时','乙向甲发出转让通知时','甲收到乙的转让通知时','甲发出同意通知时'],a:'C',e:'债权人转让债权，未通知债务人的，该转让对债务人不发生效力；通知到达债务人时对其生效。'},
+{id:'ht11',ch:'合同',type:'single',q:'王某向服装厂支付全部货款后下落不明，致服装厂无法交货。服装厂可以采取的措施是（　）。',o:['行使留置权','将服装向有关机关提存','行使不安抗辩权','行使代位权'],a:'B',e:'债权人下落不明，难以履行债务的，债务人可以将标的物提存。留置权、代位权由债权人行使，不安抗辩权由先履行方行使。'},
+{id:'ht12',ch:'合同',type:'single',q:'甲公司与乙公司3月签订木材买卖合同，约定7月1日交货。5月中旬甲通知乙因原木紧缺不能履行。乙6月1日诉至法院。下列说法正确的是（　）。',o:['乙有权解除合同并追究甲公司违约责任','乙有权主张合同无效并追究缔约过失责任','乙有权撤销合同并追究缔约过失责任','合同有效，但乙至7月1日才有权主张违约责任'],a:'A',e:'甲构成预期违约，乙可立即解除合同，并在履行期限届满前主张违约责任。'},
+{id:'ht13',ch:'合同',type:'single',q:'赵某将名家手稿转让给钱某，约定2025年8月1日交付。7月15日赵某家乡发生特大洪水，手稿被泡毁。下列说法正确的是（　）。',o:['赵某有权通知钱某解除买卖合同','经钱某同意，合同可以解除','钱某有权要求赵某承担违约责任','钱某有权要求交付其他同级别名家手稿'],a:'A',e:'因不可抗力致合同目的不能实现，赵某享有法定解除权，通知即可解除；不可抗力部分或全部免除违约责任。'},
+{id:'ht14',ch:'合同',type:'single',q:'甲公司向乙公司出售200台电视机，乙交付定金20万元。第一批100台在运输中遇泥石流全部毁损；第二批100台被甲公司债权人丙强行扣押变卖。关于甲公司定金责任，正确的是（　）。',o:['无须承担定金责任，因不可抗力和第三人原因导致','须承担全部定金责任','只须承担一半定金责任，因不可抗力导致的第一批不适用定金罚则','只须承担一半定金责任，因第三人原因造成的第二批不适用定金罚则'],a:'C',e:'第一批因不可抗力毁损，免除违约责任；第二批因第三人原因违约，不能免除，应承担定金责任。'},
+{id:'ht15',ch:'合同',type:'single',q:'甲将汽车卖给乙并交付，又将该车卖给不知情的丙并办理过户登记。下列说法正确的是（　）。',o:['乙、丙均不能取得所有权','乙、丙抽签决定归属','乙取得所有权','丙取得所有权'],a:'C',e:'特殊动产一物二卖，已受领交付的买受人请求将所有权登记在自己名下的，人民法院应予支持。'},
+{id:'ht16',ch:'合同',type:'single',q:'甲公司向乙公司购买汽车，总价200万元，分10次付清。甲支付6次共120万元后停止付款，已有2个月未付，经催告合理期限内仍未付。下列说法不正确的是（　）。',o:['乙有权要求甲一次性付清余下80万元','乙有权通知甲解除合同','乙解除合同的，有权收取汽车使用费','乙解除合同的，不得收取汽车使用费'],a:'D',e:'分期付款买受人未支付到期价款达全部价款1/5，经催告后合理期限内仍未支付的，出卖人可请求支付全部价款或解除合同；解除时可要求支付标的物使用费。'},
+{id:'ht17',ch:'合同',type:'single',q:'赵某与甲公司签订试用买卖合同，试用期15天。下列说法不正确的是（　）。',o:['试用3天即支付部分价款，视为同意购买','学习机在试用期间被洪水泡毁，赵某应支付价款','试用期满第2天才归还，甲公司有权拒绝受领','试用一周后出租给钱某，视为同意购买'],a:'B',e:'试用买卖标的物在试用期内毁损、灭失的风险由出卖人承担；试用期届满未表示的视为购买。'},
+{id:'ht18',ch:'合同',type:'single',q:'甲公司与乙公立学校签订捐赠协议，捐款1000万元专用于购买专业书籍。甲公司支付300万元后因资金链断裂、经营状况严重恶化，无力支付剩余捐款。下列说法正确的是（　）。',o:['甲公司可撤销赠与并请求返还300万元','不得撤销已付300万元，但未付700万元可撤销','应继续支付700万元并赔偿损失','甲公司可以不再支付剩余700万元'],a:'D',e:'赠与人的经济状况显著恶化，严重影响其生产经营或者家庭生活的，可以不再履行赠与义务。'},
+{id:'ht19',ch:'合同',type:'single',q:'某公司在赈灾义演会上当众宣布向救灾基金捐赠100万元，事后迟迟未付。下列说法符合规定的是（　）。',o:['该捐赠允诺无法律约束力，但应受舆论谴责','该捐赠允诺无法律约束力，因赠与合同是实践合同','该允诺有约束力，但公司可在支付前撤销','该允诺有约束力，公司无权撤销，受赠人有权要求支付'],a:'D',e:'具有救灾、扶贫、助残等公益、道德义务性质的赠与合同或者经过公证的赠与合同，不得任意撤销；不交付的，受赠人可以要求交付。'},
+{id:'ht20',ch:'合同',type:'single',q:'甲公司向乙银行借款100万元，10月5日签订合同，借款期至次年10月4日。因银行失误，11月5日才放款且预扣利息5万元。下列说法正确的是（　）。',o:['借款合同于11月5日成立','甲公司有权请求乙银行承担违约责任','甲公司应按100万元本金偿还','甲公司应按100万元本金支付利息'],a:'B',e:'向金融机构借款的合同为诺成合同，10月5日成立并生效，银行未按期放款构成违约；利息不得预先扣除，应按实际借款95万元返还并计息。'},
+{id:'ht21',ch:'合同',type:'single',q:'张某向李某借款100万元，约定年利率10%，逾期利率为贷款利率的1.5倍，违约金每日0.05%。逾期1年（365日），合同成立时1年期LPR为3.65%。法院支持的最高逾期利息与违约金合计为（　）。',o:['33.25万元','15万元','18.25万元','14.6万元'],a:'D',e:'逾期利率15%、违约金年率18.25%，合计超过LPR4倍（3.65%×4＝14.6%）；民间借贷逾期利息、违约金等总计不得超过LPR4倍，故最高为14.6万元。'},
+{id:'ht22',ch:'合同',type:'single',q:'下列有关租赁合同的说法中，正确的是（　）。',o:['书面约定租期30年的，超过20年部分为不定期租赁','租期2个月但未签书面合同，为不定期租赁','租期10年但未签书面合同，为不定期租赁','不定期租赁的当事人可以随时解除合同，但应在合理期限前通知对方'],a:'D',e:'A错：超过20年的部分无效；B、C错：租期6个月以上应采书面形式，未采用且无法确定期限的才视为不定期租赁。'},
+{id:'ht23',ch:'合同',type:'single',q:'甲公司将房屋出租给乙，租期5年。租期内屋顶漏水，甲公司拒不修理，乙自行修理支付2000元。甲公司要求调高租金遭拒，遂准备将房屋出卖给丙。下列说法不正确的是（　）。',o:['维修费2000元应由甲公司承担','甲公司无权在租期内单方决定调高租金','甲公司在租期内出卖房屋应征得乙同意','出卖时同等条件下乙享有优先购买权'],a:'C',e:'出租人出卖租赁房屋的，应在出卖前合理期限内通知承租人，承租人享有同等条件下的优先购买权，但无须征得承租人同意。'},
+{id:'ht24',ch:'合同',type:'single',q:'甲公司与乙公司签订融资租赁合同，乙公司按甲公司要求向丙公司购买大型仪器并出租给甲公司。丙交付后，甲公司将该仪器质押给丁公司并交付。丁占有期间，该仪器的所有权人是（　）。',o:['甲公司','乙公司','丙公司','丁公司'],a:'B',e:'融资租赁期间，租赁物所有权归出租人（乙公司）；丁公司最多享有质权。'},
+{id:'ht25',ch:'合同',type:'single',q:'甲向乙借款200万元，期限至2025年12月31日，丙为保证人，未约定保证期间。2025年6月甲追加借款100万元并延长全部借款至2026年12月31日，丙不知情。丙的保证责任是（　）。',o:['200万元，至2026年12月31日','300万元，至2026年6月30日','300万元，至2026年12月31日','200万元，至2026年6月30日'],a:'D',e:'未经保证人书面同意加重债务的，保证人对加重部分不承担责任；未约定保证期间的为主债务履行期届满之日起6个月，且未经同意变更履行期限不影响保证期间。'},
+{id:'ht26',ch:'合同',type:'single',q:'甲公司以自有房屋设定抵押向乙银行借款，丙公司提供连带责任保证，各方未约定担保权行使顺序。借款到期甲无力还款。下列说法正确的是（　）。',o:['乙应先请求丙承担保证责任','乙可先请求丙承担保证责任','乙应当先就甲的房屋实现债权','乙可以先就甲的房屋实现债权'],a:'C',e:'共同担保且未约定顺序时，债务人自己提供物的担保的，债权人应当先就该物的担保实现债权。'},
+
+{id:'ht27',ch:'合同',type:'multi',q:'下列当事人订立合同的形式中，属于书面形式的有（　）。',o:['甲公司和乙公司通过传真订立合同','丙公司和丁公司通过电子邮件订立合同','赵某和钱某通过打电话订立合同','孙某和李某不约而同发出内容相同的要约而订立合同'],a:['A','B'],e:'传真、电子邮件等可以有形地表现所载内容的形式属于书面形式；电话为口头形式，D为其他形式。'},
+{id:'ht28',ch:'合同',type:'multi',q:'下列各项属于要约邀请的有（　）。',o:['拍卖公告','招标公告','招股说明书','寄送的价目表'],a:['A','B','C','D'],e:'拍卖公告、招标公告、招股说明书、债券募集办法、基金招募说明书、寄送的价目表等为要约邀请。'},
+{id:'ht29',ch:'合同',type:'multi',q:'下列有关要约撤销的说法中，符合规定的有（　）。',o:['受要约人有理由认为要约不可撤销，且已为履行合同做合理准备工作的，该要约不可撤销','撤销要约以非对话方式作出的，应在受要约人收到要约之前到达','要约以对话方式作出的，该要约不可撤销','要约人在要约中载明要约不可撤销的，该要约不可撤销'],a:['A','D'],e:'B、C错：撤销通知应在受要约人作出承诺之前到达或为其所知；对话要约同样可以撤销，只要在承诺前告知。'},
+{id:'ht30',ch:'合同',type:'multi',q:'下列格式条款中，应当认定为无效的有（　）。',o:['违反公序良俗的格式条款','不合理地限制对方主要权利的格式条款','合理地限制对方主要权利的格式条款','排除对方主要权利的格式条款'],a:['A','B','D'],e:'提供格式条款一方不合理地免除或减轻其责任、加重对方责任、限制对方主要权利，或者排除对方主要权利的，该条款无效；合理限制并不当然无效。'},
+{id:'ht31',ch:'合同',type:'multi',q:'当事人就合同内容约定不明确，依交易习惯仍不能确定的，下列法定规则表述正确的有（　）。',o:['价款不明确的，按货物交付时履行地的市场价格履行','履行地点不明确的，给付货币的，在接受货币一方所在地履行','质量要求不明确的，一律按通常标准履行','履行方式不明确的，按照有利于实现合同目的的方式履行'],a:['B','D'],e:'A错：价款按“订立合同时”履行地市场价格；C错：质量依次按强制性国标、推荐性国标、行业标准，无国标行业标准的才按通常标准或符合合同目的的特定标准。'},
+{id:'ht32',ch:'合同',type:'multi',q:'甲学校委托乙服装厂加工1200套校服，约定其中200套可由丙厂加工，但均须按甲提供的样品加工，验收合格同时付款。验收时发现丙厂加工的200套不符样品要求。下列说法正确的有（　）。',o:['甲有权要求乙承担违约责任','甲有权要求丙承担违约责任','甲有权拒绝支付该200套校服的价款','甲有权要求乙重新加工200套合格校服'],a:['A','C','D'],e:'由第三人履行债务的，第三人不履行或履行不符合约定的，债务人（乙）向债权人承担违约责任；200套未验收合格，甲可行使同时履行抗辩权拒付相应价款。'},
+{id:'ht33',ch:'合同',type:'multi',q:'甲公司向乙公司购买设备，约定甲先付款，乙收款后3日内交货。甲付款时发现乙经营严重困难、已丧失履行能力。甲有权（　）。',o:['直接通知乙解除合同','通知乙中止履行，如乙收到通知后直接交付设备，甲应付款','通知乙中止履行，如乙提供交货担保，甲应付款','通知乙中止履行，如乙合理期限内未恢复能力也未提供担保，甲可解除合同但不能要求违约责任'],a:['B','C'],e:'甲可行使不安抗辩权中止履行并通知；乙恢复能力或提供适当担保的应恢复履行；合理期限内既未恢复又未提供担保的，视为预期违约，甲可解除合同并主张违约责任。'},
+{id:'ht34',ch:'合同',type:'multi',q:'甲对乙享有5万元到期债权，乙怠于行使下列债权，甲可以行使代位权的有（　）。',o:['个体工商户张某欠付乙的3个月工资1.2万元','刘某欠付乙的到期房屋租金8000元','赵某欠付乙的赌债6000元','孙某欠付乙的3个月前到期的借款2万元'],a:['B','D'],e:'A属于专属于债务人自身的权利（劳动报酬），不得代位；C赌债不合法，不得代位。'},
+{id:'ht35',ch:'合同',type:'multi',q:'2025年3月1日，甲、乙签订买卖合同，约定甲3月15日交货、乙4月15日付款，且合同债权不得转让。3月15日甲交货，4月1日甲将债权转让给丙，4月5日通知乙。乙以转让违约为由拒付。下列说法正确的有（　）。',o:['通知乙前，甲、丙之间的债权转让合同未生效','甲转让债权的行为构成违约','只有丙对禁转约定不知情时，该约定才对丙不产生约束力','不论丙是否知情，该约定对丙均不产生约束力'],a:['B','D'],e:'债权转让合同自甲、丙达成合意时生效，通知到达乙时对乙生效；甲违反禁转约定构成违约；当事人约定金钱债权不得转让的，不得对抗第三人，不论第三人是否知情。'},
+{id:'ht36',ch:'合同',type:'multi',q:'有关法定抵销的行使条件及要求，下列表述正确的有（　）。',o:['债务的标的物种类、品质相同','债务均到期','当事人主张抵销的，应当通知对方','抵销不得附条件或者附期限'],a:['A','C','D'],e:'B错：一方的债务到期、另一方的债务未到期，未到期一方也可主张抵销。'},
+{id:'ht37',ch:'合同',type:'multi',q:'下列有关不同种类违约责任相互关系的表述中，正确的有（　）。',o:['当事人就迟延履行约定违约金的，违约方支付违约金后，还应当履行债务','约定的违约金过分高于造成的损失的，可请求适当减少','当事人既约定违约金又约定定金的，一方违约时，对方可以同时适用','执行定金条款后不足以弥补损害的，仍可请求赔偿超过定金数额的损失'],a:['A','B','D'],e:'C错：违约金与定金只能选择适用，不能并用。'},
+{id:'ht38',ch:'合同',type:'multi',q:'甲将货物运至乙指定仓库，乙验收并支付80%货款，但甲未交付产品合格证和原产地证明。交货当晚山洪暴发，货物全部毁损。下列说法正确的有（　）。',o:['乙应当支付剩余20%货款','甲未交付单证构成违约，但货物损失由乙承担','乙有权解除合同并请求返还已付80%货款','甲有权要求支付余款，但应补交已毁损货物'],a:['A','B'],e:'货物已交付，风险由买受人乙承担；未交付单证构成违约但不影响风险转移，也不导致合同目的不能实现，不构成法定解除。'},
+{id:'ht39',ch:'合同',type:'multi',q:'根据合同法律制度的规定，下列有关融资租赁合同中租赁物的说法中，正确的有（　）。',o:['承租人履行占有租赁物期间的维修义务','租赁期间出租人享有租赁物的所有权','承租人破产的，租赁物属于破产财产','出租人和承租人可以约定租赁期间届满租赁物的归属'],a:['A','B','D'],e:'C错：融资租赁期间租赁物所有权归出租人，承租人破产时不属于破产财产。'},
+
+{id:'ht40',ch:'合同',type:'judge',q:'政府机关参与的合同，应当按照行政法的相关规定解决纠纷，不适用《民法典》合同编的规定。',a:false,e:'政府机关作为平等主体与对方签订合同时，适用《民法典》合同编的规定。'},
+{id:'ht41',ch:'合同',type:'judge',q:'对格式条款的理解发生争议的，一律作出不利于提供格式条款一方的解释。',a:false,e:'有通常理解的，应按通常理解解释；只有在有两种以上解释时，才作出不利于提供格式条款一方的解释。'},
+{id:'ht42',ch:'合同',type:'judge',q:'债务人将债务的全部或者部分转移给第三人，应当经债权人同意；债权人未作表示的，视为同意。',a:false,e:'债权人未作表示的，视为“不同意”，而非同意。'},
+{id:'ht43',ch:'合同',type:'judge',q:'债务人一旦提存标的物即不得要求取回；债权人自提存之日起5年内不领取的，提存物归国家所有。',a:false,e:'债权人未履行对债务人的到期债务，或者书面表示放弃领取提存物的，债务人负担提存费用后有权取回提存物。'},
+{id:'ht44',ch:'合同',type:'judge',q:'当事人就迟延履行约定违约金的，违约方支付违约金后，还应当履行债务。',a:true,e:'迟延履行违约金不免除继续履行的义务。'},
+{id:'ht45',ch:'合同',type:'judge',q:'试用买卖合同的标的物在试用期内毁损、灭失的，风险由买受人承担。',a:false,e:'试用期内标的物毁损、灭失的风险由出卖人承担。'},
+{id:'ht46',ch:'合同',type:'judge',q:'在借款合同中，借款人提前返还借款的，仍应按原约定的借款期限计息并支付。',a:false,e:'除当事人另有约定外，借款人提前返还借款的，应按实际借款期间计算利息。'},
+{id:'ht47',ch:'合同',type:'judge',q:'出借人与借款人既约定逾期利率，又约定违约金或其他费用的，出借人不得一并主张。',a:false,e:'可以一并主张，但总计不得超过合同成立时1年期LPR的4倍。'},
+{id:'ht48',ch:'合同',type:'judge',q:'租赁物在承租人按照租赁合同占有期限内发生所有权变动的，新所有权人有权向承租人主张解除租赁合同。',a:false,e:'“买卖不破租赁”，所有权变动不影响租赁合同的效力。'},
+{id:'ht49',ch:'合同',type:'judge',q:'在融资租赁合同中，租赁物在使用过程中发生部件磨损需要维修的，应由出租人承担维修义务。',a:false,e:'承租人应当履行占有租赁物期间的维修义务。'},
+{id:'ht50',ch:'合同',type:'judge',q:'甲公司因扩大生产经营需要向乙银行借款，由A公立大学提供连带责任保证，该保证合同有效。',a:false,e:'以公益为目的的非营利性学校、幼儿园、医疗机构、养老机构等提供保证的，保证合同无效。'},
+{id:'ht51',ch:'合同',type:'judge',q:'保证合同可以是单独订立的书面合同，也可以是主债权债务合同中的保证条款。',a:true,e:'这是保证合同的法定形式。'},
+{id:'ht52',ch:'合同',type:'judge',q:'连带责任保证的债权人在保证期间届满前请求保证人承担保证责任的，从保证期间届满之日起开始计算保证债务的诉讼时效。',a:false,e:'应从“债权人请求保证人承担保证责任之日”起计算保证债务的诉讼时效。'},
+
+{id:'ht53',ch:'合同',type:'case',q:'2024年1月10日，杨某与4S店签订《购车合同》，约定分期付款，杨某支付首期1/5购车款后可提车，余款分4期在1年内付清，付清前4S店保留所有权。次日杨某支付首期款，4S店要求办理所有权保留登记，杨某不同意，双方协商以杨某祖传手镯质押，约定若任何一期未按期支付，手镯归4S店所有。1月15日杨某交付手镯。\n杨某一直未付余款，经多次催告仍不支付，并将车辆转卖给不知情的罗某。4S店找到罗某要求返还车辆，罗某主张已取得所有权。4S店遂通知杨某：手镯所有权即日起归4S店，同时解除《购车合同》。\n要求：（1）罗某关于取得车辆所有权的主张是否成立？（2）4S店关于手镯所有权归其所有的主张是否成立？（3）4S店是否有权通知解除合同？分别说明理由。',a:'（1）成立。出卖人对标的物保留的所有权，未经登记，不得对抗善意第三人。罗某善意受让并完成过户，取得所有权。\n（2）不成立。质权人在债务履行期届满前，与出质人约定债务人不履行到期债务时质押财产归债权人所有的，质权人只能依法就质押财产优先受偿，不能直接取得所有权。\n（3）有权。分期付款的买受人未支付到期价款的数额达到全部价款的1/5，经催告后在合理期限内仍未支付的，出卖人可以请求支付全部价款或者解除合同。',e:'考点：所有权保留登记对抗、流质条款禁止、分期付款买卖合同的解除权。'},
+{id:'ht54',ch:'合同',type:'case',q:'刘某将房屋出租给关某，租期5年，租金先住后付、每年年底结清。关某租住1年后经刘某同意转租给张某，租期4年，上年年底预付下年全年租金。张某租住1年后，刘某告知张某：关某已2年未付租金，拟解除租赁合同。张某提出代关某支付，刘某同意，张某结清了欠付的2万元租金。\n年底关某归来向张某索要下一年度租金，张某表示应在代付租金中充抵。关某索要无果后外出打工、下落不明。次年底张某预付下一年租金时关某仍下落不明，张某遂将租金向公证机关提存。\n要求：（1）张某是否可以代关某支付欠付租金？（2）张某提出的充抵主张是否符合规定？（3）提存期间租金产生的利息由谁享有？分别说明理由。',a:'（1）可以。承租人拖欠租金的，次承租人可以代承租人支付其欠付的租金和违约金，但转租合同对出租人不具有法律约束力的除外。\n（2）符合。次承租人代为支付的租金和违约金，可以充抵次承租人应当向承租人支付的租金；超出其应付数额的，可以向承租人追偿。\n（3）归关某（债权人）所有。提存期间，标的物的孳息归债权人所有。',e:'考点：次承租人代付租金、充抵规则、提存期间孳息归属。'},
+{id:'ht55',ch:'合同',type:'case',q:'2025年1月21日，周某向梁某借款50万元，借款期限1个月，月利率2%。周某的朋友关某是某公益性养老机构负责人，关某利用职权以该养老机构名义为周某借款提供保证并与梁某签订保证合同。\n2025年2月21日借款到期，周某无力清偿本息，梁某请求养老机构承担保证责任，该机构以保证合同无效为由拒绝。\n2025年2月25日，梁某发现周某将一辆价值10万元的轿车赠送给亲戚郑某，遂起诉请求撤销该赠与。已知2025年1月1年期LPR为3.1%。\n要求：（1）梁某要求按月利率2%计息能否得到法院全额支持？（2）养老机构能否以保证合同无效为由拒绝承担保证责任？（3）梁某是否有权请求撤销周某的赠与？分别说明理由。',a:'（1）不能。民间借贷约定利率超过合同成立时1年期LPR4倍的，超过部分不予支持。月利率2%即年利率24%，超过3.1%×4＝12.4%，超出部分不受保护。\n（2）有权拒绝。以公益为目的的非营利性学校、幼儿园、医疗机构、养老机构等提供担保的，人民法院应认定担保合同无效。\n（3）有权。债务人无偿转让财产，影响债权人债权实现的，债权人可以请求人民法院撤销债务人的行为。',e:'考点：民间借贷利率上限（LPR4倍）、公益机构担保无效、债权人撤销权。'},
+{id:'ht56',ch:'合同',type:'case',q:'2025年1月5日，甲房地产开发公司与乙银行约定：甲公司以其商场设立抵押，担保未来2年内乙银行对甲公司的借款债权，最高债权额1000万元，未约定债权和抵押权转让事宜。双方当日签订书面合同，次日办理抵押登记。\n截至2025年8月10日，甲公司先后贷款500万元、200万元、100万元。8月11日乙银行将第二笔200万元债权让与丙公司，未约定抵押权转让事宜。8月12日上午，甲公司向乙银行偿还第二笔贷款中的10万元本金；当日下午收到债权让与通知。丙公司请求甲公司清偿200万元及利息未果，起诉要求行使抵押权。\n甲公司抗辩：（1）丙公司债权本金只有190万元；（2）丙公司无权行使抵押权。\n要求：（1）乙银行的抵押权何时设立？（2）甲公司关于本金只有190万元的主张是否成立？（3）丙公司是否有权行使抵押权？分别说明理由。',a:'（1）1月6日设立。以建筑物设定抵押的，抵押权自登记时起设立。\n（2）成立。债权人转让债权未通知债务人的，该转让对债务人不发生效力。乙银行的让与通知在甲公司偿还10万元之后才到达，仅对尚未清偿部分生效，丙公司只能请求清偿190万元，其余10万元应向乙银行主张。\n（3）无权。最高额抵押担保的债权确定前，部分债权转让的，最高额抵押权不得转让，但当事人另有约定的除外。',e:'考点：不动产抵押登记设立、债权让与通知效力、最高额抵押权不得部分转让。'}
+]);
+
+window.KNOW = [
+{ch:'导论', name:'经济法导论', num:'壹', sections:[
+ {h:'经济法的概念与体系', items:[
+  '经济法是调整国家在<b>宏观调控</b>和<b>市场规制</b>过程中发生的社会关系的法律规范总称，目的是克服市场调节的盲目性和局限性。',
+  '调整对象三类：市场主体调控关系、市场规制关系（反垄断、反不正当竞争、消费者保护）、宏观调控关系（财税、金融、计划）。',
+  '体系：市场主体法（公司法、合伙企业法、个人独资企业法、企业破产法）／市场规制法（反不正当竞争法、消费者权益保护法、产品质量法、广告法）／宏观调控法（预算法、银行法、税法等）。']},
+ {h:'发展脉络与基本原则', items:[
+  '1890年美国《<b>谢尔曼法</b>》是世界上第一部反垄断法，是现代经济法产生的标志。',
+  '我国经济法产生于<b>1978年改革开放</b>，完善于1992年社会主义市场经济体制确立以后。',
+  '五大基本原则：资源优化配置、国家适度干预、社会利益本位、平衡协调、维护公平竞争。']},
+ {h:'与民法、行政法的区别', items:[
+  '民法调整平等主体之间的人身关系和财产关系，以<b>权利本位</b>为特征；经济法以<b>社会责任本位</b>为特征，是“管理经营者之法”。',
+  '行政法调整行政管理关系，是“管理管理者之法”，手段为命令与服从；经济法采干预、规制、引导、监督等综合方法。']},
+ {h:'渊源与效力等级', items:[
+  '渊源：宪法、法律、行政法规、地方性法规、规章（部门规章与地方政府规章）、国际条约、法律解释等。',
+  '效力：宪法＞法律＞行政法规＞地方性法规＞同级地方政府规章；宪法＞法律＞行政法规＞部门规章。',
+  '我国是成文法国家，判例只有参考价值，<em>不属于</em>法律渊源。']},
+ {h:'经济法律关系与责任', items:[
+  '三要素：<b>主体</b>（经济管理主体、经济活动主体）、<b>内容</b>（经济权利与经济义务）、<b>客体</b>（物、行为、智力成果）。',
+  '法律事实分为事件（不以人的意志为转移，如自然灾害）与行为（人有意识的活动，分合法与违法）。',
+  '责任形式：民事责任、行政责任（行政处分、行政处罚）、刑事责任；第一目的是保护社会公共利益。']}
+]},
+{ch:'个人独资', name:'个人独资企业法', num:'贰', sections:[
+ {h:'性质与特征', items:[
+  '由一个<b>中国自然人</b>投资，财产归投资人个人所有，投资人以个人财产对企业债务承担<b>无限责任</b>。',
+  '不具有法人资格、无独立承担民事责任的能力，但属于独立民事主体，可以自己的名义从事民事活动。',
+  '不缴纳企业所得税，由投资人缴纳个人所得税。']},
+ {h:'设立条件', items:[
+  '投资人为一个中国公民、完全民事行为能力人；国家公务员、法官、检察官、人民警察、商业银行工作人员等禁止从事营利性活动的人不得投资。',
+  '名称中<em>不得</em>使用“有限”“有限责任”“公司”字样，可用厂、店、部、中心、工作室。',
+  '有投资人申报的出资，可以个人财产出资，也可以家庭共有财产作为个人出资；无法定最低注册资本。',
+  '登记机关应自收到申请文件之日起<b>15日</b>内作出决定；营业执照签发日期为成立日期。']},
+ {h:'事务管理与责任', items:[
+  '投资人可自行管理，也可委托或聘用他人管理；委托须签订<b>书面合同</b>，明确授权范围。',
+  '对受托人职权的限制，不得对抗<b>善意第三人</b>。',
+  '明确以家庭共有财产作为个人出资的，以家庭共有财产对企业债务承担无限责任；未明确的，以个人财产承担。',
+  '民事赔偿责任与罚款、罚金不足以同时支付时，<b>先承担民事赔偿责任</b>。']},
+ {h:'解散与清算', items:[
+  '解散情形：投资人决定解散；投资人死亡或被宣告死亡且无继承人或继承人放弃继承；被依法吊销营业执照；其他法定情形。',
+  '清算：投资人自行清算，或由债权人申请人民法院指定清算人。',
+  '申报债权：接到通知之日起<b>30日</b>内；未接到通知的自公告之日起<b>60日</b>内。',
+  '清偿顺序：职工工资和社会保险费用→所欠税款→其他债务；财产不足的，投资人以个人其他财产清偿。',
+  '解散后原投资人对存续期间债务仍负责任，债权人<b>5年</b>内未提出偿债请求的，责任消灭。']}
+]},
+{ch:'合伙', name:'合伙企业法', num:'叁', sections:[
+ {h:'设立与财产', items:[
+  '合伙协议由全体合伙人协商一致、以<b>书面形式</b>订立；营业执照签发日为成立日期。',
+  '普通合伙人可以劳务出资；国有独资公司、国有企业、上市公司、公益性事业单位和社会团体<em>不得</em>成为普通合伙人。',
+  '合伙企业财产包括合伙人认缴和实缴的出资、以企业名义取得的收益、依法取得的其他财产；承租物不属于企业财产。',
+  '清算前私自转移、处分企业财产的，不得对抗善意第三人。']},
+ {h:'事务执行与重大事项', items:[
+  '委托一名或数名合伙人执行事务的，其他合伙人不再执行，由执行事务合伙人对外代表企业；分别执行时，一方提出异议应<b>暂停</b>该事务。',
+  '须经全体合伙人<b>一致同意</b>的重大事项：改变企业名称、改变经营范围/主要经营场所、处分不动产、转让或出租知识产权、为他人提供担保、聘任合伙人以外的人担任经营管理人员等。',
+  '普通合伙人<em>绝对</em>不得自营或与他人合作经营与本企业相竞争的业务；不得与本企业自我交易，但协议另有约定或全体同意的除外。',
+  '对执行事务及代表权的限制，不得对抗<b>善意</b>第三人。']},
+ {h:'入伙、退伙与责任', items:[
+  '对外转让财产份额须经其他合伙人一致同意，其他合伙人有优先购买权；内部转让只需通知。',
+  '受让人经<b>修改合伙协议</b>即成为合伙人。',
+  '当然退伙：自然人死亡/被宣告死亡、个人丧失偿债能力、法人被吊销营业执照/责令关闭/撤销/宣告破产、全部份额被法院强制执行等。',
+  '除名事由：未履行出资义务、因故意或重大过失给企业造成损失、执行事务有不正当行为等；须其他合伙人一致同意，<b>收到除名通知之日</b>生效。',
+  '外部债务：全体普通合伙人承担无限连带责任，内部约定不得对抗债权人；注销后仍对存续期间债务负责（5年内未请求的除外）。']},
+ {h:'有限合伙与特殊普通合伙', items:[
+  '有限合伙企业由2个以上50个以下合伙人设立，至少1个普通合伙人；有限合伙人不得以劳务出资、不执行事务、不得对外代表企业。',
+  '有限合伙人可以同本企业交易、可以竞业，合伙协议另有约定的除外；可将全部利润约定分配给部分合伙人。',
+  '第三人有理由相信有限合伙人为普通合伙人的，该有限合伙人对该笔交易承担与普通合伙人相同的责任。',
+  '有限合伙人退伙后，对退伙前原因发生的债务，以<b>退伙时取回的财产</b>为限承担责任。',
+  '特殊的普通合伙：因合伙人故意或重大过失造成的执业债务，由该合伙人无限责任，其他合伙人以份额为限；其他债务全体无限连带。应建立执业风险基金、办理职业保险。']}
+]},
+{ch:'公司', name:'公司法', num:'肆', sections:[
+ {h:'法人、登记与人格否认', items:[
+  '公司是企业法人，有独立法人财产；分公司无法人资格，民事责任由总公司承担。',
+  '公司登记事项通过国家企业信用信息公示系统公示；营业执照签发日期为成立日期。',
+  '股东滥用法人独立地位和有限责任逃避债务、严重损害债权人利益的，对公司债务承担<b>连带责任</b>；一人公司股东不能证明财产独立的，承担连带责任。']},
+ {h:'资本与出资', items:[
+  '注册资本认缴制；新法施行前出资期限超过5年的，应在<b>2027年6月30日</b>前调整至5年内。',
+  '非货币出资须可货币估价并可依法转让；劳务、信用、姓名、商誉、特许经营权不得出资。',
+  '公司不能清偿到期债务的，公司或已到期债权人可要求未届期股东<b>提前缴纳</b>出资（加速到期）。',
+  '催缴宽限期不少于<b>60日</b>；宽限期届满仍未缴纳，经<b>董事会</b>决议可发出失权通知，自通知发出之日起丧失未缴出资股权。',
+  '转让已到期未缴出资股权：受让人知道的，与转让人在未缴范围内<b>连带</b>；转让未届期股权：受让人承担，转让人承担<b>补充</b>责任。']},
+ {h:'组织机构与决议', items:[
+  '股东会特别决议（2/3以上表决权）：修改章程、增减注册资本、合并、分立、解散、变更公司形式。',
+  '股东会由董事会召集、董事长主持；临时股东会提议主体：1/10以上表决权股东、1/3以上董事、监事会。',
+  '董事会成员3至19人；决定内部管理机构设置、聘任经理及财务负责人；监事会不少于3人，职工代表不低于1/3，董事、高管不得兼任监事。',
+  '决议内容违法→<b>无效</b>；召集程序、表决方式违法或违章程→可撤销（60日内）；未召开会议、未表决、出席或同意人数不足→<b>不成立</b>。',
+  '公司为股东或实际控制人提供担保须股东会决议，该股东回避，由出席会议的其他股东所持表决权<b>过半数</b>通过。']},
+ {h:'股东权利与股权转让', items:[
+  '有限责任公司股东可查阅、复制章程、股东名册、会议记录、财务会计报告，可查阅（不得复制）会计账簿、凭证。',
+  '股份公司股东查阅会计账簿、凭证须连续180日以上单独或合计持股1%以上。',
+  '对外转让股权：书面通知其他股东，其他股东同等条件下有优先购买权；法院强制执行时，其他股东20日内不行使视为放弃。',
+  '股东代表诉讼：告董事、高管须先书面请求监事会；告监事须先请求董事会；拒绝或30日内未起诉可自己名义起诉。',
+  '董事、高管违法损害股东利益的，股东可直接起诉（直接诉讼）。']},
+ {h:'财务会计、合并与清算', items:[
+  '公积金弥补亏损顺序：任意公积金、法定公积金→仍不足可用资本公积金；法定公积金累计达注册资本50%可不再提取。',
+  '减资弥补亏损：先以公积金弥补，仍有不足方可减资；不得向股东分配，不得免除出资义务，须公告。',
+  '简易合并：持股90%以上，被合并方可由董事会决议；小额合并：价款不超过净资产10%，合并方可由董事会决议。',
+  '清算义务人为<b>董事</b>，清算组由董事组成（章程另有规定或股东会另选除外）；注销后剩余债务不再追偿（未依法清算除外）。']},
+ {h:'董监高资格与义务', items:[
+  '不得任职：无民事行为能力/限制民事行为能力；因贪污、贿赂、侵占财产、挪用财产或破坏市场经济秩序被判刑，执行期满未逾5年；因犯罪被剥夺政治权利执行期满未逾5年；对破产清算负个人责任未逾3年；对违法被吊销营业执照负个人责任未逾3年；个人较大债务到期未清偿被列为失信被执行人。',
+  '忠实义务：不得自我交易、谋取公司商业机会、同业竞争（经股东会/董事会同意除外）；不得收受贿赂、泄露秘密。',
+  '董事、高管执行职务违法给公司造成损失，应承担赔偿责任；参与决议的董事原则上赔偿，表决时异议并记载于会议记录的可免责。']}
+]},
+{ch:'合同', name:'合同法律制度', num:'伍', sections:[
+ {h:'订立：要约与承诺', items:[
+  '要约邀请：拍卖公告、招标公告、招股说明书、债券募集办法、基金招募说明书、寄送的价目表。',
+  '要约生效后、承诺作出前可撤销；载明不可撤销或受要约人有理由信赖并已作合理准备的，不得撤销。',
+  '承诺<b>到达</b>要约人时生效；承诺可撤回但不能撤销。',
+  '承诺迟到：因受要约人迟发以外的原因迟到，要约人及时通知不接受的，合同不成立；未通知的，承诺有效。',
+  '采用合同书形式但一方已履行主要义务、对方接受的，合同成立。']},
+ {h:'效力、履行与保全', items:[
+  '格式条款：不合理免除/减轻自身责任、加重对方责任、限制或排除对方主要权利的无效；有两种以上解释的，作不利于提供方的解释。',
+  '约定不明的法定补充：价款按<b>订立合同时履行地</b>市场价格；给付货币在接受货币一方所在地履行。',
+  '三大抗辩权：同时履行、后履行、不安抗辩（先履行方有确切证据证明对方丧失履行能力时可中止，对方提供担保或恢复能力后应恢复）。',
+  '代位权：债务人怠于以诉讼/仲裁方式主张到期债权，影响债权实现的，债权人可代位，以自身债权为限。',
+  '撤销权：债务人无偿转让、明显不合理低价转让/高价受让、恶意延长到期债权等损害债权人的，可请求撤销。']},
+ {h:'变更、转让与终止', items:[
+  '债权转让：达成合意即生效，通知债务人后对其生效；金钱债权约定不得转让的，不得对抗第三人。',
+  '债务转移须经债权人同意；债权人未作表示的视为<em>不同意</em>。',
+  '提存：债权人无正当理由拒绝受领、下落不明、死亡未确定继承人等；提存期间孳息归债权人，费用由债务人负担。',
+  '法定解除：不可抗力致合同目的不能实现、预期违约、迟延履行主要债务经催告仍不履行、根本违约等。',
+  '抵销：种类品质相同、对方债务到期；通知对方；不得附条件或期限。']},
+ {h:'违约责任', items:[
+  '违约金与定金只能选择适用，不能并用；定金不足以弥补损失的，可另行请求赔偿。',
+  '违约金过分高于损失的，可请求适当减少；就迟延履行约定违约金的，支付后仍应继续履行。',
+  '不可抗力可部分或全部免责，但迟延履行后发生不可抗力的不能免责；第三人原因违约不能免责。',
+  '预期违约：履行期届满前明确表示或以行为表明不履行主要债务，另一方可立即解除并主张违约责任。']},
+ {h:'典型合同：买卖、借款、租赁、融资租赁', items:[
+  '买卖合同风险随交付转移；试用买卖试用期内风险由<b>出卖人</b>承担，试用期届满未表示视为购买。',
+  '所有权保留：未经登记不得对抗善意第三人；买受人已付总价款75%以上的，出卖人不得取回。',
+  '分期付款：未付到期价款达全部价款1/5，经催告仍不付的，可请求支付全部价款或解除合同（解除可收使用费）。',
+  '民间借贷：利率及逾期利息、违约金等总计不得超过合同成立时1年期LPR的<b>4倍</b>；利息不得预先在本金中扣除。',
+  '租赁：租期不得超过20年；6个月以上应书面；买卖不破租赁；出租人出卖房屋应在合理期限内通知承租人，承租人有优先购买权。',
+  '融资租赁：出租人享有租赁物所有权；承租人承担占有期间维修义务；租赁物质量瑕疵原则上出租人不承担责任；第三人损害出租人不赔。']},
+ {h:'担保：保证与抵押', items:[
+  '以公益为目的的非营利性学校、幼儿园、医疗机构、养老机构等提供担保的，担保合同无效。',
+  '保证期间未约定或约定不明的，为主债务履行期限届满之日起<b>6个月</b>。',
+  '未经保证人书面同意加重债务的，保证人对加重部分不承担责任；变更履行期限未经同意的，保证期间不受影响。',
+  '共同担保未约定顺序：债务人自己提供物保的，债权人应先就该物保实现债权。',
+  '最高额抵押：担保债权确定前部分债权转让的，最高额抵押权不得转让，当事人另有约定的除外。',
+  '流质条款禁止：约定债务不履行时质押财产直接归债权人所有的，只能依法就质押财产优先受偿。']}
+]}
+];
+</script>
+<script>(function(){
+'use strict';
+const CH=[
+ {key:'导论',name:'经济法导论',num:'壹',color:'#8a6a3b'},
+ {key:'个人独资',name:'个人独资企业法',num:'贰',color:'#2f6b57'},
+ {key:'合伙',name:'合伙企业法',num:'叁',color:'#1f4e79'},
+ {key:'公司',name:'公司法',num:'肆',color:'#7a3b52'},
+ {key:'合同',name:'合同法律制度',num:'伍',color:'#a35a2a'}
+];
+const BANK=(window.BANK_PARTS||[]).reduce(function(a,b){return a.concat(b)},[]);
+const byId={}; BANK.forEach(function(q){byId[q.id]=q});
+const TYPES={single:'单选',multi:'多选',judge:'判断',case:'案例'};
+const KEY='jf_review_v2';
+let DB={rec:{},streak:{last:'',days:0}};
+try{const raw=localStorage.getItem(KEY); if(raw){const o=JSON.parse(raw); DB.rec=o.rec||{}; DB.streak=o.streak||DB.streak;}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
+const S={view:'home',session:null,result:null,timer:null,examCfg:{n:30,min:30},kfilter:'all',kopen:{}};
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t}return a}
+function rec(id){return DB.rec[id]||(DB.rec[id]={attempts:0,right:0,wrong:0,streak:0,book:0,lastWrong:0})}
+function answerKeys(q){if(q.type==='judge')return [q.a?'A':'B']; if(q.type==='multi')return q.a.slice(); return [q.a]}
+function optionsOf(q){if(q.type==='judge')return [{k:'A',t:'正确'},{k:'B',t:'错误'}]; return q.o.map(function(t,i){return {k:String.fromCharCode(65+i),t:t}})}
+function isCorrect(q,picked){
+  const keys=answerKeys(q);
+  if(q.type==='multi'){return picked.length===keys.length&&keys.every(function(k){return picked.indexOf(k)>-1})}
+  return picked.length===1&&keys.indexOf(picked[0])>-1;
+}
+function answerText(q){
+  const opts=optionsOf(q), keys=answerKeys(q);
+  if(q.type==='judge')return q.a?'正确':'错误';
+  return keys.map(function(k){const o=opts.filter(function(x){return x.k===k})[0];return k+(o?'．'+o.t:'')}).join('；');
+}
+function touchStreak(){
+  const today=new Date().toDateString();
+  if(DB.streak.last===today)return;
+  const y=new Date(Date.now()-86400000).toDateString();
+  DB.streak.days=DB.streak.last===y?((DB.streak.days||0)+1):1;
+  DB.streak.last=today; save();
+}
+function record(q,ok){
+  touchStreak();
+  const r=rec(q.id);
+  r.attempts=(r.attempts||0)+1;
+  if(ok){r.right=(r.right||0)+1;r.streak=(r.streak||0)+1;}
+  else{r.wrong=(r.wrong||0)+1;r.streak=0;r.lastWrong=Date.now();}
+  r.last=Date.now(); save();
+}
+function stats(){
+  let attempts=0,right=0,seen=0,mastered=0,wrongQ=0;
+  Object.keys(DB.rec).forEach(function(id){
+    if(!byId[id])return; const r=DB.rec[id];
+    attempts+=r.attempts||0; right+=r.right||0;
+    if((r.attempts||0)>0)seen++;
+    if((r.streak||0)>=2)mastered++;
+    if((r.wrong||0)>0&&(r.streak||0)<2)wrongQ++;
+  });
+  return {attempts:attempts,right:right,seen:seen,mastered:mastered,wrongQ:wrongQ,acc:attempts?Math.round(right/attempts*100):0,total:BANK.length};
+}
+function chapStats(ch){
+  const qs=BANK.filter(function(q){return q.ch===ch});
+  let seen=0,att=0,right=0,mastered=0;
+  qs.forEach(function(q){
+    const r=DB.rec[q.id]; if(!r)return;
+    if((r.attempts||0)>0)seen++;
+    att+=r.attempts||0; right+=r.right||0;
+    if((r.streak||0)>=2)mastered++;
+  });
+  return {total:qs.length,seen:seen,acc:att?Math.round(right/att*100):0,mastered:mastered};
+}
+function wrongIds(){
+  return Object.keys(DB.rec).filter(function(id){
+    const r=DB.rec[id]; return byId[id]&&r.wrong>0&&(r.streak||0)<2;
+  }).sort(function(a,b){return (DB.rec[b].wrong||0)-(DB.rec[a].wrong||0)});
+}
+
+/* ---------- views ---------- */
+function showView(v){
+  S.view=v;
+  document.querySelectorAll('.view').forEach(function(el){el.classList.toggle('on',el.id==='view-'+v)});
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.view===v)});
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function render(){
+  updateStreak();
+  if(S.view==='home')renderHome();
+  else if(S.view==='practice')renderPractice();
+  else if(S.view==='wrong')renderWrong();
+  else if(S.view==='cards')renderCards();
+  else if(S.view==='exam')renderExam();
+}
+function updateStreak(){
+  const el=$('streak'); if(el)el.innerHTML='连续学习 <b>'+(DB.streak.days||0)+'</b> 天';
+}
+function ringHTML(pct,size){
+  const p=Math.max(0,Math.min(100,pct));
+  return '<div class="ring" style="width:'+size+'px;height:'+size+'px"><svg viewBox="0 0 100 100">'
+   +'<circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="7"/>'
+   +'<circle cx="50" cy="50" r="42" fill="none" stroke="#e0b567" stroke-width="7" pathLength="100" stroke-dasharray="'+p+' '+(100-p)+'" transform="rotate(-90 50 50)"/>'
+   +'</svg><div class="num"><div><b>'+pct+'%</b><small>题库覆盖</small></div></div></div>';
+}
+function renderHome(){
+  const st=stats(), pct=Math.round(st.seen/st.total*100);
+  const wrong=wrongIds().slice(0,4);
+  let h='';
+  h+='<div class="card hero"><div class="hero-main">'
+   +'<div class="kicker">ECONOMIC LAW · 期末冲刺</div>'
+   +'<h2>把五个章节，<br><em>重新过一遍。</em></h2>'
+   +'<p class="hero-sub">'+st.total+' 道精选题，全部取自课程课件与配套习题。先练薄弱章节，再用错题本收口，最后做一套模拟卷。</p>'
+   +'<div class="hero-actions">'
+   +'<button class="btn primary" data-act="start-random">今日推荐 · 随机 20 题</button>'
+   +'<button class="btn" data-act="start-wrong">错题重练'+(st.wrongQ?'（'+st.wrongQ+'）':'')+'</button>'
+   +'<button class="btn ghost" data-act="go-exam">模拟考</button>'
+   +'</div></div>'
+   +'<div class="hero-side">'+ringHTML(pct,150)+'<p>已练 '+st.seen+' / '+st.total+' 题</p><p>正确率 '+st.acc+'%</p></div>'
+   +'</div>';
+  h+='<div class="stat-grid">'
+   +statCard('累计作答',st.attempts+' <span style="font-size:12px;color:#8a8375">次</span>','')
+   +statCard('正确率',st.acc+'%','')
+   +statCard('已掌握',st.mastered+' 题','连续答对 2 次视为掌握')
+   +statCard('待攻克错题',st.wrongQ+' 题','')
+   +'</div>';
+  h+='<div class="sect-title"><h2>章节推进</h2><span>点击任一章节开始顺序练习</span></div><div class="chap-grid">';
+  CH.forEach(function(c){
+    const cs=chapStats(c.key), p=cs.total?Math.round(cs.seen/cs.total*100):0;
+    h+='<button class="card chap" data-act="start-ch" data-ch="'+c.key+'">'
+     +'<div class="no" style="color:'+c.color+'">'+c.num+'</div>'
+     +'<div class="mid"><h3>'+c.name+'</h3><div class="meta">'+cs.total+' 题 · 已练 '+cs.seen+' · 正确率 '+cs.acc+'%</div>'
+     +'<div class="prog"><i style="width:'+p+'%"></i></div></div>'
+     +'<div class="go">开始</div></button>';
+  });
+  h+='</div>';
+  if(wrong.length){
+    h+='<div class="sect-title"><h2>最近错题</h2><span>建议当天回看一遍</span></div><div class="card recent">';
+    wrong.forEach(function(id){
+      const q=byId[id], r=DB.rec[id];
+      h+='<div class="row"><span class="tag">'+q.ch+'</span><span class="txt">'+esc(q.q.replace(/\n/g,' '))+'</span>'
+       +'<span class="tag" style="color:#ad3a2e;border-color:#e3b3ad">错 '+(r.wrong||0)+'</span>'
+       +'<button class="btn small" data-act="practice-one" data-id="'+id+'">重练</button></div>';
+    });
+    h+='</div>';
+  }
+  $('homeBody').innerHTML=h;
+}
+function statCard(label,val,sub){
+  return '<div class="card stat"><span>'+label+'</span><b>'+val+'</b>'+(sub?'<div style="font-size:11px;color:#9a9284;margin-top:4px">'+sub+'</div>':'')+'</div>';
+}
+
+/* ---------- practice ---------- */
+function renderLauncher(){
+  let h='<div class="sect-title"><h2>选择练习方式</h2><span>顺序练习更稳，随机练习更接近考场</span></div>';
+  h+='<div class="chap-grid">';
+  CH.forEach(function(c){
+    const cs=chapStats(c.key), p=cs.total?Math.round(cs.seen/cs.total*100):0;
+    h+='<button class="card chap" data-act="start-ch" data-ch="'+c.key+'">'
+     +'<div class="no" style="color:'+c.color+'">'+c.num+'</div>'
+     +'<div class="mid"><h3>'+c.name+'</h3><div class="meta">'+cs.total+' 题 · 已练 '+cs.seen+' · 正确率 '+cs.acc+'%</div>'
+     +'<div class="prog"><i style="width:'+p+'%"></i></div></div><div class="go">开始</div></button>';
+  });
+  h+='</div>';
+  h+='<div class="sect-title"><h2>快捷入口</h2></div>';
+  h+='<div class="chap-grid" style="grid-template-columns:repeat(3,1fr)">'
+   +'<button class="card chap" data-act="start-random"><div class="no">随</div><div class="mid"><h3>随机 20 题</h3><div class="meta">跨章节混合抽取</div></div></button>'
+   +'<button class="card chap" data-act="start-wrong"><div class="no">错</div><div class="mid"><h3>错题重练</h3><div class="meta">按错误次数排序</div></div></button>'
+   +'<button class="card chap" data-act="start-book"><div class="no">藏</div><div class="mid"><h3>收藏题目</h3><div class="meta">你标记过的题</div></div></button>'
+   +'</div>';
+  $('practiceBody').innerHTML=h;
+}
+function startSession(ids,opts){
+  opts=opts||{};
+  ids=ids.filter(function(id){return byId[id]});
+  if(!ids.length){alert('这里还没有题目。');return;}
+  clearInterval(S.timer); S.timer=null; S.result=null;
+  S.session={ids:ids,idx:0,picked:{},graded:{},revealed:{},exam:!!opts.exam,title:opts.title||'练习',start:Date.now(),limit:opts.limit||0,deadline:opts.limit?Date.now()+opts.limit*1000:0};
+  showView('practice');
+  if(opts.exam)beginTimer();
+}
+function beginTimer(){
+  clearInterval(S.timer);
+  S.timer=setInterval(function(){
+    const s=S.session;
+    if(!s||!s.exam){clearInterval(S.timer);S.timer=null;return;}
+    const left=s.deadline-Date.now();
+    const t=$('timer');
+    if(t)t.textContent=fmt(Math.max(0,left));
+    if(left<=0){clearInterval(S.timer);S.timer=null;finishSession();}
+  },1000);
+  const t=$('timer'); if(t)t.textContent=fmt(Math.max(0,S.session.deadline-Date.now()));
+}
+function fmt(ms){
+  const s=Math.max(0,Math.floor(ms/1000)), m=Math.floor(s/60), ss=s%60;
+  return (m<10?'0':'')+m+':'+(ss<10?'0':'')+ss;
+}
+function renderPractice(){
+  if(S.result){renderResult();return;}
+  const s=S.session;
+  if(!s){renderLauncher();return;}
+  const q=byId[s.ids[s.idx]], g=s.graded[q.id], picked=s.picked[q.id]||[];
+  const N=s.ids.length, pos=s.idx+1;
+  let h='';
+  if(s.exam){
+    h+='<div class="pbar"><span class="chip" style="border-color:#ad3a2e;color:#ad3a2e">模拟考 · '+s.title+'</span><span class="timer" id="timer">'+fmt(Math.max(0,s.deadline-Date.now()))+'</span><span class="pnum">'+pos+' / '+N+'</span><div style="flex:1"></div><button class="btn small red" data-act="submit-exam">交卷</button></div>';
+  }else{
+    h+='<div class="pbar"><span class="pnum">'+pos+' / '+N+'</span><div class="track"><i style="width:'+(pos/N*100)+'%"></i></div><span class="pnum">'+Math.round((pos/N)*100)+'%</span></div>';
+  }
+  h+='<div class="card qcard">';
+  h+='<div class="qhead"><span class="chip ch">'+q.ch+'</span><span class="chip ty '+q.type+'">'+TYPES[q.type]+'</span>'
+   +'<span class="qidx">第 '+pos+' 题 / 共 '+N+' 题</span>'
+   +'<button class="star'+(rec(q.id).book?' on':'')+'" data-act="book" data-id="'+q.id+'" title="收藏">★</button></div>';
+  h+='<div class="stem">'+esc(q.q)+'</div>';
+  if(q.type==='case'){
+    h+='<textarea class="case-input" placeholder="先在纸上列要点，再展开参考答案对照。考试时这类题按要点给分。"></textarea>';
+    if(!s.revealed[q.id]){
+      h+='<div style="margin-top:12px"><button class="btn" data-act="case-reveal">显示参考答案</button></div>';
+    }else{
+      h+='<div class="case-box"><h4>参考答案 · 要点</h4><div class="ans">'+esc(q.a)+'</div></div>';
+      if(!g){
+        h+='<div class="selfcheck"><button class="btn primary" data-act="case-ok">我答对了</button><button class="btn" data-act="case-bad">还要复习</button></div>';
+      }else{
+        h+='<div class="explain '+(g.ok?'right':'bad')+'"><div class="verdict">'+(g.ok?'已标记掌握':'已加入错题本')+'</div>'+esc(q.e||'')+'</div>';
+      }
+    }
+  }else{
+    h+='<div class="options">';
+    optionsOf(q).forEach(function(o){
+      let cls='';
+      if(g){
+        if(answerKeys(q).indexOf(o.k)>-1)cls='right';
+        else if(picked.indexOf(o.k)>-1)cls='bad';
+        else cls='dim';
+      }else if(picked.indexOf(o.k)>-1){cls='sel';}
+      h+='<button class="opt '+cls+'" data-act="opt" data-k="'+o.k+'"><span class="key">'+o.k+'</span><span class="txt">'+esc(o.t)+'</span></button>';
+    });
+    h+='</div>';
+    if(g){
+      const ok=g.ok;
+      h+='<div class="explain '+(ok?'right':'bad')+'"><div class="verdict">'+(ok?'回答正确':'回答错误')+'　<span class="ans">正确答案：'+esc(answerText(q))+'</span></div>'+esc(q.e||'')+'</div>';
+    }
+  }
+  h+='<div class="qfoot"><span class="hint">'+(s.exam?'考试模式：可自由跳题，交卷后统一判分':'快捷键：<kbd>A</kbd><kbd>B</kbd><kbd>C</kbd><kbd>D</kbd> 选择 · <kbd>Enter</kbd> 下一题')+'</span>'
+   +'<button class="btn small" data-act="prev"'+(s.idx===0?' disabled':'')+'>上一题</button>';
+  if(!s.exam&&q.type==='multi'&&!g){
+    h+='<button class="btn primary" data-act="submit-multi"'+(picked.length?'':' disabled')+'>提交答案</button>';
+  }else if(s.exam&&pos===N){
+    h+='<button class="btn primary" data-act="submit-exam">交卷</button>';
+  }else{
+    h+='<button class="btn primary" data-act="next">'+(pos===N?'完成本题组':'下一题 →')+'</button>';
+  }
+  h+='</div>';
+  h+='<div class="mini-list">';
+  s.ids.forEach(function(id,i){
+    let cls='';
+    const gg=s.graded[id], pp=s.picked[id]||[];
+    if(gg)cls=gg.ok?'right':'bad'; else if(pp.length)cls='on';
+    if(i===s.idx)cls+=' now';
+    h+='<button class="mini '+cls+'" data-act="jump" data-i="'+i+'">'+(i+1)+'</button>';
+  });
+  h+='</div></div>';
+  $('practiceBody').innerHTML=h;
+}
+function gradeCurrent(){
+  const s=S.session, q=byId[s.ids[s.idx]];
+  const picked=s.picked[q.id]||[];
+  const ok=isCorrect(q,picked);
+  s.graded[q.id]={picked:picked.slice(),ok:ok};
+  record(q,ok);
+  renderPractice();
+  const ex=document.querySelector('.explain');
+  if(ex)ex.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function choose(k){
+  const s=S.session, q=byId[s.ids[s.idx]];
+  if(!s||!q||q.type==='case')return;
+  if(s.graded[q.id])return;
+  const picked=s.picked[q.id]||[];
+  if(q.type==='multi'){
+    const i=picked.indexOf(k);
+    if(i>-1)picked.splice(i,1); else picked.push(k);
+    s.picked[q.id]=picked;
+    renderPractice();
+  }else{
+    s.picked[q.id]=[k];
+    if(s.exam){renderPractice();}
+    else gradeCurrent();
+  }
+}
+function goNext(){
+  const s=S.session; if(!s)return;
+  const q=byId[s.ids[s.idx]];
+  if(!s.exam&&q&&q.type==='multi'&&!s.graded[q.id])return;
+  if(s.idx<s.ids.length-1){s.idx++;renderPractice();window.scrollTo({top:0,behavior:'smooth'});}
+  else if(s.exam){if(confirm('确定交卷吗？未作答题目将计为错误。'))finishSession();}
+  else finishSession();
+}
+function finishSession(){
+  const s=S.session; if(!s)return;
+  clearInterval(S.timer); S.timer=null;
+  let answered=0,correct=0,wrongList=[];
+  s.ids.forEach(function(id){
+    const q=byId[id];
+    let g=s.graded[id];
+    if(s.exam){
+      const picked=s.picked[id]||[];
+      const ok=picked.length?isCorrect(q,picked):false;
+      g={picked:picked,ok:ok};
+      s.graded[id]=g;
+      record(q,ok);
+    }
+    if(g){answered++; if(g.ok)correct++; else wrongList.push(id);}
+    else wrongList.push(id);
+  });
+  S.result={title:s.title,total:s.ids.length,answered:answered,correct:correct,wrong:wrongList,time:Date.now()-s.start,exam:s.exam};
+  S.session=null;
+  renderPractice();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderResult(){
+  const r=S.result;
+  const pct=r.total?Math.round(r.correct/r.total*100):0;
+  let h='<div class="card result">';
+  h+='<div class="big">'+pct+'<small>%</small></div>';
+  h+='<h2>'+(pct>=85?'稳了，保持手感':pct>=60?'及格线以上，继续收口':'基础还需要再走一遍')+'</h2>';
+  h+='<p>'+esc(r.title)+' · 共 '+r.total+' 题 · 用时 '+Math.round(r.time/60000)+' 分钟</p>';
+  h+='<div class="result-stats"><div><b>'+r.correct+'</b><span>答对</span></div><div><b>'+(r.total-r.correct)+'</b><span>答错 / 未答</span></div><div><b>'+pct+'%</b><span>正确率</span></div></div>';
+  h+='<div class="acts">';
+  if(r.wrong.length)h+='<button class="btn primary" data-act="retry-wrong" data-ids="'+r.wrong.join(',')+'">立即重练错题（'+r.wrong.length+'）</button>';
+  h+='<button class="btn" data-act="start-random">再来一组随机题</button><button class="btn ghost" data-act="practice-home">重新选择</button><button class="btn ghost" data-act="home">返回概览</button></div></div>';
+  $('practiceBody').innerHTML=h;
+}
+
+/* ---------- wrong ---------- */
+function renderWrong(){
+  const ids=wrongIds();
+  let h='<div class="sect-title"><h2>错题本</h2><span>连续答对两次自动移出，也可以手动标记掌握</span></div>';
+  if(!ids.length){
+    h+='<div class="card empty"><span class="ic">淨</span>暂时没有待攻克的错题。<br>去“练习”里做一组题，错题会自动收录到这里。</div>';
+    $('wrongBody').innerHTML=h; return;
+  }
+  h+='<div class="wrong-head"><span style="font-size:13px;color:#736d62">共 '+ids.length+' 道待复习</span><div style="display:flex;gap:8px">'
+   +'<button class="btn primary" data-act="practice-ids" data-ids="'+ids.join(',')+'">全部重练</button>'
+   +'<button class="btn small" data-act="clear-mastered">全部标记掌握</button></div></div>';
+  h+='<div class="wrong-list">';
+  ids.forEach(function(id){
+    const q=byId[id], r=DB.rec[id];
+    h+='<div class="card wrow"><span class="wch">'+q.ch+'</span>'
+     +'<span class="wtxt">'+esc(q.q.replace(/\n/g,' '))+'</span>'
+     +'<span class="cnt">错 '+(r.wrong||0)+' 次</span>'
+     +'<span class="acts"><button class="btn small" data-act="practice-one" data-id="'+id+'">重练</button>'
+     +'<button class="btn small" data-act="master" data-id="'+id+'">已掌握</button></span></div>';
+  });
+  h+='</div>';
+  $('wrongBody').innerHTML=h;
+}
+
+/* ---------- knowledge ---------- */
+function renderCards(){
+  let h='<div class="sect-title"><h2>知识速查</h2><span>考前十分钟，看这一页</span></div>';
+  h+='<div class="knav"><button class="'+(S.kfilter==='all'?'on':'')+'" data-act="kfilter" data-ch="all">全部</button>';
+  CH.forEach(function(c){h+='<button class="'+(S.kfilter===c.key?'on':'')+'" data-act="kfilter" data-ch="'+c.key+'">'+c.name+'</button>'});
+  h+='</div>';
+  KNOW.forEach(function(group){
+    if(S.kfilter!=='all'&&S.kfilter!==group.ch)return;
+    h+='<div class="card kcard'+(S.kopen[group.ch]===false?'':' open')+'"><div class="kh" data-act="ktoggle" data-k="'+group.ch+'"><span class="no">'+group.num+'</span><h3>'+group.name+'</h3><span class="arr">▸</span></div><div class="kb">';
+    group.sections.forEach(function(sec,si){
+      h+='<div style="margin:10px 0 4px;font-family:var(--serif);font-size:14px;letter-spacing:1px;color:#7a6a4c">'+sec.h+'</div><ul>';
+      sec.items.forEach(function(it){h+='<li>'+it+'</li>'});
+      h+='</ul>';
+    });
+    h+='</div></div>';
+  });
+  $('cardsBody').innerHTML=h;
+}
+
+/* ---------- exam ---------- */
+function renderExam(){
+  if(S.session&&S.session.exam){
+    $('examBody').innerHTML='<div class="card exam-setup"><h2>考试进行中</h2><p>'+esc(S.session.title)+' · 共 '+S.session.ids.length+' 题</p>'
+     +'<div style="display:flex;gap:10px"><button class="btn primary" data-act="resume-exam">继续答题</button><button class="btn red" data-act="submit-exam">立即交卷</button></div></div>';
+    return;
+  }
+  const c=S.examCfg;
+  let h='<div class="card exam-setup"><h2>模拟考试</h2><p>只抽取单选、多选、判断题；交卷后统一判分并收录错题。</p>';
+  h+='<div class="field"><label>题目数量</label><div class="seg">';
+  [20,30,50].forEach(function(n){h+='<button class="'+(c.n===n?'on':'')+'" data-act="exam-n" data-n="'+n+'">'+n+' 题</button>'});
+  h+='</div></div>';
+  h+='<div class="field"><label>考试时间</label><div class="seg">';
+  [20,30,45].forEach(function(m){h+='<button class="'+(c.min===m?'on':'')+'" data-act="exam-min" data-m="'+m+'">'+m+' 分钟</button>'});
+  h+='</div></div>';
+  h+='<div style="margin-top:8px"><button class="btn primary" data-act="start-exam" style="width:100%;padding:13px">开始考试</button></div>';
+  h+='<div class="notice">提示：中途离开页面计时不会暂停。时间到自动交卷，未作答题目按错误计入错题本。</div></div>';
+  $('examBody').innerHTML=h;
+}
+
+/* ---------- actions ---------- */
+document.addEventListener('click',function(e){
+  const t=e.target.closest('[data-act]'); if(!t)return;
+  const act=t.dataset.act;
+  if(act==='start-ch'){
+    const ch=t.dataset.ch;
+    startSession(BANK.filter(function(q){return q.ch===ch}).map(function(q){return q.id}),{title:ch+' · 顺序练习'});
+  }
+  else if(act==='start-random'){startSession(shuffle(BANK).slice(0,20).map(function(q){return q.id}),{title:'随机 20 题'});}
+  else if(act==='start-wrong'){const ids=wrongIds(); if(!ids.length){alert('目前没有待攻克的错题。');return;} startSession(ids,{title:'错题重练'});}
+  else if(act==='start-book'){const ids=Object.keys(DB.rec).filter(function(id){return byId[id]&&DB.rec[id].book}); if(!ids.length){alert('还没有收藏题目，点击题目右上角的星标即可收藏。');return;} startSession(ids,{title:'收藏题重练'});}
+  else if(act==='practice-one'){startSession([t.dataset.id],{title:'单题重练'});}
+  else if(act==='practice-ids'){startSession(t.dataset.ids.split(','),{title:'错题重练'});}
+  else if(act==='opt'){choose(t.dataset.k);}
+  else if(act==='submit-multi'){gradeCurrent();}
+  else if(act==='prev'){if(S.session&&S.session.idx>0){S.session.idx--;renderPractice();}}
+  else if(act==='next'){goNext();}
+  else if(act==='jump'){if(S.session){S.session.idx=Number(t.dataset.i);renderPractice();}}
+  else if(act==='book'){const r=rec(t.dataset.id);r.book=r.book?0:1;save();renderPractice();}
+  else if(act==='case-reveal'){S.session.revealed[byId[S.session.ids[S.session.idx]].id]=true;renderPractice();}
+  else if(act==='case-ok'||act==='case-bad'){
+    const q=byId[S.session.ids[S.session.idx]];
+    S.session.graded[q.id]={picked:[],ok:act==='case-ok'};
+    record(q,act==='case-ok'); renderPractice();
+  }
+  else if(act==='retry-wrong'){startSession(t.dataset.ids.split(','),{title:'错题重练'});}
+  else if(act==='home'){showView('home');}
+  else if(act==='master'){const r=rec(t.dataset.id);r.streak=2;save();renderWrong();}
+  else if(act==='clear-mastered'){wrongIds().forEach(function(id){DB.rec[id].streak=2});save();renderWrong();}
+  else if(act==='kfilter'){S.kfilter=t.dataset.ch;renderCards();}
+  else if(act==='ktoggle'){const k=t.dataset.k;const willOpen=S.kopen[k]===false;S.kopen[k]=willOpen?true:false;t.parentElement.classList.toggle('open',willOpen);}
+  else if(act==='practice-home'){S.result=null;renderPractice();}
+  else if(act==='exam-n'){S.examCfg.n=Number(t.dataset.n);renderExam();}
+  else if(act==='exam-min'){S.examCfg.min=Number(t.dataset.m);renderExam();}
+  else if(act==='start-exam'){
+    const pool=BANK.filter(function(q){return q.type!=='case'});
+    const n=Math.min(S.examCfg.n,pool.length);
+    startSession(shuffle(pool).slice(0,n).map(function(q){return q.id}),{exam:true,title:'模拟考',limit:S.examCfg.min*60});
+  }
+  else if(act==='submit-exam'){if(S.session&&S.session.exam&&confirm('确定交卷吗？未作答题目将计为错误。'))finishSession();}
+  else if(act==='resume-exam'){showView('practice');}
+  else if(act==='go-exam'){showView('exam');}
+});
+document.querySelectorAll('.tab').forEach(function(b){
+  b.addEventListener('click',function(){showView(b.dataset.view);});
+});
+document.addEventListener('keydown',function(e){
+  if(S.view!=='practice'||!S.session)return;
+  const tag=(e.target.tagName||'').toUpperCase();
+  if(tag==='INPUT'||tag==='TEXTAREA')return;
+  const s=S.session,q=byId[s.ids[s.idx]];
+  if(e.key==='Enter'){
+    if(tag==='BUTTON')return;
+    const g=s.graded[q.id];
+    if(q.type==='multi'&&!g&&!s.exam)gradeCurrent();
+    else if(g||s.exam)goNext();
+    e.preventDefault();return;
+  }
+  if(q.type==='case')return;
+  let k=null;
+  if(/^[1-4]$/.test(e.key))k=String.fromCharCode(64+Number(e.key));
+  else if(/^[abcd]$/i.test(e.key))k=e.key.toUpperCase();
+  if(k&&optionsOf(q).some(function(o){return o.k===k})){choose(k);e.preventDefault();}
+});
+
+/* init */
+render();
+})();
+</script>
+</body>
+</html>
