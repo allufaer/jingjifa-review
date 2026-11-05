@@ -44,6 +44,25 @@ a{color:var(--navy)}
 .streak{font-size:12px;color:var(--muted);white-space:nowrap;border-left:1px solid var(--line);padding-left:18px}
 .streak b{color:var(--red);font-size:15px;font-family:var(--serif)}
 
+/* ---------- user switcher ---------- */
+.userbox{position:relative;margin-left:6px}
+.ubtn{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;padding:6px 10px 6px 6px;border-radius:999px;cursor:pointer;font-size:13px;color:var(--ink)}
+.ubtn:hover{border-color:var(--gold)}
+.uava{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-size:13px}
+.uname{max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ucaret{font-size:10px;color:var(--muted)}
+.upop{position:absolute;top:calc(100% + 8px);right:0;width:230px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px -16px rgba(60,50,30,.4);padding:12px;z-index:40}
+.utitle{font-size:12px;letter-spacing:2px;color:var(--muted);margin-bottom:8px}
+.ulist{display:flex;flex-direction:column;gap:4px;max-height:180px;overflow:auto}
+.urow{border:0;background:transparent;text-align:left;padding:8px 10px;border-radius:8px;font-size:14px;color:var(--ink);cursor:pointer}
+.urow:hover{background:#f2ece0}
+.urow.on{background:#ece5d7;color:var(--navy);font-weight:600}
+.uadd{display:flex;gap:6px;margin-top:10px}
+.uadd input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:13px}
+.udel{margin-top:8px}
+.uhint{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5}
+.resume-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f4efe3;border:1px solid #e0d4b8;border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:#6b5d44;flex-wrap:wrap}
+@media (max-width:900px){.userbox{order:3;width:100%}.uname{max-width:140px}}
 /* ---------- generic ---------- */
 .view{display:none;padding:38px 0 70px;animation:fade .35s ease}
 .view.on{display:block}
@@ -248,6 +267,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
       <button class="tab" data-view="cards">速查</button>
       <button class="tab" data-view="exam">模拟考</button>
     </nav>
+    <div class="userbox" id="userbox"></div>
+    <div class="streak" id="streak">连续学习 <b>0</b> 天</div>
     <div class="streak" id="streak">连续学习 <b>0</b> 天</div>
   </div>
 </header>
@@ -263,7 +284,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 <footer>
   <div class="wrap">
     <span>题库依据：课程 PPT · 公司法 / 合伙企业法 / 合同法律制度配套习题（含答案与解析）</span>
-    <span id="footInfo">本地存储 · 进度自动保存</span>
+    <span id="footInfo">多用户本地存储 · 进度与答题自动保存，中途退出可恢复</span>
   </div>
 </footer>
 
@@ -295,6 +316,7 @@ window.BANK_PARTS.push([
 {id:'dl23',ch:'导论',type:'multi',q:'经济法的基本原则包含（　）。',o:['资源优化配置原则','国家适度干预原则','社会利益本位原则','维护公平竞争原则'],a:['A','B','C','D'],e:'经济法五大基本原则：资源优化配置、国家适度干预、社会利益本位、平衡协调、维护公平竞争。'},
 {id:'dl24',ch:'导论',type:'multi',q:'经济法律关系的三要素包括（　）。',o:['主体','法律事实','客体','内容'],a:['A','C','D'],e:'三要素为主体、内容、客体；法律事实是引起经济法律关系产生、变更、终止的客观现象，不是构成要素。'},
 {id:'dl25',ch:'导论',type:'multi',q:'经济法律责任的形式包括（　）。',o:['民事责任','行政责任','刑事责任','道义责任'],a:['A','B','C'],e:'经济法律责任包括民事、行政、刑事责任；道义责任仅是社会评价，不具国家强制性。'},
+{id:'dl26',ch:'导论',type:'case',q:'在一次经济法课程讨论中，同学们提出以下观点：\n（1）地方性法规的效力高于本级和下级地方政府规章；\n（2）最高人民法院的判例是我国经济法的正式渊源之一；\n（3）平等主体之间的人身关系和财产关系属于经济法的调整对象。\n要求：分别判断上述观点是否正确，并说明理由。',a:'（1）正确。我国法律规范的效力等级为：宪法＞法律＞行政法规＞地方性法规＞本级和下级地方政府规章。\n（2）错误。我国是成文法国家，判例只具有参考价值，不属于正式法律渊源。\n（3）错误。平等主体之间的人身关系和财产关系由民法调整；经济法调整的是市场主体调控关系、市场规制关系和宏观调控关系。',e:'考点：法律渊源的效力等级、判例的地位、经济法与民法的调整对象划分。'},
 
 /* ================= 第二章 个人独资企业法 ================= */
 {id:'dz01',ch:'个人独资',type:'single',q:'下列关于个人独资企业法律特征的表述中，符合规定的是（　）。',o:['个人独资企业没有独立承担民事责任的能力','个人独资企业不能以自己的名义从事民事活动','个人独资企业具有法人资格','投资人对企业债务承担有限责任'],a:'A',e:'个人独资企业不具有法人资格，无独立承担民事责任的能力，但它是独立的民事主体，可以自己的名义从事民事活动；投资人承担无限责任。'},
@@ -321,7 +343,8 @@ window.BANK_PARTS.push([
 {id:'dz22',ch:'个人独资',type:'judge',q:'清算期间，个人独资企业可以开展与清算目的无关的经营活动。',a:false,e:'清算期间不得开展与清算目的无关的经营活动；清偿债务前，投资人不得转移、隐匿财产。'},
 {id:'dz23',ch:'个人独资',type:'multi',q:'投资人委托或者聘用的管理人员不得实施的行为有（　）。',o:['利用职务便利索取或者收受贿赂','挪用企业资金归个人使用或者借贷给他人','擅自以企业财产提供担保','未经投资人同意从事与本企业相竞争的业务'],a:['A','B','C','D'],e:'此外还包括侵占企业财产、擅自以个人名义开立账户存储企业资金、未经同意与本企业交易、擅自转让企业知识产权、泄露商业秘密等。'},
 {id:'dz24',ch:'个人独资',type:'multi',q:'下列情形中，个人独资企业应当解散的有（　）。',o:['投资人决定解散','投资人死亡，无继承人或者继承人决定放弃继承','被依法吊销营业执照','投资人被宣告死亡，其继承人决定继承'],a:['A','B','C'],e:'D项中继承人决定继承的，企业继续存续，不解散。法定解散情形还包括法律、行政法规规定的其他情形。'},
-{id:'dz25',ch:'个人独资',type:'multi',q:'关于个人独资企业的设立，下列说法正确的有（　）。',o:['投资人可以家庭共有财产作为个人出资','企业名称中不得使用“公司”字样','必须有符合规定的最低注册资本','投资人为一个中国自然人'],a:['A','B','D'],e:'个人独资企业没有法定最低注册资本要求，只需有投资人申报的出资。'}
+{id:'dz25',ch:'个人独资',type:'multi',q:'关于个人独资企业的设立，下列说法正确的有（　）。',o:['投资人可以家庭共有财产作为个人出资','企业名称中不得使用“公司”字样','必须有符合规定的最低注册资本','投资人为一个中国自然人'],a:['A','B','D'],e:'个人独资企业没有法定最低注册资本要求，只需有投资人申报的出资。'},
+{id:'dz26',ch:'个人独资',type:'case',q:'甲以个人财产5万元出资设立A个人独资企业，聘请乙管理企业事务，约定乙对外签订合同单笔不得超过10万元。后A企业欠B公司货款8万元，A企业现有财产仅3万元。甲随后决定解散A企业并进行清算。\n要求：（1）A企业财产不足清偿的5万元债务，B公司能否要求甲以其个人其他财产清偿？说明理由。（2）若乙擅自以A企业名义与不知情的C公司签订15万元合同，该合同对A企业是否有效？说明理由。（3）A企业解散后，甲对企业存续期间债务的偿还责任何时消灭？',a:'（1）可以。个人独资企业财产不足以清偿债务的，投资人应当以其个人的其他财产予以清偿（投资人承担无限责任）。\n（2）有效。投资人对受托人职权的限制，不得对抗善意第三人；C公司不知情，属于善意第三人，故合同对A企业有效。\n（3）债权人在5年内未向甲提出偿债请求的，该责任消灭。',e:'考点：投资人无限责任、对受托人职权限制不得对抗善意第三人、解散后偿债责任的5年除斥期间。'}
 ]);
 
 window.BANK_PARTS = window.BANK_PARTS || [];
@@ -446,7 +469,9 @@ window.BANK_PARTS.push([
 {id:'gs51',ch:'公司',type:'judge',q:'公司通过简易程序注销登记，股东承诺不实的，应当对注销登记前的债务承担补充清偿责任。',a:false,e:'应当承担连带责任，而非补充责任。'},
 
 {id:'gs52',ch:'公司',type:'case',q:'2020年8月，冯某、陈某、楚某、卫某共同设立甲有限责任公司，注册资本100万元，持股10%、20%、30%、40%。陈某认缴20万元，应于2023年7月31日前缴清；楚某认缴30万元，应于2025年7月31日前缴清。\n2024年7月5日，董事会向陈某发出《催缴出资通知书》，要求其于2024年9月10日前缴清，否则经董事会决议解除其股东资格。陈某提出：（1）宽限期过短，不符合规定；（2）解除股东资格应由股东会决议，董事会无权。\n2024年10月10日，公司无力向乙公司偿付到期货款40万元，乙公司请求楚某提前缴纳出资，楚某以出资期限未届至为由拒绝。\n要求：（1）陈某第（1）项主张是否成立？（2）第（2）项主张是否成立？（3）乙公司是否有权请求楚某提前缴纳出资？分别说明理由。',a:'（1）不成立。催缴出资书面通知中载明的宽限期应当不少于60日。甲公司7月5日发出通知、宽限至9月10日，已超过60日，符合法定要求。\n（2）不成立。股东在宽限期届满仍未履行出资义务的，公司经董事会决议可以向该股东发出失权通知，自通知发出之日起该股东丧失其未缴纳出资的股权，属于董事会职权，无须股东会决议。\n（3）有权。公司不能清偿到期债务的，公司或者已到期债务的债权人有权要求已认缴出资但未届出资期限的股东提前缴纳出资（出资加速到期）。',e:'考点：催缴宽限期60日、股东失权由董事会决议、出资加速到期。'},
-{id:'gs53',ch:'公司',type:'case',q:'甲、乙、丙、丁、戊共同出资设立A有限责任公司，出资比例22%、30%、20%、20%、8%。\n（1）3月，甲向银行申请贷款请求A公司担保。甲提议召开临时股东会，董事会按期召集。表决时甲、乙、戊赞成，丙、丁反对，作出为甲提供担保的决议。\n（2）6月，乙提议将公司变更为股份有限公司。表决时乙、丙、丁赞成，甲、戊反对，作出变更公司形式的决议。\n要求：（1）甲是否有权提议召开临时股东会？（2）为甲提供担保的决议是否合法？（3）变更公司形式的决议是否合法？分别说明理由。',a:'（1）有权。代表1/10以上表决权的股东有权提议召开临时股东会，甲持股22%，超过1/10。\n（2）不合法。公司为股东提供担保，接受担保的股东不得参加表决，该项表决由出席会议的其他股东所持表决权的过半数通过。甲不得表决；扣除甲后，赞成票为乙30%＋戊8%＝38%，其他股东表决权合计78%，38/78未过半数，决议不合法。\n（3）合法。变更公司形式属于特别决议，须经代表2/3以上表决权的股东通过。赞成票为乙30%＋丙20%＋丁20%＝70%，超过2/3（约66.67%），决议合法有效。',e:'考点：临时股东会提议权、关联担保表决回避与过半数、特别决议2/3。'}
+{id:'gs53',ch:'公司',type:'case',q:'甲、乙、丙、丁、戊共同出资设立A有限责任公司，出资比例22%、30%、20%、20%、8%。\n（1）3月，甲向银行申请贷款请求A公司担保。甲提议召开临时股东会，董事会按期召集。表决时甲、乙、戊赞成，丙、丁反对，作出为甲提供担保的决议。\n（2）6月，乙提议将公司变更为股份有限公司。表决时乙、丙、丁赞成，甲、戊反对，作出变更公司形式的决议。\n要求：（1）甲是否有权提议召开临时股东会？（2）为甲提供担保的决议是否合法？（3）变更公司形式的决议是否合法？分别说明理由。',a:'（1）有权。代表1/10以上表决权的股东有权提议召开临时股东会，甲持股22%，超过1/10。\n（2）不合法。公司为股东提供担保，接受担保的股东不得参加表决，该项表决由出席会议的其他股东所持表决权的过半数通过。甲不得表决；扣除甲后，赞成票为乙30%＋戊8%＝38%，其他股东表决权合计78%，38/78未过半数，决议不合法。\n（3）合法。变更公司形式属于特别决议，须经代表2/3以上表决权的股东通过。赞成票为乙30%＋丙20%＋丁20%＝70%，超过2/3（约66.67%），决议合法有效。',e:'考点：临时股东会提议权、关联担保表决回避与过半数、特别决议2/3。'},
+{id:'gs54',ch:'公司',type:'case',q:'2023年4月，刘某、关某、张某共同投资设立桃园有限责任公司，刘某任董事长，关某任董事。2025年11月，江东投资公司拟收购桃园公司，经查：\n（1）刘某将其已转入公司账户的200万元出资转出100万元；\n（2）关某曾于2020年因行贿罪被判有期徒刑3年，2023年刑满释放；\n（3）张某出资的办公用房已办理权属转移手续，但至今未交付公司使用，其他股东主张张某不得享有相应股东权利。\n要求：（1）刘某转出100万元出资属于什么行为？应承担什么民事责任？（2）关某担任董事是否合法？说明理由。（3）其他股东主张张某不享有相应股东权利是否合法？说明理由。',a:'（1）属于抽逃出资行为。刘某应向公司返还抽逃的出资本金及利息；给公司造成损失的，负有责任的董事、监事、高级管理人员应与刘某承担连带赔偿责任。\n（2）不合法。关某因行贿罪被判处刑罚，2023年刑满释放，至公司设立及2025年时均未逾5年，不具备担任董事的任职资格。\n（3）合法。股东以房屋等非货币财产出资，虽已办理权属变更手续但未交付公司使用的，公司或股东主张其在交付前不享有相应股东权利（如分红权、表决权等）的，人民法院应予支持。',e:'考点：抽逃出资的民事责任、董事任职资格的5年禁入期、非货币财产出资未交付不享有相应股东权利。'},
+{id:'gs55',ch:'公司',type:'case',q:'甲股份有限公司股票于2020年5月上市，股本总额2亿元、资产总额5亿元，董事会成员共9人。2025年7月召开董事会，出席董事5人，讨论事项如下：\n（1）通过为其子公司向银行借款2亿元提供担保的决议；\n（2）以涉及违规财务资助为由，取消公司为员工持股计划员工取得股份的银行借款提供担保的决定；\n（3）讨论为公司利益向乙公司提供借款5000万元，乙公司将用该借款购入甲公司母公司的股份，出席董事全部赞成。\n已知公司章程规定财务资助事项由董事会决议。\n要求：（1）董事会是否有权作出为子公司2亿元借款提供担保的决议？说明理由。（2）董事会取消为员工担保的理由是否成立？说明理由。（3）向乙公司提供借款是否合法？董事会是否通过该项决议？分别说明理由。',a:'（1）无权。甲公司资产总额5亿元，本次担保2亿元占资产总额40%。上市公司在一年内担保金额超过公司资产总额30%的，应由股东会作出决议，并经出席会议股东所持表决权的2/3以上通过，董事会无权决定。\n（2）成立。公司不得为股东或实际控制人提供违规财务资助；为员工持股计划收购本公司股份提供财务资助的，总额不得超过已发行股本总额的10%，且须经股东会决议或章程授权的董事会经全体董事2/3以上通过，不符合条件的取消合理。\n（3）借款不合法；董事会未通过决议。公司不得直接或间接向他人提供资金用于购买本公司或其母公司的股份；即便属授权董事会决议的财务资助，也应经全体董事2/3以上（9人中6人以上）通过，本次仅5人出席赞成，未达全体董事2/3，故决议未通过。',e:'考点：上市公司超30%资产担保的股东会特别决议、违规财务资助的禁止、财务资助的全体董事2/3通过规则。'}
 ]);
 
 window.BANK_PARTS = window.BANK_PARTS || [];
@@ -510,7 +535,8 @@ window.BANK_PARTS.push([
 {id:'ht53',ch:'合同',type:'case',q:'2024年1月10日，杨某与4S店签订《购车合同》，约定分期付款，杨某支付首期1/5购车款后可提车，余款分4期在1年内付清，付清前4S店保留所有权。次日杨某支付首期款，4S店要求办理所有权保留登记，杨某不同意，双方协商以杨某祖传手镯质押，约定若任何一期未按期支付，手镯归4S店所有。1月15日杨某交付手镯。\n杨某一直未付余款，经多次催告仍不支付，并将车辆转卖给不知情的罗某。4S店找到罗某要求返还车辆，罗某主张已取得所有权。4S店遂通知杨某：手镯所有权即日起归4S店，同时解除《购车合同》。\n要求：（1）罗某关于取得车辆所有权的主张是否成立？（2）4S店关于手镯所有权归其所有的主张是否成立？（3）4S店是否有权通知解除合同？分别说明理由。',a:'（1）成立。出卖人对标的物保留的所有权，未经登记，不得对抗善意第三人。罗某善意受让并完成过户，取得所有权。\n（2）不成立。质权人在债务履行期届满前，与出质人约定债务人不履行到期债务时质押财产归债权人所有的，质权人只能依法就质押财产优先受偿，不能直接取得所有权。\n（3）有权。分期付款的买受人未支付到期价款的数额达到全部价款的1/5，经催告后在合理期限内仍未支付的，出卖人可以请求支付全部价款或者解除合同。',e:'考点：所有权保留登记对抗、流质条款禁止、分期付款买卖合同的解除权。'},
 {id:'ht54',ch:'合同',type:'case',q:'刘某将房屋出租给关某，租期5年，租金先住后付、每年年底结清。关某租住1年后经刘某同意转租给张某，租期4年，上年年底预付下年全年租金。张某租住1年后，刘某告知张某：关某已2年未付租金，拟解除租赁合同。张某提出代关某支付，刘某同意，张某结清了欠付的2万元租金。\n年底关某归来向张某索要下一年度租金，张某表示应在代付租金中充抵。关某索要无果后外出打工、下落不明。次年底张某预付下一年租金时关某仍下落不明，张某遂将租金向公证机关提存。\n要求：（1）张某是否可以代关某支付欠付租金？（2）张某提出的充抵主张是否符合规定？（3）提存期间租金产生的利息由谁享有？分别说明理由。',a:'（1）可以。承租人拖欠租金的，次承租人可以代承租人支付其欠付的租金和违约金，但转租合同对出租人不具有法律约束力的除外。\n（2）符合。次承租人代为支付的租金和违约金，可以充抵次承租人应当向承租人支付的租金；超出其应付数额的，可以向承租人追偿。\n（3）归关某（债权人）所有。提存期间，标的物的孳息归债权人所有。',e:'考点：次承租人代付租金、充抵规则、提存期间孳息归属。'},
 {id:'ht55',ch:'合同',type:'case',q:'2025年1月21日，周某向梁某借款50万元，借款期限1个月，月利率2%。周某的朋友关某是某公益性养老机构负责人，关某利用职权以该养老机构名义为周某借款提供保证并与梁某签订保证合同。\n2025年2月21日借款到期，周某无力清偿本息，梁某请求养老机构承担保证责任，该机构以保证合同无效为由拒绝。\n2025年2月25日，梁某发现周某将一辆价值10万元的轿车赠送给亲戚郑某，遂起诉请求撤销该赠与。已知2025年1月1年期LPR为3.1%。\n要求：（1）梁某要求按月利率2%计息能否得到法院全额支持？（2）养老机构能否以保证合同无效为由拒绝承担保证责任？（3）梁某是否有权请求撤销周某的赠与？分别说明理由。',a:'（1）不能。民间借贷约定利率超过合同成立时1年期LPR4倍的，超过部分不予支持。月利率2%即年利率24%，超过3.1%×4＝12.4%，超出部分不受保护。\n（2）有权拒绝。以公益为目的的非营利性学校、幼儿园、医疗机构、养老机构等提供担保的，人民法院应认定担保合同无效。\n（3）有权。债务人无偿转让财产，影响债权人债权实现的，债权人可以请求人民法院撤销债务人的行为。',e:'考点：民间借贷利率上限（LPR4倍）、公益机构担保无效、债权人撤销权。'},
-{id:'ht56',ch:'合同',type:'case',q:'2025年1月5日，甲房地产开发公司与乙银行约定：甲公司以其商场设立抵押，担保未来2年内乙银行对甲公司的借款债权，最高债权额1000万元，未约定债权和抵押权转让事宜。双方当日签订书面合同，次日办理抵押登记。\n截至2025年8月10日，甲公司先后贷款500万元、200万元、100万元。8月11日乙银行将第二笔200万元债权让与丙公司，未约定抵押权转让事宜。8月12日上午，甲公司向乙银行偿还第二笔贷款中的10万元本金；当日下午收到债权让与通知。丙公司请求甲公司清偿200万元及利息未果，起诉要求行使抵押权。\n甲公司抗辩：（1）丙公司债权本金只有190万元；（2）丙公司无权行使抵押权。\n要求：（1）乙银行的抵押权何时设立？（2）甲公司关于本金只有190万元的主张是否成立？（3）丙公司是否有权行使抵押权？分别说明理由。',a:'（1）1月6日设立。以建筑物设定抵押的，抵押权自登记时起设立。\n（2）成立。债权人转让债权未通知债务人的，该转让对债务人不发生效力。乙银行的让与通知在甲公司偿还10万元之后才到达，仅对尚未清偿部分生效，丙公司只能请求清偿190万元，其余10万元应向乙银行主张。\n（3）无权。最高额抵押担保的债权确定前，部分债权转让的，最高额抵押权不得转让，但当事人另有约定的除外。',e:'考点：不动产抵押登记设立、债权让与通知效力、最高额抵押权不得部分转让。'}
+{id:'ht56',ch:'合同',type:'case',q:'2025年1月5日，甲房地产开发公司与乙银行约定：甲公司以其商场设立抵押，担保未来2年内乙银行对甲公司的借款债权，最高债权额1000万元，未约定债权和抵押权转让事宜。双方当日签订书面合同，次日办理抵押登记。\n截至2025年8月10日，甲公司先后贷款500万元、200万元、100万元。8月11日乙银行将第二笔200万元债权让与丙公司，未约定抵押权转让事宜。8月12日上午，甲公司向乙银行偿还第二笔贷款中的10万元本金；当日下午收到债权让与通知。丙公司请求甲公司清偿200万元及利息未果，起诉要求行使抵押权。\n甲公司抗辩：（1）丙公司债权本金只有190万元；（2）丙公司无权行使抵押权。\n要求：（1）乙银行的抵押权何时设立？（2）甲公司关于本金只有190万元的主张是否成立？（3）丙公司是否有权行使抵押权？分别说明理由。',a:'（1）1月6日设立。以建筑物设定抵押的，抵押权自登记时起设立。\n（2）成立。债权人转让债权未通知债务人的，该转让对债务人不发生效力。乙银行的让与通知在甲公司偿还10万元之后才到达，仅对尚未清偿部分生效，丙公司只能请求清偿190万元，其余10万元应向乙银行主张。\n（3）无权。最高额抵押担保的债权确定前，部分债权转让的，最高额抵押权不得转让，但当事人另有约定的除外。',e:'考点：不动产抵押登记设立、债权让与通知效力、最高额抵押权不得部分转让。'},
+{id:'ht57',ch:'合同',type:'case',q:'甲公司与乙公司签订融资租赁合同，甲公司根据乙公司的选择，向丙公司购买1台大型设备，出租给乙公司使用。保修期过后，该设备不能正常运行，且在某次事故中造成员工李某受伤。乙公司要求甲公司履行维修义务、承担设备不符合约定的违约责任，并对李某所受损害承担赔偿责任，甲公司拒绝，乙公司遂以此为由拒绝支付租金。\n要求：（1）甲公司是否应履行维修义务？说明理由。（2）甲公司是否应承担设备不符合约定的违约责任？说明理由。（3）甲公司是否应对李某所受损害承担赔偿责任？说明理由。',a:'（1）无须履行。在融资租赁合同中，承租人应当履行占有租赁物期间的维修义务。\n（2）不承担。融资租赁物不符合约定或者不符合使用目的的，出租人不承担责任；但承租人依赖出租人的技能确定租赁物或者出租人干预选择租赁物的除外。\n（3）不承担。承租人占有融资租赁物期间，租赁物造成第三人的人身损害或者财产损失的，出租人不承担赔偿责任。',e:'考点：融资租赁合同中承租人的维修义务、出租人瑕疵担保责任的免除、租赁物致第三人损害的责任承担。'}
 ]);
 
 window.KNOW = [
@@ -667,11 +693,34 @@ const CH=[
 const BANK=(window.BANK_PARTS||[]).reduce(function(a,b){return a.concat(b)},[]);
 const byId={}; BANK.forEach(function(q){byId[q.id]=q});
 const TYPES={single:'单选',multi:'多选',judge:'判断',case:'案例'};
-const KEY='jf_review_v2';
+/* ---------- persistence (multi-user) ---------- */
+const PMETA='jf_review_profiles_v1';
+const LEGKEY='jf_review_v2';
+function ukey(n){return 'jf_review_u_'+n+'_v2'}
+function sessKey(n){return 'jf_review_sess_'+n}
+function readMeta(){try{return JSON.parse(localStorage.getItem(PMETA))||null}catch(e){return null}}
+function writeMeta(m){try{localStorage.setItem(PMETA,JSON.stringify(m))}catch(e){}}
+let USER='同学1';
 let DB={rec:{},streak:{last:'',days:0}};
-try{const raw=localStorage.getItem(KEY); if(raw){const o=JSON.parse(raw); DB.rec=o.rec||{}; DB.streak=o.streak||DB.streak;}}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
-const S={view:'home',session:null,result:null,timer:null,examCfg:{n:30,min:30},kfilter:'all',kopen:{}};
+(function initProfiles(){
+  let meta=readMeta();
+  if(!meta){
+    const first='同学1';
+    let legacy={rec:{},streak:{last:'',days:0}};
+    try{const raw=localStorage.getItem(LEGKEY);if(raw){const o=JSON.parse(raw);legacy.rec=o.rec||{};legacy.streak=o.streak||legacy.streak;}}catch(e){}
+    try{localStorage.setItem(ukey(first),JSON.stringify(legacy))}catch(e){}
+    meta={current:first,names:[first]};writeMeta(meta);
+    try{localStorage.removeItem(LEGKEY)}catch(e){}
+  }
+  USER=meta.current||(meta.names&&meta.names[0])||'同学1';
+  if(meta.names.indexOf(USER)<0)USER=meta.names[0];
+})();
+function loadUser(){DB={rec:{},streak:{last:'',days:0}};try{const raw=localStorage.getItem(ukey(USER));if(raw){const o=JSON.parse(raw);DB.rec=o.rec||{};DB.streak=o.streak||DB.streak;}}catch(e){}}
+loadUser();
+function save(){try{localStorage.setItem(ukey(USER),JSON.stringify(DB))}catch(e){}}
+function saveSession(){try{if(!S.session){localStorage.removeItem(sessKey(USER));return}localStorage.setItem(sessKey(USER),JSON.stringify({session:S.session,savedAt:Date.now()}))}catch(e){}}
+function clearSession(){try{localStorage.removeItem(sessKey(USER))}catch(e){}}
+const S={view:'home',session:null,result:null,timer:null,examCfg:{n:30,min:30},kfilter:'all',kopen:{},resumedBanner:false};
 
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
@@ -732,6 +781,49 @@ function wrongIds(){
   }).sort(function(a,b){return (DB.rec[b].wrong||0)-(DB.rec[a].wrong||0)});
 }
 
+/* ---------- user profiles ---------- */
+function renderUserBox(){
+  const el=$('userbox');if(!el)return;
+  const meta=readMeta()||{current:USER,names:[USER]};
+  let h='<button class="ubtn" data-act="user-toggle" title="切换学习用户"><span class="uava">'+esc(USER.slice(0,1))+'</span><span class="uname">'+esc(USER)+'</span><span class="ucaret">▾</span></button>';
+  h+='<div class="upop" id="upop" style="display:none">';
+  h+='<div class="utitle">切换 / 新建用户</div><div class="ulist">';
+  meta.names.forEach(function(n){
+    h+='<button class="urow'+(n===USER?' on':'')+'" data-act="user-switch" data-name="'+esc(n)+'">'+(n===USER?'● ':'○ ')+esc(n)+'</button>';
+  });
+  h+='</div>';
+  h+='<div class="uadd"><input id="newUserName" placeholder="新用户名（≤12字）" maxlength="12"/><button class="btn small" data-act="user-add">添加</button></div>';
+  if(meta.names.length>1)h+='<div class="udel"><button class="btn small red" data-act="user-del">删除当前用户「'+esc(USER)+'」</button></div>';
+  h+='<div class="uhint">每人进度独立保存在本机浏览器</div></div>';
+  el.innerHTML=h;
+}
+function switchUser(name){
+  const meta=readMeta();if(!meta||meta.names.indexOf(name)<0||name===USER)return;
+  save();clearSession();USER=name;meta.current=name;writeMeta(meta);loadUser();
+  S.session=null;S.result=null;S.resumedBanner=false;showView('home');
+}
+function addUser(){
+  const inp=$('newUserName');if(!inp)return;
+  let name=(inp.value||'').trim();
+  if(!name){alert('请输入用户名');return;}
+  if(name.length>12)name=name.slice(0,12);
+  const meta=readMeta()||{current:USER,names:[USER]};
+  if(meta.names.indexOf(name)>-1){alert('该用户名已存在');return;}
+  save();clearSession();
+  meta.names.push(name);meta.current=name;writeMeta(meta);
+  try{localStorage.setItem(ukey(name),JSON.stringify({rec:{},streak:{last:'',days:0}}))}catch(e){}
+  USER=name;loadUser();
+  S.session=null;S.result=null;S.resumedBanner=false;showView('home');
+}
+function delUser(){
+  const meta=readMeta();if(!meta||meta.names.length<=1)return;
+  if(!confirm('确定删除用户「'+USER+'」？该用户的所有复习进度将被清除，不可恢复。'))return;
+  try{localStorage.removeItem(ukey(USER))}catch(e){}
+  clearSession();
+  meta.names=meta.names.filter(function(n){return n!==USER});
+  USER=meta.names[0];meta.current=USER;writeMeta(meta);loadUser();
+  S.session=null;S.result=null;S.resumedBanner=false;showView('home');
+}
 /* ---------- views ---------- */
 function showView(v){
   S.view=v;
@@ -742,6 +834,7 @@ function showView(v){
 }
 function render(){
   updateStreak();
+  renderUserBox();
   if(S.view==='home')renderHome();
   else if(S.view==='practice')renderPractice();
   else if(S.view==='wrong')renderWrong();
@@ -769,6 +862,7 @@ function renderHome(){
    +'<div class="hero-actions">'
    +'<button class="btn primary" data-act="start-random">今日推荐 · 随机 20 题</button>'
    +'<button class="btn" data-act="start-wrong">错题重练'+(st.wrongQ?'（'+st.wrongQ+'）':'')+'</button>'
+   +'<button class="btn" data-act="start-case">大题专练</button>'
    +'<button class="btn ghost" data-act="go-exam">模拟考</button>'
    +'</div></div>'
    +'<div class="hero-side">'+ringHTML(pct,150)+'<p>已练 '+st.seen+' / '+st.total+' 题</p><p>正确率 '+st.acc+'%</p></div>'
@@ -818,10 +912,11 @@ function renderLauncher(){
   });
   h+='</div>';
   h+='<div class="sect-title"><h2>快捷入口</h2></div>';
-  h+='<div class="chap-grid" style="grid-template-columns:repeat(3,1fr)">'
+  h+='<div class="chap-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">'
    +'<button class="card chap" data-act="start-random"><div class="no">随</div><div class="mid"><h3>随机 20 题</h3><div class="meta">跨章节混合抽取</div></div></button>'
    +'<button class="card chap" data-act="start-wrong"><div class="no">错</div><div class="mid"><h3>错题重练</h3><div class="meta">按错误次数排序</div></div></button>'
    +'<button class="card chap" data-act="start-book"><div class="no">藏</div><div class="mid"><h3>收藏题目</h3><div class="meta">你标记过的题</div></div></button>'
+   +'<button class="card chap" data-act="start-case"><div class="no">案</div><div class="mid"><h3>大题专练</h3><div class="meta">'+BANK.filter(function(q){return q.type==='case'}).length+' 道案例分析 · 顺序练习</div></div></button>'
    +'</div>';
   $('practiceBody').innerHTML=h;
 }
@@ -829,7 +924,7 @@ function startSession(ids,opts){
   opts=opts||{};
   ids=ids.filter(function(id){return byId[id]});
   if(!ids.length){alert('这里还没有题目。');return;}
-  clearInterval(S.timer); S.timer=null; S.result=null;
+  clearInterval(S.timer); S.timer=null; S.result=null; S.resumedBanner=false;
   S.session={ids:ids,idx:0,picked:{},graded:{},revealed:{},exam:!!opts.exam,title:opts.title||'练习',start:Date.now(),limit:opts.limit||0,deadline:opts.limit?Date.now()+opts.limit*1000:0};
   showView('practice');
   if(opts.exam)beginTimer();
@@ -862,14 +957,17 @@ function renderPractice(){
   }else{
     h+='<div class="pbar"><span class="pnum">'+pos+' / '+N+'</span><div class="track"><i style="width:'+(pos/N*100)+'%"></i></div><span class="pnum">'+Math.round((pos/N)*100)+'%</span></div>';
   }
+  if(S.resumedBanner){h+='<div class="resume-bar"><span>⏵ 已恢复上次的「'+esc(s.title)+'」进度（第 '+(s.idx+1)+' / '+N+' 题），可继续作答。</span><button class="btn small" data-act="resume-abandon">放弃进度</button></div>';S.resumedBanner=false;}
   h+='<div class="card qcard">';
   h+='<div class="qhead"><span class="chip ch">'+q.ch+'</span><span class="chip ty '+q.type+'">'+TYPES[q.type]+'</span>'
    +'<span class="qidx">第 '+pos+' 题 / 共 '+N+' 题</span>'
    +'<button class="star'+(rec(q.id).book?' on':'')+'" data-act="book" data-id="'+q.id+'" title="收藏">★</button></div>';
   h+='<div class="stem">'+esc(q.q)+'</div>';
   if(q.type==='case'){
-    h+='<textarea class="case-input" placeholder="先在纸上列要点，再展开参考答案对照。考试时这类题按要点给分。"></textarea>';
-    if(!s.revealed[q.id]){
+    h+='<textarea class="case-input" placeholder="'+(s.exam?'案例题 · 请在草稿纸上作答，交卷后统一查看参考答案并自评。':'先在纸上列要点，再展开参考答案对照。考试时这类题按要点给分。')+'">'+esc((s.draft&&s.draft[q.id])||'')+'</textarea>';
+    if(s.exam){
+      h+='<div style="margin-top:10px;font-size:12px;color:#8a8375">案例分析题 · 不自动判分，交卷后显示参考答案并按要点自评</div>';
+    }else if(!s.revealed[q.id]){
       h+='<div style="margin-top:12px"><button class="btn" data-act="case-reveal">显示参考答案</button></div>';
     }else{
       h+='<div class="case-box"><h4>参考答案 · 要点</h4><div class="ans">'+esc(q.a)+'</div></div>';
@@ -916,6 +1014,7 @@ function renderPractice(){
   });
   h+='</div></div>';
   $('practiceBody').innerHTML=h;
+  if(S.session)saveSession();
 }
 function gradeCurrent(){
   const s=S.session, q=byId[s.ids[s.idx]];
@@ -953,10 +1052,11 @@ function goNext(){
 }
 function finishSession(){
   const s=S.session; if(!s)return;
-  clearInterval(S.timer); S.timer=null;
-  let answered=0,correct=0,wrongList=[];
+  clearInterval(S.timer); S.timer=null; clearSession(); S.resumedBanner=false;
+  let answered=0,correct=0,wrongList=[],caseIds=[];
   s.ids.forEach(function(id){
     const q=byId[id];
+    if(q.type==='case'){caseIds.push(id);return;}
     let g=s.graded[id];
     if(s.exam){
       const picked=s.picked[id]||[];
@@ -968,19 +1068,42 @@ function finishSession(){
     if(g){answered++; if(g.ok)correct++; else wrongList.push(id);}
     else wrongList.push(id);
   });
-  S.result={title:s.title,total:s.ids.length,answered:answered,correct:correct,wrong:wrongList,time:Date.now()-s.start,exam:s.exam};
+  S.result={title:s.title,total:s.ids.length,answered:answered,correct:correct,wrong:wrongList,caseIds:caseIds,time:Date.now()-s.start,exam:s.exam};
   S.session=null;
   renderPractice();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function renderResult(){
   const r=S.result;
-  const pct=r.total?Math.round(r.correct/r.total*100):0;
+  const caseIds=r.caseIds||[];
+  const objTotal=r.total-caseIds.length;
+  const pct=objTotal?Math.round(r.correct/objTotal*100):0;
   let h='<div class="card result">';
   h+='<div class="big">'+pct+'<small>%</small></div>';
   h+='<h2>'+(pct>=85?'稳了，保持手感':pct>=60?'及格线以上，继续收口':'基础还需要再走一遍')+'</h2>';
-  h+='<p>'+esc(r.title)+' · 共 '+r.total+' 题 · 用时 '+Math.round(r.time/60000)+' 分钟</p>';
-  h+='<div class="result-stats"><div><b>'+r.correct+'</b><span>答对</span></div><div><b>'+(r.total-r.correct)+'</b><span>答错 / 未答</span></div><div><b>'+pct+'%</b><span>正确率</span></div></div>';
+  h+='<p>'+esc(r.title)+' · 共 '+r.total+' 题'+(caseIds.length?'（客观题 '+objTotal+' · 案例题 '+caseIds.length+'）':'')+' · 用时 '+Math.round(r.time/60000)+' 分钟</p>';
+  h+='<div class="result-stats"><div><b>'+r.correct+'</b><span>'+(caseIds.length?'客观答对':'答对')+'</span></div><div><b>'+(objTotal-r.correct)+'</b><span>'+(caseIds.length?'客观答错 / 未答':'答错 / 未答')+'</span></div><div><b>'+pct+'%</b><span>'+(caseIds.length?'客观正确率':'正确率')+'</span></div></div>';
+  if(caseIds.length){
+    h+='<div style="margin-top:14px;padding:12px 14px;border:1px dashed #c9b486;border-radius:10px;background:rgba(224,181,103,.06)">'
+     +'<div style="font-size:13px;color:#7a6a4c;margin-bottom:4px">案例分析题（共 '+caseIds.length+' 道 · 不计入上方客观分，请对照参考答案自评）</div>'
+     +'<div class="case-review">';
+    caseIds.forEach(function(id,i){
+      const q=byId[id];
+      h+='<div class="case-item">'
+       +'<div class="ci-head" data-act="case-toggle" data-id="'+id+'" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 0;border-bottom:1px solid rgba(122,106,76,.18)">'
+       +'<span style="display:inline-block;min-width:58px;padding:2px 8px;border-radius:6px;background:#e0b567;color:#fff;font-size:11px;text-align:center">案例 '+(i+1)+'</span>'
+       +'<span class="tag" style="color:#7a6a4c">'+q.ch+'</span>'
+       +'<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#5a5347;font-size:13px">'+esc(q.q.replace(/\n/g,' '))+'</span>'
+       +'<span class="arr" style="color:#a89a7e">▸</span></div>'
+       +'<div class="ci-body" style="display:none;padding:10px 0 4px">'
+       +'<div class="stem" style="white-space:pre-wrap;margin-bottom:10px">'+esc(q.q)+'</div>'
+       +'<div class="case-box"><h4>参考答案 · 要点</h4><div class="ans">'+esc(q.a)+'</div></div>'
+       +(q.e?'<div class="explain" style="margin-top:8px"><div class="verdict">解析</div>'+esc(q.e)+'</div>':'')
+       +'<div class="selfcheck" style="margin-top:10px"><button class="btn primary small" data-act="case-grade" data-id="'+id+'" data-ok="1">我答对了</button><button class="btn small" data-act="case-grade" data-id="'+id+'" data-ok="0">还要复习</button></div>'
+       +'</div></div>';
+    });
+    h+='</div></div>';
+  }
   h+='<div class="acts">';
   if(r.wrong.length)h+='<button class="btn primary" data-act="retry-wrong" data-ids="'+r.wrong.join(',')+'">立即重练错题（'+r.wrong.length+'）</button>';
   h+='<button class="btn" data-act="start-random">再来一组随机题</button><button class="btn ghost" data-act="practice-home">重新选择</button><button class="btn ghost" data-act="home">返回概览</button></div></div>';
@@ -1038,7 +1161,7 @@ function renderExam(){
     return;
   }
   const c=S.examCfg;
-  let h='<div class="card exam-setup"><h2>模拟考试</h2><p>只抽取单选、多选、判断题；交卷后统一判分并收录错题。</p>';
+  let h='<div class="card exam-setup"><h2>模拟考试</h2><p>含单选、多选、判断与适量案例分析题；客观题交卷后统一判分，案例题查看参考答案后自评。</p>';
   h+='<div class="field"><label>题目数量</label><div class="seg">';
   [20,30,50].forEach(function(n){h+='<button class="'+(c.n===n?'on':'')+'" data-act="exam-n" data-n="'+n+'">'+n+' 题</button>'});
   h+='</div></div>';
@@ -1046,7 +1169,7 @@ function renderExam(){
   [20,30,45].forEach(function(m){h+='<button class="'+(c.min===m?'on':'')+'" data-act="exam-min" data-m="'+m+'">'+m+' 分钟</button>'});
   h+='</div></div>';
   h+='<div style="margin-top:8px"><button class="btn primary" data-act="start-exam" style="width:100%;padding:13px">开始考试</button></div>';
-  h+='<div class="notice">提示：中途离开页面计时不会暂停。时间到自动交卷，未作答题目按错误计入错题本。</div></div>';
+  h+='<div class="notice">提示：中途离开页面计时不会暂停。时间到自动交卷，未作答的客观题按错误计入错题本；案例题交卷后自评。</div></div>';
   $('examBody').innerHTML=h;
 }
 
@@ -1061,6 +1184,7 @@ document.addEventListener('click',function(e){
   else if(act==='start-random'){startSession(shuffle(BANK).slice(0,20).map(function(q){return q.id}),{title:'随机 20 题'});}
   else if(act==='start-wrong'){const ids=wrongIds(); if(!ids.length){alert('目前没有待攻克的错题。');return;} startSession(ids,{title:'错题重练'});}
   else if(act==='start-book'){const ids=Object.keys(DB.rec).filter(function(id){return byId[id]&&DB.rec[id].book}); if(!ids.length){alert('还没有收藏题目，点击题目右上角的星标即可收藏。');return;} startSession(ids,{title:'收藏题重练'});}
+  else if(act==='start-case'){const ids=BANK.filter(function(q){return q.type==='case'}).map(function(q){return q.id}); startSession(ids,{title:'大题专练 · 案例分析'});}
   else if(act==='practice-one'){startSession([t.dataset.id],{title:'单题重练'});}
   else if(act==='practice-ids'){startSession(t.dataset.ids.split(','),{title:'错题重练'});}
   else if(act==='opt'){choose(t.dataset.k);}
@@ -1075,6 +1199,13 @@ document.addEventListener('click',function(e){
     S.session.graded[q.id]={picked:[],ok:act==='case-ok'};
     record(q,act==='case-ok'); renderPractice();
   }
+  else if(act==='case-toggle'){const body=t.nextElementSibling;if(body){const open=body.style.display!=='none';body.style.display=open?'none':'block';const arr=t.querySelector('.arr');if(arr)arr.textContent=open?'▸':'▾';}}
+  else if(act==='case-grade'){const id=t.dataset.id,ok=t.dataset.ok==='1';const q=byId[id];if(q){record(q,ok);const sc=t.parentElement;if(sc)sc.innerHTML='<span style="font-size:12px;color:'+(ok?'#3d7a4f':'#ad3a2e')+'">'+(ok?'已标记掌握 ✓':'已加入错题本 ✗')+'</span>';}}
+  else if(act==='user-toggle'){const p=$('upop');if(p)p.style.display=(p.style.display==='none'?'block':'none');}
+  else if(act==='user-switch'){switchUser(t.dataset.name);}
+  else if(act==='user-add'){addUser();}
+  else if(act==='user-del'){delUser();}
+  else if(act==='resume-abandon'){if(confirm('放弃当前未完成的答题进度？')){S.session=null;S.result=null;S.resumedBanner=false;clearSession();showView('practice');}}
   else if(act==='retry-wrong'){startSession(t.dataset.ids.split(','),{title:'错题重练'});}
   else if(act==='home'){showView('home');}
   else if(act==='master'){const r=rec(t.dataset.id);r.streak=2;save();renderWrong();}
@@ -1085,13 +1216,27 @@ document.addEventListener('click',function(e){
   else if(act==='exam-n'){S.examCfg.n=Number(t.dataset.n);renderExam();}
   else if(act==='exam-min'){S.examCfg.min=Number(t.dataset.m);renderExam();}
   else if(act==='start-exam'){
-    const pool=BANK.filter(function(q){return q.type!=='case'});
-    const n=Math.min(S.examCfg.n,pool.length);
-    startSession(shuffle(pool).slice(0,n).map(function(q){return q.id}),{exam:true,title:'模拟考',limit:S.examCfg.min*60});
+    const casePool=BANK.filter(function(q){return q.type==='case'});
+    const objPool=BANK.filter(function(q){return q.type!=='case'});
+    const caseN=Math.max(1,Math.round(S.examCfg.n*0.1));
+    const n=Math.min(S.examCfg.n,casePool.length+objPool.length);
+    const takeCase=Math.min(caseN,n,casePool.length);
+    const caseIds=shuffle(casePool).slice(0,takeCase).map(function(q){return q.id});
+    const objIds=shuffle(objPool).slice(0,n-caseIds.length).map(function(q){return q.id});
+    startSession(shuffle(caseIds.concat(objIds)),{exam:true,title:'模拟考',limit:S.examCfg.min*60});
   }
   else if(act==='submit-exam'){if(S.session&&S.session.exam&&confirm('确定交卷吗？未作答题目将计为错误。'))finishSession();}
   else if(act==='resume-exam'){showView('practice');}
   else if(act==='go-exam'){showView('exam');}
+});
+document.addEventListener('click',function(e){
+  const p=$('upop');if(!p||p.style.display==='none')return;
+  if(!e.target.closest('#userbox'))p.style.display='none';
+});
+document.addEventListener('input',function(e){
+  const ta=e.target.closest('.case-input');if(!ta||!S.session)return;
+  const q=byId[S.session.ids[S.session.idx]];if(!q||q.type!=='case')return;
+  S.session.draft=S.session.draft||{};S.session.draft[q.id]=ta.value;saveSession();
 });
 document.querySelectorAll('.tab').forEach(function(b){
   b.addEventListener('click',function(){showView(b.dataset.view);});
@@ -1116,6 +1261,27 @@ document.addEventListener('keydown',function(e){
 });
 
 /* init */
+(function restore(){
+  try{
+    const raw=localStorage.getItem(sessKey(USER));
+    if(raw){
+      const o=JSON.parse(raw);const sess=o.session;
+      if(sess&&sess.ids&&sess.ids.length){
+        const age=Date.now()-(o.savedAt||0);
+        sess.ids=sess.ids.filter(function(id){return byId[id]});
+        if(sess.ids.length&&age<=7*86400000){
+          if(sess.idx>=sess.ids.length)sess.idx=sess.ids.length-1;
+          if(sess.exam&&sess.deadline&&sess.deadline<=Date.now()){
+            S.session=sess;S.view='practice';finishSession();
+          }else{
+            S.session=sess;S.view='practice';S.resumedBanner=true;
+            if(sess.exam)beginTimer();
+          }
+        }else{localStorage.removeItem(sessKey(USER));}
+      }else{localStorage.removeItem(sessKey(USER));}
+    }
+  }catch(e){try{localStorage.removeItem(sessKey(USER))}catch(e2){}}
+})();
 render();
 })();
 </script>
