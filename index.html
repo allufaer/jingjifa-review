@@ -98,6 +98,7 @@ a{color:var(--navy)}
 .chap .prog{height:5px;border-radius:5px;background:#efe6d6;margin-top:10px;overflow:hidden}
 .chap .prog i{display:block;height:100%;background:var(--navy);width:0;transition:width .6s}
 .chap .go{font-size:12px;color:var(--navy);border:1px solid var(--line);padding:6px 12px;border-radius:8px;flex-shrink:0}
+.study-link{margin-left:8px;padding-left:8px;border-left:1px solid var(--line);color:#2f6b4f;font-weight:600}
 
 .recent{display:flex;flex-direction:column;gap:2px}
 .recent .row{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px dashed var(--line);font-size:14px}
@@ -896,6 +897,7 @@ function renderHome(){
    +'<button class="btn primary" data-act="start-random">今日推荐 · 随机 40 题</button>'
    +'<button class="btn" data-act="start-wrong">错题重练'+(st.wrongQ?'（'+st.wrongQ+'）':'')+'</button>'
    +'<button class="btn" data-act="start-case">大题专练</button>'
+   +'<button class="btn" data-act="start-study">背题模式</button>'
    +'<button class="btn ghost" data-act="go-exam">模拟考</button>'
    +'</div></div>'
    +'<div class="hero-side">'+ringHTML(pct,150)+'<p>已练 '+st.seen+' / '+st.total+' 题</p><p>正确率 '+st.acc+'%</p></div>'
@@ -913,7 +915,7 @@ function renderHome(){
      +'<div class="no" style="color:'+c.color+'">'+c.num+'</div>'
      +'<div class="mid"><h3>'+c.name+'</h3><div class="meta">'+cs.total+' 题 · 已练 '+cs.seen+' · 正确率 '+cs.acc+'%</div>'
      +'<div class="prog"><i style="width:'+p+'%"></i></div></div>'
-     +'<div class="go">开始</div></button>';
+     +'<div class="go">开始<span class="study-link" data-act="study-ch" data-ch="'+c.key+'">背题</span></div></button>';
   });
   h+='</div>';
   if(wrong.length){
@@ -941,7 +943,7 @@ function renderLauncher(){
     h+='<button class="card chap" data-act="start-ch" data-ch="'+c.key+'">'
      +'<div class="no" style="color:'+c.color+'">'+c.num+'</div>'
      +'<div class="mid"><h3>'+c.name+'</h3><div class="meta">'+cs.total+' 题 · 已练 '+cs.seen+' · 正确率 '+cs.acc+'%</div>'
-     +'<div class="prog"><i style="width:'+p+'%"></i></div></div><div class="go">开始</div></button>';
+     +'<div class="prog"><i style="width:'+p+'%"></i></div></div><div class="go">开始<span class="study-link" data-act="study-ch" data-ch="'+c.key+'">背题</span></div></button>';
   });
   h+='</div>';
   h+='<div class="sect-title"><h2>快捷入口</h2></div>';
@@ -950,6 +952,7 @@ function renderLauncher(){
    +'<button class="card chap" data-act="start-wrong"><div class="no">错</div><div class="mid"><h3>错题重练</h3><div class="meta">按错误次数排序</div></div></button>'
    +'<button class="card chap" data-act="start-book"><div class="no">藏</div><div class="mid"><h3>收藏题目</h3><div class="meta">你标记过的题</div></div></button>'
    +'<button class="card chap" data-act="start-case"><div class="no">案</div><div class="mid"><h3>大题专练</h3><div class="meta">'+BANK.filter(function(q){return q.type==='case'}).length+' 道案例分析 · 顺序练习</div></div></button>'
+   +'<button class="card chap" data-act="start-study"><div class="no">背</div><div class="mid"><h3>背题模式</h3><div class="meta">题干答案直接显示 · 快速过题</div></div></button>'
    +'</div>';
   $('practiceBody').innerHTML=h;
 }
@@ -958,7 +961,7 @@ function startSession(ids,opts){
   ids=ids.filter(function(id){return byId[id]});
   if(!ids.length){alert('这里还没有题目。');return;}
   clearInterval(S.timer); S.timer=null; S.result=null; S.resumedBanner=false;
-  S.session={ids:ids,idx:0,picked:{},graded:{},revealed:{},exam:!!opts.exam,title:opts.title||'练习',start:Date.now(),limit:opts.limit||0,deadline:opts.limit?Date.now()+opts.limit*1000:0};
+  S.session={ids:ids,idx:0,picked:{},graded:{},revealed:{},exam:!!opts.exam,study:!!opts.study,title:opts.title||'练习',start:Date.now(),limit:opts.limit||0,deadline:opts.limit?Date.now()+opts.limit*1000:0};
   showView('practice');
   if(opts.exam)beginTimer();
 }
@@ -985,7 +988,9 @@ function renderPractice(){
   const q=byId[s.ids[s.idx]], g=s.graded[q.id], picked=s.picked[q.id]||[];
   const N=s.ids.length, pos=s.idx+1;
   let h='';
-  if(s.exam){
+  if(s.study){
+    h+='<div class="pbar"><span class="chip" style="border-color:#2f6b4f;color:#2f6b4f">背题模式</span><span class="pnum">'+esc(s.title)+'</span><span class="pnum">'+pos+' / '+N+'</span><div style="flex:1"></div><button class="btn small" data-act="study-home">返回列表</button></div>';
+  }else if(s.exam){
     h+='<div class="pbar"><span class="chip" style="border-color:#ad3a2e;color:#ad3a2e">模拟考 · '+s.title+'</span><span class="timer" id="timer">'+fmt(Math.max(0,s.deadline-Date.now()))+'</span><span class="pnum">'+pos+' / '+N+'</span><div style="flex:1"></div><button class="btn small red" data-act="submit-exam">交卷</button></div>';
   }else{
     h+='<div class="pbar"><span class="pnum">'+pos+' / '+N+'</span><div class="track"><i style="width:'+(pos/N*100)+'%"></i></div><span class="pnum">'+Math.round((pos/N)*100)+'%</span></div>';
@@ -998,6 +1003,10 @@ function renderPractice(){
    +'<button class="star'+(rec(q.id).book?' on':'')+'" data-act="book" data-id="'+q.id+'" title="收藏">★</button></div>';
   h+='<div class="stem">'+esc(q.q)+'</div>';
   if(q.type==='case'){
+    if(s.study){
+      h+='<div class="case-box"><h4>参考答案 · 要点</h4><div class="ans">'+esc(q.a)+'</div></div>';
+      if(q.e)h+='<div class="explain right"><div class="verdict">解析</div>'+esc(q.e)+'</div>';
+    }else{
     h+='<textarea class="case-input" placeholder="'+(s.exam?'案例题 · 请在草稿纸上作答，交卷后统一查看参考答案并自评。':'先在纸上列要点，再展开参考答案对照。考试时这类题按要点给分。')+'">'+esc((s.draft&&s.draft[q.id])||'')+'</textarea>';
     if(s.exam){
       h+='<div style="margin-top:10px;font-size:12px;color:#8a8375">案例分析题 · 不自动判分，交卷后显示参考答案并按要点自评</div>';
@@ -1011,11 +1020,12 @@ function renderPractice(){
         h+='<div class="explain '+(g.ok?'right':'bad')+'"><div class="verdict">'+(g.ok?'已标记掌握':'已加入错题本')+'</div>'+esc(q.e||'')+'</div>';
       }
     }
+    }
   }else{
     h+='<div class="options">';
     optionsOf(q).forEach(function(o){
       let cls='';
-      if(g){
+      if(g||s.study){
         if(answerKeys(q).indexOf(o.k)>-1)cls='right';
         else if(picked.indexOf(o.k)>-1)cls='bad';
         else cls='dim';
@@ -1023,14 +1033,19 @@ function renderPractice(){
       h+='<button class="opt '+cls+'" data-act="opt" data-k="'+o.k+'"><span class="key">'+o.k+'</span><span class="txt">'+esc(o.t)+'</span></button>';
     });
     h+='</div>';
-    if(g){
+    if(s.study){
+      h+='<div class="explain right"><div class="verdict">正确答案：'+esc(answerText(q))+'</div>'+esc(q.e||'')+'</div>';
+    }else if(g){
       const ok=g.ok;
       h+='<div class="explain '+(ok?'right':'bad')+'"><div class="verdict">'+(ok?'回答正确':'回答错误')+'　<span class="ans">正确答案：'+esc(answerText(q))+'</span></div>'+esc(q.e||'')+'</div>';
     }
   }
-  h+='<div class="qfoot"><span class="hint">'+(s.exam?'考试模式：可自由跳题，交卷后统一判分':'快捷键：<kbd>A</kbd><kbd>B</kbd><kbd>C</kbd><kbd>D</kbd> 选择 · <kbd>Enter</kbd> 下一题')+'</span>'
+  h+='<div class="qfoot"><span class="hint">'+(s.study?'背题模式：答案与解析已直接显示，手机可左右滑动翻题':(s.exam?'考试模式：可自由跳题，交卷后统一判分':'快捷键：<kbd>A</kbd><kbd>B</kbd><kbd>C</kbd><kbd>D</kbd> 选择 · <kbd>Enter</kbd> 下一题'))+'</span>'
    +'<button class="btn small" data-act="prev"'+(s.idx===0?' disabled':'')+'>上一题</button>';
-  if(!s.exam&&q.type==='multi'&&!g){
+  if(s.study){
+    if(pos===N)h+='<button class="btn primary" data-act="study-home">返回列表</button>';
+    else h+='<button class="btn primary" data-act="next">下一题 →</button>';
+  }else if(!s.exam&&q.type==='multi'&&!g){
     h+='<button class="btn primary" data-act="submit-multi"'+(picked.length?'':' disabled')+'>提交答案</button>';
   }else if(s.exam&&pos===N){
     h+='<button class="btn primary" data-act="submit-exam">交卷</button>';
@@ -1062,7 +1077,7 @@ function gradeCurrent(){
 }
 function choose(k){
   const s=S.session, q=byId[s.ids[s.idx]];
-  if(!s||!q||q.type==='case')return;
+  if(!s||!q||q.type==='case'||s.study)return;
   if(s.graded[q.id])return;
   const picked=s.picked[q.id]||[];
   if(q.type==='multi'){
@@ -1079,8 +1094,9 @@ function choose(k){
 function goNext(){
   const s=S.session; if(!s)return;
   const q=byId[s.ids[s.idx]];
-  if(!s.exam&&q&&q.type==='multi'&&!s.graded[q.id])return;
+  if(!s.exam&&!s.study&&q&&q.type==='multi'&&!s.graded[q.id])return;
   if(s.idx<s.ids.length-1){s.idx++;renderPractice();window.scrollTo({top:0,behavior:'smooth'});}
+  else if(s.study){return;}
   else if(s.exam){if(confirm('确定交卷吗？未作答题目将计为错误。'))finishSession();}
   else finishSession();
 }
@@ -1219,6 +1235,9 @@ document.addEventListener('click',function(e){
   else if(act==='start-wrong'){const ids=wrongIds(); if(!ids.length){alert('目前没有待攻克的错题。');return;} startSession(ids,{title:'错题重练'});}
   else if(act==='start-book'){const ids=Object.keys(DB.rec).filter(function(id){return byId[id]&&DB.rec[id].book}); if(!ids.length){alert('还没有收藏题目，点击题目右上角的星标即可收藏。');return;} startSession(ids,{title:'收藏题重练'});}
   else if(act==='start-case'){const ids=BANK.filter(function(q){return q.type==='case'}).map(function(q){return q.id}); startSession(ids,{title:'大题专练 · 案例分析'});}
+  else if(act==='start-study'){startSession(BANK.map(function(q){return q.id}),{title:'背题模式 · 全题库',study:true});}
+  else if(act==='study-ch'){const ch=t.dataset.ch;startSession(BANK.filter(function(q){return q.ch===ch}).map(function(q){return q.id}),{title:'背题 · '+ch,study:true});}
+  else if(act==='study-home'){S.session=null;S.result=null;S.resumedBanner=false;clearSession();render();}
   else if(act==='practice-one'){startSession([t.dataset.id],{title:'单题重练'});}
   else if(act==='practice-ids'){startSession(t.dataset.ids.split(','),{title:'错题重练'});}
   else if(act==='opt'){choose(t.dataset.k);}
