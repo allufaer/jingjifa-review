@@ -125,6 +125,9 @@ a{color:var(--navy)}
 .qidx{margin-left:auto;font-size:12px;color:var(--muted);font-family:var(--serif)}
 .star{border:0;background:transparent;font-size:19px;line-height:1;padding:4px;color:#c9bda6}
 .star.on{color:var(--gold);transform:scale(1.08)}
+#toast{position:fixed;left:50%;bottom:76px;transform:translate(-50%,12px);background:rgba(31,45,66,.94);color:#fff;
+ font-size:13px;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:80vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
 .stem{font-family:var(--serif);font-size:20px;line-height:1.85;margin:18px 0 22px;letter-spacing:.5px;white-space:pre-wrap}
 .stem .qno{color:var(--muted);font-size:15px;margin-right:8px}
 .options{display:flex;flex-direction:column;gap:10px}
@@ -801,6 +804,14 @@ function $(id){return document.getElementById(id)}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t}return a}
 function rec(id){return DB.rec[id]||(DB.rec[id]={attempts:0,right:0,wrong:0,streak:0,book:0,lastWrong:0})}
+function bookIds(){return Object.keys(DB.rec).filter(function(id){return byId[id]&&DB.rec[id].book})}
+let toastTimer=null;
+function toast(msg){
+  let el=document.getElementById('toast');
+  if(!el){el=document.createElement('div');el.id='toast';document.body.appendChild(el);}
+  el.textContent=msg;el.classList.add('on');
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove('on')},1800);
+}
 function answerKeys(q){if(q.type==='judge')return [q.a?'A':'B']; if(q.type==='multi')return q.a.slice(); return [q.a]}
 function optionsOf(q){if(q.type==='judge')return [{k:'A',t:'正确'},{k:'B',t:'错误'}]; return q.o.map(function(t,i){return {k:String.fromCharCode(65+i),t:t}})}
 function isCorrect(q,picked){
@@ -896,6 +907,7 @@ function renderHome(){
    +'<div class="hero-actions">'
    +'<button class="btn primary" data-act="start-random">今日推荐 · 随机 40 题</button>'
    +'<button class="btn" data-act="start-wrong">错题重练'+(st.wrongQ?'（'+st.wrongQ+'）':'')+'</button>'
+   +'<button class="btn" data-act="start-book">我的收藏'+(bookIds().length?'（'+bookIds().length+'）':'')+'</button>'
    +'<button class="btn" data-act="start-case">大题专练</button>'
    +'<button class="btn" data-act="start-study">背题模式</button>'
    +'<button class="btn ghost" data-act="go-exam">模拟考</button>'
@@ -950,7 +962,7 @@ function renderLauncher(){
   h+='<div class="chap-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">'
    +'<button class="card chap" data-act="start-random"><div class="no">随</div><div class="mid"><h3>随机 40 题</h3><div class="meta">跨章节混合抽取</div></div></button>'
    +'<button class="card chap" data-act="start-wrong"><div class="no">错</div><div class="mid"><h3>错题重练</h3><div class="meta">按错误次数排序</div></div></button>'
-   +'<button class="card chap" data-act="start-book"><div class="no">藏</div><div class="mid"><h3>收藏题目</h3><div class="meta">你标记过的题</div></div></button>'
+   +'<button class="card chap" data-act="start-book"><div class="no">藏</div><div class="mid"><h3>收藏题目'+(bookIds().length?'（'+bookIds().length+'）':'')+'</h3><div class="meta">'+(bookIds().length?bookIds().length+' 道 · 点击开始复习':'点题目右上角星标即可收藏')+'</div></div></button>'
    +'<button class="card chap" data-act="start-case"><div class="no">案</div><div class="mid"><h3>大题专练</h3><div class="meta">'+BANK.filter(function(q){return q.type==='case'}).length+' 道案例分析 · 顺序练习</div></div></button>'
    +'<button class="card chap" data-act="start-study"><div class="no">背</div><div class="mid"><h3>背题模式</h3><div class="meta">题干答案直接显示 · 快速过题</div></div></button>'
    +'</div>';
@@ -993,7 +1005,7 @@ function renderPractice(){
   }else if(s.exam){
     h+='<div class="pbar"><span class="chip" style="border-color:#ad3a2e;color:#ad3a2e">模拟考 · '+s.title+'</span><span class="timer" id="timer">'+fmt(Math.max(0,s.deadline-Date.now()))+'</span><span class="pnum">'+pos+' / '+N+'</span><div style="flex:1"></div><button class="btn small red" data-act="submit-exam">交卷</button></div>';
   }else{
-    h+='<div class="pbar"><span class="pnum">'+pos+' / '+N+'</span><div class="track"><i style="width:'+(pos/N*100)+'%"></i></div><span class="pnum">'+Math.round((pos/N)*100)+'%</span></div>';
+    h+='<div class="pbar"><span class="pnum">'+pos+' / '+N+'</span><div class="track"><i style="width:'+(pos/N*100)+'%"></i></div><span class="pnum">'+Math.round((pos/N)*100)+'%</span><button class="btn small ghost" data-act="exit-session">返回列表</button></div>';
   }
   if(S.resumedBanner){h+='<div class="resume-bar"><span>⏵ 已恢复上次的「'+esc(s.title)+'」进度（第 '+(s.idx+1)+' / '+N+' 题），可继续作答。</span><button class="btn small" data-act="resume-abandon">放弃进度</button></div>';S.resumedBanner=false;}
   h+='<div class="card qcard">';
@@ -1233,7 +1245,7 @@ document.addEventListener('click',function(e){
   }
   else if(act==='start-random'){startSession(shuffle(BANK).slice(0,40).map(function(q){return q.id}),{title:'随机 40 题'});}
   else if(act==='start-wrong'){const ids=wrongIds(); if(!ids.length){alert('目前没有待攻克的错题。');return;} startSession(ids,{title:'错题重练'});}
-  else if(act==='start-book'){const ids=Object.keys(DB.rec).filter(function(id){return byId[id]&&DB.rec[id].book}); if(!ids.length){alert('还没有收藏题目，点击题目右上角的星标即可收藏。');return;} startSession(ids,{title:'收藏题重练'});}
+  else if(act==='start-book'){const ids=bookIds(); if(!ids.length){alert('还没有收藏题目。做题时点题目右上角的 ★ 即可收藏，收藏后可在这里集中复习。');return;} startSession(ids,{title:'我的收藏'});}
   else if(act==='start-case'){const ids=BANK.filter(function(q){return q.type==='case'}).map(function(q){return q.id}); startSession(ids,{title:'大题专练 · 案例分析'});}
   else if(act==='start-study'){startSession(BANK.map(function(q){return q.id}),{title:'背题模式 · 全题库',study:true});}
   else if(act==='study-ch'){const ch=t.dataset.ch;startSession(BANK.filter(function(q){return q.ch===ch}).map(function(q){return q.id}),{title:'背题 · '+ch,study:true});}
@@ -1245,7 +1257,8 @@ document.addEventListener('click',function(e){
   else if(act==='prev'){if(S.session&&S.session.idx>0){S.session.idx--;renderPractice();}}
   else if(act==='next'){goNext();}
   else if(act==='jump'){if(S.session){S.session.idx=Number(t.dataset.i);renderPractice();}}
-  else if(act==='book'){const r=rec(t.dataset.id);r.book=r.book?0:1;save();renderPractice();}
+  else if(act==='book'){const r=rec(t.dataset.id);r.book=r.book?0:1;save();renderPractice();toast(r.book?'已收藏，可在「概览 → 我的收藏」集中复习':'已取消收藏');}
+  else if(act==='exit-session'){if(confirm('退出当前练习？本组进度将结束，已收藏的题目不受影响。')){S.session=null;S.result=null;S.resumedBanner=false;clearSession();renderPractice();window.scrollTo({top:0});}}
   else if(act==='case-reveal'){S.session.revealed[byId[S.session.ids[S.session.idx]].id]=true;renderPractice();}
   else if(act==='case-ok'||act==='case-bad'){
     const q=byId[S.session.ids[S.session.idx]];
