@@ -969,7 +969,7 @@ function renderLauncher(){
    +'<button class="card chap" data-act="start-random"><div class="no">随</div><div class="mid"><h3>随机 40 题</h3><div class="meta">跨章节混合抽取</div></div></button>'
    +'<button class="card chap" data-act="start-wrong"><div class="no">错</div><div class="mid"><h3>错题重练</h3><div class="meta">按错误次数排序</div></div></button>'
    +'<button class="card chap" data-act="start-book"><div class="no">藏</div><div class="mid"><h3>收藏题目'+(bookIds().length?'（'+bookIds().length+'）':'')+'</h3><div class="meta">'+(bookIds().length?bookIds().length+' 道 · 点击开始复习':'点题目右上角星标即可收藏')+'</div></div></button>'
-   +'<button class="card chap" data-act="start-case"><div class="no">案</div><div class="mid"><h3>大题专练</h3><div class="meta">'+BANK.filter(function(q){return q.type==='case'}).length+' 道案例分析 · 顺序练习</div></div></button>'
+   +'<button class="card chap" data-act="start-case"><div class="no">案</div><div class="mid"><h3>大题专练</h3><div class="meta">'+BANK.filter(function(q){return q.type==='case'}).length+' 道案例分析 · 必背 '+BANK.filter(function(q){return q.type==='case'&&q.must}).length+' 道优先</div></div></button>'
    +'<button class="card chap" data-act="start-study"><div class="no">背</div><div class="mid"><h3>背题模式</h3><div class="meta">题干答案直接显示 · 快速过题</div></div></button>'
    +'</div>';
   $('practiceBody').innerHTML=h;
@@ -1252,7 +1252,7 @@ document.addEventListener('click',function(e){
   else if(act==='start-random'){startSession(shuffle(BANK).slice(0,40).map(function(q){return q.id}),{title:'随机 40 题'});}
   else if(act==='start-wrong'){const ids=wrongIds(); if(!ids.length){alert('目前没有待攻克的错题。');return;} startSession(ids,{title:'错题重练'});}
   else if(act==='start-book'){const ids=bookIds(); if(!ids.length){alert('还没有收藏题目。做题时点题目右上角的 ★ 即可收藏，收藏后可在这里集中复习。');return;} startSession(ids,{title:'我的收藏'});}
-  else if(act==='start-case'){const ids=BANK.filter(function(q){return q.type==='case'}).map(function(q){return q.id}); startSession(ids,{title:'大题专练 · 案例分析'});}
+  else if(act==='start-case'){const cs=BANK.filter(function(q){return q.type==='case'});const ids=cs.filter(function(q){return q.must}).map(function(q){return q.id}).concat(cs.filter(function(q){return !q.must}).map(function(q){return q.id})); startSession(ids,{title:'大题专练 · 案例分析'});}
   else if(act==='start-study'){startSession(BANK.map(function(q){return q.id}),{title:'背题模式 · 全题库',study:true});}
   else if(act==='study-ch'){const ch=t.dataset.ch;startSession(BANK.filter(function(q){return q.ch===ch}).map(function(q){return q.id}),{title:'背题 · '+ch,study:true});}
   else if(act==='study-home'){S.session=null;S.result=null;S.resumedBanner=false;clearSession();render();}
